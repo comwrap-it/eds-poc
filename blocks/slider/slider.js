@@ -1,5 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+import { moveInstrumentation, isEditorMode } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const slides = [...block.children];
@@ -237,8 +237,8 @@ export default function decorate(block) {
     let autoplayInterval;
 
     function startAutoplay() {
-      // L'autoplay non dovrebbe partire su mobile se non desiderato
-      if (!isMobile) {
+      // L'autoplay non dovrebbe partire su mobile se non desiderato o in modalità editor
+      if (!isMobile && !isEditorMode()) {
         autoplayInterval = setInterval(nextSlide, 5000);
       }
     }
