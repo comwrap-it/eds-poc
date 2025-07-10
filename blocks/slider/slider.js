@@ -1,169 +1,221 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-/**
- * Crea il blocco di contenuto per una singola slide leggendo i dati strutturati.
- * @param {HTMLElement} slideElement - L'elemento della slide che contiene i dati.
- * @returns {HTMLElement} - Il blocco di contenuto HTML.
- */
-function createContentBlock(slideElement) {
-  const contentBlock = document.createElement('div');
-  contentBlock.className = 'slide-content-block';
-
-  // Legge i dati dai div generati da Franklin/EDS basati sul JSON
-  const icon = slideElement.querySelector('.icon img');
-  const iconText = slideElement.querySelector('.iconText')?.textContent.trim();
-  const title = slideElement.querySelector('.title')?.textContent.trim();
-  const description = slideElement.querySelector('.description')?.textContent.trim();
-  const ctaLink = slideElement.querySelector('.ctaLink a');
-  const ctaText = slideElement.querySelector('.ctaText')?.textContent.trim();
-  
-  // Applica le configurazioni dal JSON (lette come data-attributes sulla slide)
-  const position = slideElement.dataset.blockPosition || 'left';
-  const bgColor = slideElement.dataset.blockBackgroundColor;
-
-  contentBlock.classList.add(position);
-  if (bgColor) {
-    contentBlock.style.backgroundColor = bgColor;
-  }
-
-  // --- Costruisce il contenuto interno ---
-
-  // Blocco superiore: Icona + Testo Icona
-  if (icon || iconText) {
-    const headerBlock = document.createElement('div');
-    headerBlock.className = 'slide-content-header';
-    if (icon) {
-      const optimizedIcon = createOptimizedPicture(icon.src, icon.alt || 'icon', false, [{ width: '40' }]);
-      headerBlock.appendChild(optimizedIcon);
-    }
-    if (iconText) {
-      const textElem = document.createElement('span');
-      textElem.className = 'slide-icon-text';
-      textElem.textContent = iconText;
-      headerBlock.appendChild(textElem);
-    }
-    contentBlock.appendChild(headerBlock);
-  }
-
-  // Titolo
-  if (title) {
-    const titleElem = document.createElement('h2');
-    titleElem.className = 'slide-title';
-    titleElem.textContent = title;
-    contentBlock.appendChild(titleElem);
-  }
-
-  // Descrizione
-  if (description) {
-    const descElem = document.createElement('p');
-    descElem.className = 'slide-description';
-    descElem.textContent = description;
-    contentBlock.appendChild(descElem);
-  }
-
-  // Pulsante CTA
-  if (ctaLink && ctaText) {
-    const ctaButton = document.createElement('a');
-    ctaButton.className = 'slide-cta';
-    ctaButton.href = ctaLink.href;
-    ctaButton.textContent = ctaText;
-    if (ctaLink.title) ctaButton.title = ctaLink.title;
-    contentBlock.appendChild(ctaButton);
-  }
-
-  return contentBlock;
-}
-
 export default function decorate(block) {
   const slides = [...block.children];
-  const totalSlides = slides.length;
 
-  if (totalSlides === 0) {
+  // Se non ci sono slide, nascondi il componente
+  if (slides.length === 0) {
     block.style.display = 'none';
     return;
   }
 
-  block.classList.add('slider');
-
+  // Crea la struttura del slider
   const sliderContainer = document.createElement('div');
   sliderContainer.className = 'slider-container';
 
   const sliderTrack = document.createElement('div');
   sliderTrack.className = 'slider-track';
 
-  slides.forEach((slide, index) => {
-    moveInstrumentation(slide, slide); // Sposta l'instrumentazione sull'elemento slide
-    slide.classList.add('slide');
-    if (index === 0) slide.classList.add('active');
+  const sliderControls = document.createElement('div');
+  sliderControls.className = 'slider-controls';
 
-    // Imposta l'immagine di sfondo
-    const bgImage = slide.querySelector('.backgroundImage img');
-    if (bgImage) {
-      const optimizedBg = createOptimizedPicture(bgImage.src, bgImage.alt, true, [{ width: '2000' }]);
-      slide.append(optimizedBg);
-    }
+  // Indicatori (definiti prima per evitare no-use-before-define)
+  const indicators = document.createElement('div');
+  indicators.className = 'slider-indicators';
 
-    // Crea e aggiunge il blocco di contenuto
-    const contentBlock = createContentBlock(slide);
-    
-    // Pulisce il contenuto originale della slide e aggiunge solo il blocco
-    const elementsToKeep = [contentBlock, slide.querySelector('picture')].filter(Boolean);
-    slide.textContent = '';
-    elementsToKeep.forEach(el => slide.append(el));
-    
-    sliderTrack.appendChild(slide);
-  });
+  // Logica di navigazione
+  let currentSlide = 0;
+  const totalSlides = slides.length;
 
-  sliderContainer.appendChild(sliderTrack);
-  block.textContent = '';
-  block.appendChild(sliderContainer);
-  
-  // --- LOGICA DI NAVIGAZIONE E CONTROLLI ---
-  
-  if (totalSlides <= 1) {
-    block.classList.add('single-slide');
-    return; // Non aggiungere controlli se c'è una sola slide
+  function goToSlide(index) {
+    // Rimuovi classe active da slide corrente
+    sliderTrack.children[currentSlide].classList.remove('active');
+    indicators.children[currentSlide].classList.remove('active');
+
+    // Aggiorna indice
+    currentSlide = index;
+
+    // Aggiungi classe active alla nuova slide
+    sliderTrack.children[currentSlide].classList.add('active');
+    indicators.children[currentSlide].classList.add('active');
+
+    // Sposta il track
+    sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
   }
 
-  let currentSlide = 0;
+  function nextSlide() {
+    const next = (currentSlide + 1) % totalSlides;
+    goToSlide(next);
+  }
 
-  const goToSlide = (index) => {
-    sliderTrack.querySelector('.slide.active')?.classList.remove('active');
-    sliderTrack.children[index].classList.add('active');
-    sliderTrack.style.transform = `translateX(-${index * 100}%)`;
-    currentSlide = index;
-  };
+  function prevSlide() {
+    const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+    goToSlide(prev);
+  }
 
-  const nextSlide = () => goToSlide((currentSlide + 1) % totalSlides);
-  const prevSlide = () => goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+  // Processa ogni slide
+  slides.forEach((slide, index) => {
+    const slideElement = document.createElement('div');
+    slideElement.className = 'slide';
+    if (index === 0) slideElement.classList.add('active');
+
+    moveInstrumentation(slide, slideElement);
+
+    const cells = [...slide.children];
+
+    // Contenuto testuale (prima colonna)
+    if (cells[0]) {
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'slide-content';
+
+      // Estrai titolo, sottotitolo e descrizione
+      const paragraphs = cells[0].querySelectorAll('p');
+      if (paragraphs.length > 0) {
+        const title = document.createElement('h2');
+        title.className = 'slide-title';
+        title.textContent = paragraphs[0].textContent;
+        contentDiv.appendChild(title);
+      }
+
+      if (paragraphs.length > 1) {
+        const subtitle = document.createElement('h3');
+        subtitle.className = 'slide-subtitle';
+        subtitle.textContent = paragraphs[1].textContent;
+        contentDiv.appendChild(subtitle);
+      }
+
+      if (paragraphs.length > 2) {
+        const description = document.createElement('p');
+        description.className = 'slide-description';
+        description.textContent = paragraphs[2].textContent;
+        contentDiv.appendChild(description);
+      }
+
+      // CTA Button
+      const ctaLink = cells[0].querySelector('a');
+      if (ctaLink) {
+        const ctaButton = document.createElement('a');
+        ctaButton.className = 'slide-cta';
+        ctaButton.href = ctaLink.href;
+        ctaButton.textContent = ctaLink.textContent || 'Scopri di più';
+        contentDiv.appendChild(ctaButton);
+      }
+
+      slideElement.appendChild(contentDiv);
+    }
+
+    // Immagine di sfondo (seconda colonna)
+    if (cells[1]) {
+      const img = cells[1].querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1200' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        slideElement.style.backgroundImage = `url(${img.src})`;
+      }
+    }
+
+    // Griglia di icone (terza colonna se presente)
+    if (cells[2]) {
+      const iconsGrid = document.createElement('div');
+      iconsGrid.className = 'slide-icons-grid';
+
+      const icons = cells[2].querySelectorAll('img');
+      icons.forEach((icon) => {
+        const iconWrapper = document.createElement('div');
+        iconWrapper.className = 'icon-item';
+        const optimizedIcon = createOptimizedPicture(icon.src, icon.alt, false, [{ width: '100' }]);
+        moveInstrumentation(icon, optimizedIcon.querySelector('img'));
+        iconWrapper.appendChild(optimizedIcon);
+        iconsGrid.appendChild(iconWrapper);
+      });
+
+      slideElement.appendChild(iconsGrid);
+    }
+
+    sliderTrack.appendChild(slideElement);
+  });
+
+  // Controlli di navigazione - mostra solo se ci sono più slide
+  if (totalSlides > 1) {
+    const prevButton = document.createElement('button');
+    prevButton.className = 'slider-nav slider-prev';
+    prevButton.innerHTML = '‹';
+    prevButton.setAttribute('aria-label', 'Slide precedente');
   
-  // Frecce di navigazione
-  const prevButton = document.createElement('button');
-  prevButton.className = 'slider-nav slider-prev';
-  prevButton.setAttribute('aria-label', 'Previous Slide');
-  prevButton.innerHTML = '‹';
+    const nextButton = document.createElement('button');
+    nextButton.className = 'slider-nav slider-next';
+    nextButton.innerHTML = '›';
+    nextButton.setAttribute('aria-label', 'Slide successiva');
+  
+    sliderControls.appendChild(prevButton);
+    sliderControls.appendChild(nextButton);
+  
+    // Event listeners
+    nextButton.addEventListener('click', nextSlide);
+    prevButton.addEventListener('click', prevSlide);
+  
+    // Popola gli indicatori
+    slides.forEach((_, index) => {
+      const indicator = document.createElement('button');
+      indicator.className = 'slider-indicator';
+      if (index === 0) indicator.classList.add('active');
+      indicator.setAttribute('aria-label', `Vai alla slide ${index + 1}`);
+      indicator.addEventListener('click', () => goToSlide(index));
+      indicators.appendChild(indicator);
+    });
+  
+    sliderControls.appendChild(indicators);
+  }
+
+  // Assembla il slider
+  sliderContainer.appendChild(sliderTrack);
+  sliderContainer.appendChild(sliderControls);
+
+  // Sostituisci il contenuto del blocco
+  block.textContent = '';
+  block.appendChild(sliderContainer);
+
+  // Event listeners
+  nextButton.addEventListener('click', nextSlide);
   prevButton.addEventListener('click', prevSlide);
 
-  const nextButton = document.createElement('button');
-  nextButton.className = 'slider-nav slider-next';
-  nextButton.setAttribute('aria-label', 'Next Slide');
-  nextButton.innerHTML = '›';
-  nextButton.addEventListener('click', nextSlide);
-  
-  sliderContainer.append(prevButton, nextButton);
+  // Auto-play (opzionale)
+  let autoplayInterval;
 
-  // Autoplay
-  let autoplayInterval = setInterval(nextSlide, 5000);
-  block.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
-  block.addEventListener('mouseleave', () => { autoplayInterval = setInterval(nextSlide, 5000); });
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 5000); // 5 secondi
+  }
 
-  // Supporto Touch
-  let touchStartX = 0;
-  sliderTrack.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+
+  // Avvia autoplay
+  startAutoplay();
+
+  // Pausa autoplay al hover
+  block.addEventListener('mouseenter', stopAutoplay);
+  block.addEventListener('mouseleave', startAutoplay);
+
+  // Supporto touch per mobile
+  let startX = 0;
+  let endX = 0;
+
+  sliderTrack.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+
   sliderTrack.addEventListener('touchend', (e) => {
-    const touchEndX = e.changedTouches[0].clientX;
-    if (touchStartX - touchEndX > 50) nextSlide();
-    if (touchEndX - touchStartX > 50) prevSlide();
+    endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if (Math.abs(diff) > 50) { // Soglia minima per lo swipe
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
   });
 }
