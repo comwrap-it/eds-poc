@@ -83,27 +83,12 @@ export default function decorate(block) {
 
     // Imposta immagine di sfondo
     if (slideData.backgroundImage) {
-      // Rimuovi questa riga:
-      // slideElement.style.backgroundImage = `url(${slideData.backgroundImage.src})`;
-      
-      // Sostituisci con:
       const backgroundPicture = createOptimizedPicture(
         slideData.backgroundImage.src,
         slideData.backgroundImage.alt || 'Background image',
         false,
         [{ width: '1200' }, { width: '800' }, { width: '400' }]
       );
-      backgroundPicture.style.position = 'absolute';
-      backgroundPicture.style.inset = '0';
-      backgroundPicture.style.zIndex = '0';
-      backgroundPicture.style.objectFit = 'cover';
-      
-      const img = backgroundPicture.querySelector('img');
-      if (img) {
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'cover';
-      }
       
       slideElement.appendChild(backgroundPicture);
     }
@@ -126,12 +111,11 @@ export default function decorate(block) {
       const iconElement = document.createElement('div');
       iconElement.className = 'slide-icon';
       
-      // Crea immagine ottimizzata per l'icona
+      // Crea un semplice tag <img> per l'icona SVG
       const iconImg = document.createElement('img');
       iconImg.src = slideData.iconLink;
-      iconImg.alt = slideData.iconText;
-      const optimizedIcon = createOptimizedPicture(slideData.iconLink, slideData.iconText, false, [{ width: '64' }]);
-      iconElement.appendChild(optimizedIcon);
+      iconImg.alt = slideData.iconText || 'icon'; // Aggiungi un alt di fallback
+      iconElement.appendChild(iconImg);
       contentBlock.appendChild(iconElement);
     }
 
@@ -171,12 +155,22 @@ export default function decorate(block) {
   if (totalSlides > 1) {
     const prevButton = document.createElement('button');
     prevButton.className = 'slider-nav slider-prev';
-    prevButton.innerHTML = '‹';
+    // Usa SVG inline per l'icona della freccia
+    prevButton.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    `;
     prevButton.setAttribute('aria-label', 'Slide precedente');
 
     const nextButton = document.createElement('button');
     nextButton.className = 'slider-nav slider-next';
-    nextButton.innerHTML = '›';
+    // Usa SVG inline per l'icona della freccia
+    nextButton.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    `;
     nextButton.setAttribute('aria-label', 'Slide successiva');
 
     sliderControls.appendChild(prevButton);

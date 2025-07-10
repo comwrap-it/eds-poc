@@ -147,18 +147,23 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 3;
+  z-index: 5; /* Aumentato per essere sopra il contenuto */
   background: transparent;
   border: 1px solid white;
   color: white;
   width: 48px;
+  height: 48px; /* Aggiunto per un cerchio perfetto */
   border-radius: 50%;
-  font-size: 1.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: flex; /* Aggiunto per centrare la freccia */
-  align-items: center; /* Aggiunto per centrare la freccia */
-  justify-content: center; /* Aggiunto per centrare la freccia */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-nav svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
 }
 
 .slider-nav:hover {
@@ -170,14 +175,22 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+
+    .slide-content-block.right {
+        right:unset;
+    }
+
   .slider-container {
     height: auto;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
   }
 
   .slide {
     flex-direction: column;
     height: auto;
     padding: 0;
+    width: 100vw;
   }
 
   .slide > picture {
@@ -201,36 +214,36 @@
     top: auto;
     left: auto;
     right: auto;
-    width: 100%;
-    max-width: 100%;
+    width: 100vw;
+    max-width: 100vw;
     min-width: unset;
     border-radius: 0;
     padding: 2rem 1.5rem;
-    color: black;
-    background-color: white;
+    color: initial; /* Usa i colori di default del testo */
+    background-color: #f5f5f5; /* Sfondo leggermente grigio per il blocco */
     order: 2;
-    text-align: center; /* Centra il testo come nell'esempio */
-    align-items: center; /* Centra gli elementi flessibili */
+    text-align: center; /* Allineamento a sinistra come da richiesta implicita */
+    align-items: center; /* Allinea elementi all'inizio */
   }
 
-  /* Nascondi le frecce su mobile usando la classe aggiunta dal JS */
-  .slider-mobile .slider-nav {
+  /* Nascondi le frecce su mobile */
+  .slider-nav {
     display: none;
   }
 
   .slider-controls {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
+    position: static; /* Rimuovi posizionamento assoluto */
+    transform: none;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
   }
 
-  .slider-controls .slider-indicator {
+  .slider-indicator {
     background-color: #ccc;
   }
 
-  .slider-controls .slider-indicator.active {
+  .slider-indicator.active {
     background-color: #333;
   }
 }
