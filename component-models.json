@@ -219,6 +219,19 @@
     "id": "slide",
     "fields": [
       {
+        "component": "reference",
+        "name": "icon",
+        "label": "Icona",
+        "description": "Icona da mostrare nel blocco.",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "iconText",
+        "label": "Descrizione affianco all'icona",
+        "valueType": "string"
+      },
+      {
         "component": "richtext",
         "name": "title",
         "label": "Titolo",
@@ -226,27 +239,9 @@
       },
       {
         "component": "richtext",
-        "name": "subtitle",
-        "label": "Sottotitolo",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
         "name": "description",
         "label": "Descrizione",
         "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "icon",
-        "label": "Icona",
-        "multi": false
-      },
-      {
-        "component": "reference",
-        "name": "backgroundImage",
-        "label": "Immagine di sfondo",
-        "multi": false
       },
       {
         "component": "aem-content",
@@ -259,25 +254,32 @@
         "label": "Testo CTA"
       },
       {
+        "component": "reference",
+        "name": "backgroundImage",
+        "label": "Immagine di sfondo",
+        "multi": false
+      },
+      {
         "component": "select",
         "name": "blockPosition",
-        "label": "Posizione Blocco",
+        "label": "Posizione Blocco Contenuto",
         "options": [
           {
-            "name": "Sinistra",
+            "label": "Sinistra",
             "value": "left"
           },
           {
-            "name": "Destra",
+            "label": "Destra",
             "value": "right"
           }
-        ]
+        ],
+        "defaultValue": "left"
       },
       {
         "component": "text",
         "name": "blockBackgroundColor",
-        "label": "Colore Background Blocco",
-        "description": "Inserire codice colore hex (es: #ff0000)"
+        "label": "Colore Sfondo Blocco",
+        "description": "Es. #FF6347 o rgba(255, 99, 71, 0.9)"
       }
     ]
   }
