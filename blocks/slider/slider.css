@@ -80,18 +80,24 @@
 
 .slide-icon {
   flex-shrink: 0;
-  width: 48px; /* Dimensione icona */
+  width: auto; /* Dimensione icona */
   height: 48px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 10px; /* Spazio sotto l'icona */
+  gap: 10px;
 }
 
 .slide-icon img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+.slide-icon-text {
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .slide-text-content {
@@ -228,6 +234,10 @@
 
   /* Nascondi le frecce su mobile */
   .slider-nav {
+    display: none;
+  }
+
+  .slider-indicators {
     display: none;
   }
 

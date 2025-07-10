@@ -27,48 +27,18 @@ export default function decorate(block) {
   // Aggiungi questa variabile per controllare lo stato mobile
   let isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-  // Logica di navigazione
-  let currentSlide = 0;
+  // --- Inizio Logica Slider Infinito ---
+  let currentSlide = 1; // Inizia dalla prima vera slide (non dal clone)
   const totalSlides = slides.length;
+  let isTransitioning = false;
 
-  function goToSlide(index) {
-    sliderTrack.children[currentSlide].classList.remove('active');
-    if (indicators.children[currentSlide]) {
-      indicators.children[currentSlide].classList.remove('active');
-    }
-
-    currentSlide = index;
-
-    sliderTrack.children[currentSlide].classList.add('active');
-    if (indicators.children[currentSlide]) {
-      indicators.children[currentSlide].classList.add('active');
-    }
-
-    // Applica sempre la trasformazione
-    sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }
-
-  function nextSlide() {
-    const next = (currentSlide + 1) % totalSlides;
-    goToSlide(next);
-  }
-
-  function prevSlide() {
-    const prev = (currentSlide - 1 + totalSlides) % totalSlides;
-    goToSlide(prev);
-  }
-
-  // Processa ogni slide
+  // Processa e aggiunge le slide al track
   slides.forEach((slide, index) => {
     const slideElement = document.createElement('div');
     slideElement.className = 'slide';
-    if (index === 0) slideElement.classList.add('active');
-
     moveInstrumentation(slide, slideElement);
 
     const cells = [...slide.children];
-
-    // Estrai dati dalla struttura HTML
     const slideData = {
       iconLink: cells[0]?.querySelector('a')?.href || '',
       iconText: cells[0]?.querySelector('a')?.textContent?.replace(/<\/?p>/g, '') || '',
@@ -78,7 +48,7 @@ export default function decorate(block) {
       ctaText: cells[4]?.textContent || '',
       backgroundImage: cells[5]?.querySelector('img'),
       blockPosition: cells[6]?.textContent?.trim() || 'left',
-      blockBackgroundColor: cells[7]?.querySelector('a')?.href?.replace('#', '') || cells[7]?.textContent?.replace('#', '') || 'rgba(0, 51, 102, 0.9)'
+      blockBackgroundColor: cells[7]?.querySelector('a')?.href?.replace('#', '') || cells[7]?.textContent?.replace('#', '') || 'rgba(0, 51, 102, 0.9)',
     };
 
     // Imposta immagine di sfondo
@@ -110,12 +80,23 @@ export default function decorate(block) {
     if (slideData.iconLink) {
       const iconElement = document.createElement('div');
       iconElement.className = 'slide-icon';
-      
-      // Crea un semplice tag <img> per l'icona SVG
-      const iconImg = document.createElement('img');
-      iconImg.src = slideData.iconLink;
-      iconImg.alt = slideData.iconText || 'icon'; // Aggiungi un alt di fallback
-      iconElement.appendChild(iconImg);
+
+      // Usa createOptimizedPicture per l'icona
+      const iconPicture = createOptimizedPicture(
+        slideData.iconLink,
+        slideData.iconText || 'icon',
+        true, // Le icone sono decorative, quindi possono essere caricate lazy
+        [{ width: '50' }], // Specifica una larghezza per l'ottimizzazione
+      );
+      iconElement.appendChild(iconPicture);
+
+      if (slideData.iconText) {
+        const iconTextElement = document.createElement('span');
+        iconTextElement.className = 'slide-icon-text';
+        iconTextElement.textContent = slideData.iconText;
+        iconElement.appendChild(iconTextElement);
+      }
+
       contentBlock.appendChild(iconElement);
     }
 
@@ -151,6 +132,74 @@ export default function decorate(block) {
     sliderTrack.appendChild(slideElement);
   });
 
+  // Clona la prima e l'ultima slide per l'effetto infinito
+  if (totalSlides > 1) {
+    const firstClone = sliderTrack.children[0].cloneNode(true);
+    firstClone.classList.add('clone');
+    sliderTrack.appendChild(firstClone);
+
+    const lastClone = sliderTrack.children[totalSlides - 1].cloneNode(true);
+    lastClone.classList.add('clone');
+    sliderTrack.insertBefore(lastClone, sliderTrack.children[0]);
+  }
+
+  function updateSliderPosition(withTransition = true) {
+    sliderTrack.style.transition = withTransition ? 'transform 0.5s ease-in-out' : 'none';
+    const slideWidth = sliderTrack.clientWidth;
+    sliderTrack.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+  }
+
+  function updateIndicators() {
+    [...indicators.children].forEach((indicator, index) => {
+      // L'indicatore attivo corrisponde alla slide reale (currentSlide - 1)
+      if (index === (currentSlide - 1 + totalSlides) % totalSlides) {
+        indicator.classList.add('active');
+      } else {
+        indicator.classList.remove('active');
+      }
+    });
+  }
+
+  function goToSlide(index) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentSlide = index;
+    updateSliderPosition();
+    updateIndicators();
+  }
+
+  function shiftSlide() {
+    isTransitioning = false;
+    if (currentSlide === 0) {
+      currentSlide = totalSlides;
+      updateSliderPosition(false);
+    } else if (currentSlide === totalSlides + 1) {
+      currentSlide = 1;
+      updateSliderPosition(false);
+    }
+  }
+
+  function nextSlide() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentSlide++;
+    updateSliderPosition();
+    updateIndicators();
+  }
+
+  function prevSlide() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentSlide--;
+    updateSliderPosition();
+    updateIndicators();
+  }
+
+  sliderTrack.addEventListener('transitionend', shiftSlide);
+
+  // Posizionamento iniziale
+  updateSliderPosition(false);
+
   // La logica di controllo deve funzionare sempre, ma gli elementi visivi possono essere nascosti
   if (totalSlides > 1) {
     const prevButton = document.createElement('button');
@@ -184,11 +233,11 @@ export default function decorate(block) {
     slides.forEach((_, slideIndex) => {
       const indicator = document.createElement('button');
       indicator.className = 'slider-indicator';
-      if (slideIndex === 0) indicator.classList.add('active');
-      indicator.setAttribute('aria-label', `Vai alla slide ${slideIndex + 1}`);
-      indicator.addEventListener('click', () => goToSlide(slideIndex));
+      // L'indice per goToSlide deve essere slideIndex + 1 a causa del clone iniziale
+      indicator.addEventListener('click', () => goToSlide(slideIndex + 1));
       indicators.appendChild(indicator);
     });
+    updateIndicators(); // Imposta l'indicatore iniziale
 
     sliderControls.appendChild(indicators);
 
@@ -210,33 +259,51 @@ export default function decorate(block) {
     block.addEventListener('mouseenter', stopAutoplay);
     block.addEventListener('mouseleave', startAutoplay);
 
-    // Supporto touch
+    // Supporto touch con scorrimento fluido
+    let isDragging = false;
     let startX = 0;
-    let endX = 0;
+    let currentTranslate = -sliderTrack.clientWidth; // Inizia dalla prima vera slide
+    let prevTranslate = currentTranslate;
 
     sliderTrack.addEventListener('touchstart', (e) => {
+      if (isTransitioning) return;
+      isDragging = true;
       startX = e.touches[0].clientX;
-      stopAutoplay(); // Ferma l'autoplay durante l'interazione touch
+      sliderTrack.style.transition = 'none';
+      stopAutoplay();
     });
 
-    sliderTrack.addEventListener('touchend', (e) => {
-      endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
-
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
+    sliderTrack.addEventListener('touchmove', (e) => {
+      if (isDragging) {
+        const currentX = e.touches[0].clientX;
+        const diff = currentX - startX;
+        currentTranslate = prevTranslate + diff;
+        sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
       }
-      startAutoplay(); // Riavvia l'autoplay dopo l'interazione
     });
+
+    sliderTrack.addEventListener('touchend', () => {
+      if (isTransitioning) return;
+      isDragging = false;
+      const movedBy = currentTranslate - prevTranslate;
+
+      if (movedBy < -50) {
+        nextSlide();
+      } else if (movedBy > 50) {
+        prevSlide();
+      } else {
+        updateSliderPosition(); // Torna alla posizione originale
+      }
+      startAutoplay();
+    });
+
+    // Rimuovi la logica di animazione separata e la vecchia goToSlide
   }
 
   // Gestione del resize più fluida
   window.addEventListener('resize', () => {
     isMobile = window.matchMedia('(max-width: 768px)').matches;
+    updateSliderPosition(false); // Aggiorna la posizione al resize
     // Applica/rimuovi classi o stili invece di ricaricare
     if (isMobile) {
       block.classList.add('slider-mobile');
