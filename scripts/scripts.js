@@ -129,6 +129,14 @@ async function loadLazy(doc) {
 }
 
 /**
+ * Checks if the current page is in editor mode.
+ * @returns {boolean} True if in editor mode, false otherwise.
+ */
+export function isEditorMode() {
+  return window.hlx?.edit;
+}
+
+/**
  * Loads everything that happens a lot later,
  * without impacting the user experience.
  */
