@@ -39,61 +39,60 @@ export default function decorate(block) {
     moveInstrumentation(slide, slideElement);
 
     const cells = [...slide.children];
-    const slideData = {
-      iconLink: cells[0]?.querySelector('a')?.href || '',
-      iconText: cells[0]?.querySelector('a')?.textContent?.replace(/<\/?p>/g, '') || '',
-      title: cells[1]?.textContent || '',
-      description: cells[2]?.textContent || '',
-      ctaLink: cells[3]?.querySelector('a')?.href || '',
-      ctaText: cells[4]?.textContent || '',
-      backgroundImage: cells[5]?.querySelector('img'),
-      blockPosition: cells[6]?.textContent?.trim() || 'left',
-      blockBackgroundColor: cells[7]?.querySelector('a')?.href?.replace('#', '') || cells[7]?.textContent?.replace('#', '') || 'rgba(0, 51, 102, 0.9)',
-    };
+    // Estrai gli elementi originali per preservare l'instrumentazione dell'editor
+    const iconLink = cells[0]?.querySelector('a');
+    const titleEl = cells[1]?.firstElementChild;
+    const descriptionEl = cells[2]?.firstElementChild;
+    const ctaEl = cells[3]?.querySelector('a');
+    const backgroundImageEl = cells[5]?.querySelector('img');
+    const blockPosition = cells[6]?.textContent?.trim() || 'left';
+    const blockBackgroundColor = cells[7]?.querySelector('a')?.href?.replace('#', '') || cells[7]?.textContent?.replace('#', '') || 'rgba(0, 51, 102, 0.9)';
 
     // Imposta immagine di sfondo
-    if (slideData.backgroundImage) {
+    if (backgroundImageEl) {
       const backgroundPicture = createOptimizedPicture(
-        slideData.backgroundImage.src,
-        slideData.backgroundImage.alt || 'Background image',
+        backgroundImageEl.src,
+        backgroundImageEl.alt || 'Background image',
         false,
-        [{ width: '1200' }, { width: '800' }, { width: '400' }]
+        [{ width: '1200' }, { width: '800' }, { width: '400' }],
       );
-      
+      // Sposta l'instrumentazione dall'immagine originale a quella ottimizzata
+      moveInstrumentation(backgroundImageEl, backgroundPicture);
       slideElement.appendChild(backgroundPicture);
     }
 
     // Crea blocco contenuto
     const contentBlock = document.createElement('div');
-    contentBlock.className = `slide-content-block ${slideData.blockPosition}`;
-    
+    contentBlock.className = `slide-content-block ${blockPosition}`;
+
     // Applica colore di sfondo
-    if (slideData.blockBackgroundColor.startsWith('#')) {
-      contentBlock.style.backgroundColor = slideData.blockBackgroundColor;
-    } else if (slideData.blockBackgroundColor.startsWith('rgba')) {
-      contentBlock.style.backgroundColor = slideData.blockBackgroundColor;
+    if (blockBackgroundColor.startsWith('#')) {
+      contentBlock.style.backgroundColor = blockBackgroundColor;
+    } else if (blockBackgroundColor.startsWith('rgba')) {
+      contentBlock.style.backgroundColor = blockBackgroundColor;
     } else {
-      contentBlock.style.backgroundColor = `#${slideData.blockBackgroundColor}`;
+      contentBlock.style.backgroundColor = `#${blockBackgroundColor}`;
     }
 
     // Icona
-    if (slideData.iconLink) {
+    if (iconLink) {
       const iconElement = document.createElement('div');
       iconElement.className = 'slide-icon';
 
-      // Usa createOptimizedPicture per l'icona
       const iconPicture = createOptimizedPicture(
-        slideData.iconLink,
-        slideData.iconText || 'icon',
-        true, // Le icone sono decorative, quindi possono essere caricate lazy
-        [{ width: '50' }], // Specifica una larghezza per l'ottimizzazione
+        iconLink.href,
+        iconLink.textContent.trim() || 'icon',
+        true,
+        [{ width: '50' }],
       );
+      // Sposta l'instrumentazione dal link originale all'immagine ottimizzata
+      moveInstrumentation(iconLink, iconPicture);
       iconElement.appendChild(iconPicture);
 
-      if (slideData.iconText) {
+      if (iconLink.textContent.trim()) {
         const iconTextElement = document.createElement('span');
         iconTextElement.className = 'slide-icon-text';
-        iconTextElement.textContent = slideData.iconText;
+        iconTextElement.textContent = iconLink.textContent.trim();
         iconElement.appendChild(iconTextElement);
       }
 
@@ -104,27 +103,20 @@ export default function decorate(block) {
     const textContent = document.createElement('div');
     textContent.className = 'slide-text-content';
 
-    if (slideData.title) {
-      const title = document.createElement('h2');
-      title.className = 'slide-title';
-      title.textContent = slideData.title;
-      textContent.appendChild(title);
+    if (titleEl) {
+      titleEl.className = 'slide-title';
+      textContent.appendChild(titleEl);
     }
 
-    if (slideData.description) {
-      const description = document.createElement('p');
-      description.className = 'slide-description';
-      description.textContent = slideData.description;
-      textContent.appendChild(description);
+    if (descriptionEl) {
+      descriptionEl.className = 'slide-description';
+      textContent.appendChild(descriptionEl);
     }
 
     // CTA Button
-    if (slideData.ctaLink && slideData.ctaText) {
-      const ctaButton = document.createElement('a');
-      ctaButton.className = 'slide-cta';
-      ctaButton.href = slideData.ctaLink;
-      ctaButton.textContent = slideData.ctaText;
-      textContent.appendChild(ctaButton);
+    if (ctaEl) {
+      ctaEl.className = 'slide-cta';
+      textContent.appendChild(ctaEl);
     }
 
     contentBlock.appendChild(textContent);
