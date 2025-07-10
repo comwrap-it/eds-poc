@@ -4,6 +4,12 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const slides = [...block.children];
 
+  // Se non ci sono slide, nascondi il componente
+  if (slides.length === 0) {
+    block.style.display = 'none';
+    return;
+  }
+
   // Crea la struttura del slider
   const sliderContainer = document.createElement('div');
   sliderContainer.className = 'slider-container';
@@ -130,31 +136,37 @@ export default function decorate(block) {
     sliderTrack.appendChild(slideElement);
   });
 
-  // Controlli di navigazione
-  const prevButton = document.createElement('button');
-  prevButton.className = 'slider-nav slider-prev';
-  prevButton.innerHTML = '‹';
-  prevButton.setAttribute('aria-label', 'Slide precedente');
-
-  const nextButton = document.createElement('button');
-  nextButton.className = 'slider-nav slider-next';
-  nextButton.innerHTML = '›';
-  nextButton.setAttribute('aria-label', 'Slide successiva');
-
-  sliderControls.appendChild(prevButton);
-  sliderControls.appendChild(nextButton);
-
-  // Popola gli indicatori
-  slides.forEach((_, index) => {
-    const indicator = document.createElement('button');
-    indicator.className = 'slider-indicator';
-    if (index === 0) indicator.classList.add('active');
-    indicator.setAttribute('aria-label', `Vai alla slide ${index + 1}`);
-    indicator.addEventListener('click', () => goToSlide(index));
-    indicators.appendChild(indicator);
-  });
-
-  sliderControls.appendChild(indicators);
+  // Controlli di navigazione - mostra solo se ci sono più slide
+  if (totalSlides > 1) {
+    const prevButton = document.createElement('button');
+    prevButton.className = 'slider-nav slider-prev';
+    prevButton.innerHTML = '‹';
+    prevButton.setAttribute('aria-label', 'Slide precedente');
+  
+    const nextButton = document.createElement('button');
+    nextButton.className = 'slider-nav slider-next';
+    nextButton.innerHTML = '›';
+    nextButton.setAttribute('aria-label', 'Slide successiva');
+  
+    sliderControls.appendChild(prevButton);
+    sliderControls.appendChild(nextButton);
+  
+    // Event listeners
+    nextButton.addEventListener('click', nextSlide);
+    prevButton.addEventListener('click', prevSlide);
+  
+    // Popola gli indicatori
+    slides.forEach((_, index) => {
+      const indicator = document.createElement('button');
+      indicator.className = 'slider-indicator';
+      if (index === 0) indicator.classList.add('active');
+      indicator.setAttribute('aria-label', `Vai alla slide ${index + 1}`);
+      indicator.addEventListener('click', () => goToSlide(index));
+      indicators.appendChild(indicator);
+    });
+  
+    sliderControls.appendChild(indicators);
+  }
 
   // Assembla il slider
   sliderContainer.appendChild(sliderTrack);

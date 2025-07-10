@@ -238,6 +238,12 @@
       },
       {
         "component": "reference",
+        "name": "icon",
+        "label": "Icona",
+        "multi": false
+      },
+      {
+        "component": "reference",
         "name": "backgroundImage",
         "label": "Immagine di sfondo",
         "multi": false
@@ -251,6 +257,27 @@
         "component": "text",
         "name": "ctaText",
         "label": "Testo CTA"
+      },
+      {
+        "component": "select",
+        "name": "blockPosition",
+        "label": "Posizione Blocco",
+        "options": [
+          {
+            "name": "Sinistra",
+            "value": "left"
+          },
+          {
+            "name": "Destra",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "blockBackgroundColor",
+        "label": "Colore Background Blocco",
+        "description": "Inserire codice colore hex (es: #ff0000)"
       }
     ]
   }
