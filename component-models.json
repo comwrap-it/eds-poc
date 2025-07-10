@@ -214,5 +214,44 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "slide",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Titolo",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "subtitle",
+        "label": "Sottotitolo",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrizione",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "backgroundImage",
+        "label": "Immagine di sfondo",
+        "multi": false
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaLink",
+        "label": "Link CTA"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "Testo CTA"
+      }
+    ]
   }
 ]
