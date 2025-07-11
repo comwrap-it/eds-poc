@@ -146,6 +146,65 @@
     "fields": [
       {
         "component": "reference",
+        "name": "image",
+        "label": "Immagine",
+        "description": "Immagine principale della card",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "category",
+        "label": "Categoria",
+        "description": "Categoria della card"
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Titolo",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrizione",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "name": "buttonText",
+        "label": "Testo Pulsante",
+        "description": "Testo del pulsante CTA"
+      },
+      {
+        "component": "text",
+        "name": "badgeText",
+        "label": "Testo Badge",
+        "description": "Testo del badge (opzionale)"
+      },
+      {
+        "component": "boolean",
+        "name": "showDate",
+        "label": "Mostra Data",
+        "description": "Mostra la data nella card"
+      },
+      {
+        "component": "boolean",
+        "name": "showCategory",
+        "label": "Mostra Categoria",
+        "description": "Mostra la categoria nella card"
+      }
+    ]
+  },
+  {
+    "id": "card",
+    "fields": [
+      {
+        "component": "reference",
         "valueType": "string",
         "name": "image",
         "label": "Image",
@@ -157,6 +216,40 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Immagine",
+        "description": "Immagine principale dell'elemento del carousel.",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Titolo",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrizione",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "buttonLink",
+        "label": "Link Pulsante"
+      },
+      {
+        "component": "text",
+        "name": "buttonText",
+        "label": "Testo Pulsante"
       }
     ]
   },
