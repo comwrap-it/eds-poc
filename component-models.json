@@ -216,70 +216,44 @@
     ]
   },
   {
-    "id": "slide",
+    "id": "text-image",
     "fields": [
       {
         "component": "reference",
-        "name": "icon",
-        "label": "Icona",
-        "description": "Icona da mostrare nel blocco.",
+        "name": "image",
+        "label": "Immagine",
         "multi": false
-      },
-      {
-        "component": "richtext",
-        "name": "iconText",
-        "label": "Descrizione affianco all'icona",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "title",
-        "label": "Titolo",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Descrizione",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "ctaLink",
-        "label": "Link CTA"
       },
       {
         "component": "text",
-        "name": "ctaText",
-        "label": "Testo CTA"
+        "name": "imageAlt",
+        "label": "Testo Alternativo Immagine",
+        "value": ""
       },
       {
-        "component": "reference",
-        "name": "backgroundImage",
-        "label": "Immagine di sfondo",
-        "multi": false
+        "component": "richtext",
+        "name": "text",
+        "label": "Testo",
+        "valueType": "string",
+        "rte": {
+          "allow": "all"
+        }
       },
       {
         "component": "select",
-        "name": "blockPosition",
-        "label": "Posizione Blocco Contenuto",
+        "name": "layout",
+        "label": "Layout",
         "options": [
           {
-            "label": "Sinistra",
-            "value": "left"
+            "name": "Immagine a sinistra, testo a destra",
+            "value": "image-left"
           },
           {
-            "label": "Destra",
-            "value": "right"
+            "name": "Testo a sinistra, immagine a destra",
+            "value": "text-left"
           }
         ],
-        "defaultValue": "left"
-      },
-      {
-        "component": "text",
-        "name": "blockBackgroundColor",
-        "label": "Colore Sfondo Blocco",
-        "description": "Es. #FF6347 o rgba(255, 99, 71, 0.9)"
+        "defaultValue": "image-left"
       }
     ]
   }

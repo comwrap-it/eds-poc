@@ -1,0 +1,28 @@
+.text-image {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.text-image .text-content {
+  flex: 1;
+}
+
+.text-image .image-content {
+  flex: 1;
+}
+
+.text-image .image-content img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .text-image {
+    flex-direction: column;
+  }
+}
