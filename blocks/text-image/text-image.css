@@ -1,28 +1,43 @@
 .text-image {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
-  background-color: #f0f0f0;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
 }
 
 .text-image .text-content {
   flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .text-image .image-content {
   flex: 1;
+  box-sizing: border-box;
 }
 
 .text-image .image-content img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+}
+
+.text-image .text-content h2 {
+  color: rgb(0, 35, 96);
+}
+
+.text-image .text-content p,
+.text-image .text-content {
+  color: rgb(25, 58, 86);
 }
 
 @media (max-width: 768px) {
   .text-image {
     flex-direction: column;
+  }
+  .text-image .text-content,
+  .text-image .image-content {
+    flex-basis: 100%;
   }
 }

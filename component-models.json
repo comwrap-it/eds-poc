@@ -240,6 +240,13 @@
         }
       },
       {
+        "component": "text",
+        "name": "textBackgroundColor",
+        "label": "Colore Sfondo Testo",
+        "description": "Inserisci un valore CSS (es. #f0f0f0 o rgb(240,240,240))",
+        "value": ""
+      },
+      {
         "component": "select",
         "name": "layout",
         "label": "Layout",
