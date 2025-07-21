@@ -142,6 +142,40 @@
     ]
   },
   {
+    "id": "accordion-list",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "rootPath",
+        "label": "Root Path Content Fragments",
+        "description": "Percorso root dei Content Fragments FAQ",
+        "value": "/content/dam"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "backgroundColor",
+        "label": "Colore Sfondo Componente",
+        "value": "#ffffff"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "openBackgroundColor",
+        "label": "Colore Sfondo FAQ Aperta",
+        "value": "#f0f8ff"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "closedBackgroundColor",
+        "label": "Colore Sfondo FAQ Chiusa",
+        "value": "#f9f9f9"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
