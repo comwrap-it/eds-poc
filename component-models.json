@@ -376,6 +376,37 @@
         "valueType": "string"
       },
       {
+        "component": "select",
+        "name": "FontSize",
+        "label": "Font Size",
+        "options": [
+          {
+            "name": "Font-size-xl",
+            "value": "Font-size-xl"
+          },
+          {
+            "name": "Font-size-l",
+            "value": "Font-size-l"
+          },
+          {
+            "name": "Font-size-m",
+            "value": "Font-size-m"
+          },
+          {
+            "name": "Font-size-s",
+            "value": "Font-size-s"
+          },
+          {
+            "name": "Font-size-xs",
+            "value": "Font-size-xs"
+          },
+          {
+            "name": "Font-size-xxs",
+            "value": "Font-size-xxs"
+          }
+        ]
+      },
+      {
         "component": "text",
         "name": "textColor",
         "label": "Text Color",
