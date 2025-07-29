@@ -10,6 +10,7 @@ export default function decorate(block) {
   if (['left', 'center', 'right'].includes(alignment)) {
     heading.classList.add(`title-${alignment}`);
   }
+  children[1]?.remove();
 
   heading.setAttribute('data-aue-label', 'Titolo');
   heading.setAttribute('data-aue-type', 'text');
