@@ -287,6 +287,25 @@
             "value": "h6"
           }
         ]
+      },
+      {
+        "component": "select",
+        "name": "titleAlignment",
+        "label": "Title Alignment",
+        "options": [
+          {
+            "name": "left",
+            "value": ""
+          },
+          {
+            "name": "right",
+            "value": ""
+          },
+          {
+            "name": "center",
+            "value": ""
+          }
+        ]
       }
     ]
   },
