@@ -74,6 +74,13 @@
               "value": "center"
             }
           ]
+        },
+        {
+          "component": "text",
+          "name": "textColor",
+          "label": "Colore Testo",
+          "description": "Inserisci un valore CSS (es. #f0f0f0 o rgb(240,240,240))",
+          "value": ""
         }
       ]
     }
