@@ -295,15 +295,15 @@
         "options": [
           {
             "name": "left",
-            "value": ""
+            "value": "left"
           },
           {
             "name": "right",
-            "value": ""
+            "value": "right"
           },
           {
             "name": "center",
-            "value": ""
+            "value": "center"
           }
         ]
       }
