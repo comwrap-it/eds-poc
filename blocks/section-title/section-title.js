@@ -4,27 +4,16 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  const titleText = children[0]?.textContent.trim() || '';
-  const titleType = children[1]?.textContent.trim() || 'h2';
-  const alignment = children[2]?.textContent.trim() || '';
+  const heading = children[0];
+  const alignment = children[1]?.textContent.trim().toLowerCase() || '';
 
-  const heading = document.createElement(titleType);
-  heading.textContent = titleText;
-
-  if (alignment === 'left') {
-    heading.classList.add('title-left');
-  } else if (alignment === 'right') {
-    heading.classList.add('title-right');
-  } else if (alignment === 'center') {
-    heading.classList.add('title-center');
+  if (['left', 'center', 'right'].includes(alignment)) {
+    heading.classList.add(`title-${alignment}`);
   }
 
   heading.setAttribute('data-aue-label', 'Titolo');
   heading.setAttribute('data-aue-type', 'text');
-  moveInstrumentation(children[0], heading);
 
-  block.innerHTML = '';
-  block.appendChild(heading);
-
+  moveInstrumentation(heading);
   moveInstrumentation(block);
 }
