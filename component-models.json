@@ -364,5 +364,24 @@
         "value": ""
       }
     ]
+  },
+  {
+    "id": "tpd-rich-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "textColor",
+        "label": "Text Color",
+        "description": "Enter CSS value (#f0f0f0 or rgb(240, 240, 240)...)",
+        "value": ""
+      }
+    ]
   }
 ]
