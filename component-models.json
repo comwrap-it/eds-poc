@@ -425,5 +425,16 @@
         "value": ""
       }
     ]
+  },
+  {
+    "id": "article-list",
+    "fields": [
+      {
+        "component": "text",
+        "name": "background",
+        "label": "Background Color",
+        "placeholder": "#e6f4ff"
+      }
+    ]
   }
 ]
