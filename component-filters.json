@@ -49,5 +49,9 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "tpd-vantaggi",
+    "components": []
   }
 ]
