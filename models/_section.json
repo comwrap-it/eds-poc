@@ -50,7 +50,11 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "text-image",
+        "tpd-rich-text",
+        "accordion-list",
+        "articleList"
       ]
     }
   ]

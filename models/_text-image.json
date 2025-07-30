@@ -1,0 +1,49 @@
+{
+  "id": "text-image",
+  "fields": [
+    {
+      "component": "reference",
+      "name": "image",
+      "label": "Immagine",
+      "multi": false
+    },
+    {
+      "component": "text",
+      "name": "imageAlt",
+      "label": "Testo Alternativo Immagine",
+      "value": ""
+    },
+    {
+      "component": "richtext",
+      "name": "text",
+      "label": "Testo",
+      "valueType": "string",
+      "rte": {
+        "allow": "all"
+      }
+    },
+    {
+      "component": "select",
+      "name": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "name": "Immagine a sinistra, testo a destra",
+          "value": "image-left"
+        },
+        {
+          "name": "Testo a sinistra, immagine a destra",
+          "value": "text-left"
+        }
+      ],
+      "defaultValue": "image-left"
+    },
+    {
+      "component": "text",
+      "name": "textBackgroundColor",
+      "label": "Colore Sfondo Testo",
+      "description": "Inserisci un valore CSS (es. #f0f0f0 o rgb(240,240,240))",
+      "value": ""
+    }
+  ]
+}

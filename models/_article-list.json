@@ -1,0 +1,23 @@
+{
+  "id": "article-list",
+  "fields": [
+    {
+      "component": "text",
+      "name": "background",
+      "label": "Background Color",
+      "placeholder": "#e6f4ff"
+    },
+    {
+      "component": "text",
+      "name": "graphqlEndpoint",
+      "label": "GraphQL Endpoint",
+      "value": "/content/cq:graphql/unipol/endpoint.json"
+    },
+    {
+      "component": "text",
+      "name": "graphqlQuery",
+      "label": "GraphQL Query",
+      "value": "query { articleList { items { title description image { _path } } } }"
+    }
+  ]
+}
