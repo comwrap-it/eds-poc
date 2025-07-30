@@ -16,11 +16,11 @@
       "value": ""
     },
     {
-      "component": "richtext",
-      "name": "text",
-      "value": "",
-      "label": "Text",
-      "valueType": "string"
+      "component": "collection",
+      "name": "sliderBoxes",
+      "label": "Slider Boxes",
+      "model": "slider-box",
+      "multi": true
     }
   ]
 }
