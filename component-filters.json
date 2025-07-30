@@ -35,6 +35,12 @@
     ]
   },
   {
+    "id": "slider",
+    "components": [
+      "slider-box"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
