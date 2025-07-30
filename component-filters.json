@@ -19,7 +19,8 @@
       "text-image",
       "tpd-rich-text",
       "accordion-list",
-      "articleList"
+      "articleList",
+      "carousel"
     ]
   },
   {
@@ -32,12 +33,6 @@
     "id": "carousel",
     "components": [
       "slider"
-    ]
-  },
-  {
-    "id": "slider",
-    "components": [
-      "slider-box"
     ]
   },
   {

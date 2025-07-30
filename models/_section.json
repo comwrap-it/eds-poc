@@ -54,7 +54,8 @@
         "text-image",
         "tpd-rich-text",
         "accordion-list",
-        "articleList"
+        "articleList",
+        "carousel"
       ]
     }
   ]

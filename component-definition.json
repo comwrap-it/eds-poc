@@ -174,21 +174,6 @@
           }
         },
         {
-          "title": "Slider Box",
-          "id": "slider-box",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Slider Box",
-                  "model": "slider-box"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Columns",
           "id": "columns",
           "plugins": {

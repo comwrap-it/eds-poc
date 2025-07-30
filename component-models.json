@@ -235,30 +235,11 @@
         "value": ""
       },
       {
-        "component": "collection",
-        "name": "sliderBoxes",
-        "label": "Slider Boxes",
-        "model": "slider-box",
-        "multi": true
-      }
-    ]
-  },
-  {
-    "id": "slider-box",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "title",
-        "label": "Title",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "description",
-        "label": "Description",
-        "value": ""
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
       }
     ]
   },
