@@ -176,17 +176,6 @@
     ]
   },
   {
-    "id": "article-list",
-    "fields": [
-      {
-        "component": "text",
-        "name": "background",
-        "label": "Background Color",
-        "placeholder": "#e6f4ff"
-      }
-    ]
-  },
-  {
     "id": "card",
     "fields": [
       {
@@ -463,6 +452,17 @@
             "value": "#FFA500"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "article-list",
+    "fields": [
+      {
+        "component": "text",
+        "name": "background",
+        "label": "Background Color",
+        "placeholder": "#e6f4ff"
       }
     ]
   }
