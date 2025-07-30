@@ -12,14 +12,10 @@
       "image",
       "button",
       "title",
+      "hero",
       "cards",
       "columns",
-      "fragment",
-      "hero",
-      "section-title",
-      "text-image",
-      "tpd-rich-text",
-      "article-list"
+      "fragment"
     ]
   },
   {

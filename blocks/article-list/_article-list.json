@@ -2,7 +2,18 @@
   "definitions": [{
     "id": "article-list",
     "title": "Article List",
-    "icon": "list"
+    "icon": "list",
+    "plugins": {
+      "xwalk": {
+        "page": {
+          "resourceType": "core/franklin/components/block/v1/block",
+          "template": {
+            "name": "Article List",
+            "model": "article-list"
+          }
+        }
+      }
+    }
   }],
   "models": [{
     "id": "article-list",
@@ -11,6 +22,16 @@
       "name": "background",
       "label": "Background Color",
       "placeholder": "#e6f4ff"
+    }, {
+      "component": "text",
+      "name": "graphqlEndpoint",
+      "label": "GraphQL Endpoint",
+      "value": "/content/cq:graphql/unipol/endpoint.json"
+    }, {
+      "component": "text",
+      "name": "graphqlQuery",
+      "label": "GraphQL Query",
+      "value": "query { articleList { items { title description image { _path } } } }"
     }]
   }],
   "filters": []
