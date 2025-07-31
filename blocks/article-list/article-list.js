@@ -48,16 +48,21 @@ function buildCard(item) {
  */
 async function fetchArticlesFromAEM() {
   try {
-    // Usa la configurazione centralizzata come accordion-list
     const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/articleCardList');
+
+    if (!graphqlEndpoint) {
+      return null;
+    }
 
     const headers = {
       'Content-Type': 'application/json',
     };
 
-    // Aggiungi autenticazione solo in sviluppo locale
     if (DEV_CONFIG.isLocalDevelopment) {
-      headers.Authorization = getAuthHeader();
+      const authHeader = getAuthHeader();
+      if (authHeader) {
+        headers.Authorization = authHeader;
+      }
     }
 
     const response = await fetch(graphqlEndpoint, {
@@ -66,13 +71,17 @@ async function fetchArticlesFromAEM() {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      return null;
     }
 
     const data = await response.json();
+    
+    if (!data || !data.data) {
+      return null;
+    }
+
     return data.data?.articleCardList?.items || [];
   } catch (error) {
-    console.error('Errore nel caricamento degli articoli:', error);
     return null;
   }
 }
@@ -112,14 +121,22 @@ export default async function decorate(block) {
   try {
     articles = await fetchArticlesFromAEM();
   } catch (error) {
-    console.error('Errore nel caricamento degli articoli:', error);
+    articles = null;
   }
 
   if (articles && articles.length > 0) {
     /* Usa dati reali da AEM */
     articles.slice(0, 3).forEach((item) => {
-      const card = buildCard(item);
-      cardsContainer.appendChild(card);
+      if (item) {
+        try {
+          const card = buildCard(item);
+          if (card) {
+            cardsContainer.appendChild(card);
+          }
+        } catch (error) {
+          // Ignora errori nella creazione delle singole card
+        }
+      }
     });
 
     console.log('✅ Dati caricati da AEM');
@@ -153,8 +170,14 @@ export default async function decorate(block) {
     ];
 
     sampleArticles.forEach((item) => {
-      const card = buildCard(item);
-      cardsContainer.appendChild(card);
+      try {
+        const card = buildCard(item);
+        if (card) {
+          cardsContainer.appendChild(card);
+        }
+      } catch (error) {
+        // Ignora errori nella creazione delle card di fallback
+      }
     });
 
     console.log('ℹ️ Usando dati di esempio (sviluppo locale)');
