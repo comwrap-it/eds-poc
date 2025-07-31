@@ -12,7 +12,6 @@ export default function decorate(block) {
   slides.forEach((slide) => {
     const slideChildren = [...slide.children];
 
-    // Estrai contenuti con fallback sicuri
     const primaryTitleText = slideChildren[1]?.textContent.trim() || '';
     const primaryTitleTag = slideChildren[2]?.textContent.trim().toLowerCase() || 'h2';
     const primaryColor = slideChildren[3]?.textContent.trim() || '';
@@ -25,12 +24,10 @@ export default function decorate(block) {
     const paragraphColor = slideChildren[8]?.textContent.trim() || '';
     const boxBgColor = slideChildren[9]?.textContent.trim() || '';
 
-    // Verifica la presenza di contenuti reali
     const hasPrimaryTitle = !!primaryTitleText;
     const hasSecondaryTitle = !!secondaryTitleText;
     const hasParagraph = paragraphNode && paragraphNode.querySelector('p');
 
-    // Crea lo slider box
     const sliderBox = document.createElement('div');
     sliderBox.className = 'slider-box';
 
@@ -64,15 +61,12 @@ export default function decorate(block) {
       sliderBox.appendChild(paragraphNode);
     }
 
-    // Nascondi il box se mancano tutti i contenuti
     if (!hasPrimaryTitle && !hasSecondaryTitle && !hasParagraph) {
       sliderBox.style.display = 'none';
     }
 
-    // Inserisci lo sliderBox nel DOM
     slide.insertBefore(sliderBox, slide.children[1]);
 
-    // Rimuovi gli elementi di configurazione
     [1, 2, 3, 4, 5, 6, 8, 9].forEach((index) => {
       if (slideChildren[index]) slideChildren[index].remove();
     });
@@ -173,5 +167,19 @@ export default function decorate(block) {
 
     block.appendChild(dotsWrapper);
     startAutoSlide();
+  }
+
+  const wrapper = block.closest('.carousel-wrapper');
+  if (wrapper) {
+    wrapper.addEventListener('click', (e) => {
+      if (e.target.closest('a, button')) return;
+
+      const activeSlide = slides[currentSlide];
+      const cta = activeSlide.querySelector('.button-container a.button');
+
+      if (cta) {
+        cta.click();
+      }
+    });
   }
 }
