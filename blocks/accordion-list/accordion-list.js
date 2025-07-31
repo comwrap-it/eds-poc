@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
 
 export default async function decorate(block) {
   const config = {};
@@ -10,50 +11,26 @@ export default async function decorate(block) {
     }
   });
 
-  const rootPath = config.rootpath || '/content/dam/faq';
   const backgroundColor = config.backgroundcolor || '#ffffff';
   const openBackgroundColor = config.openbackgroundcolor || '#f0f8ff';
   const closedBackgroundColor = config.closedbackgroundcolor || '#f9f9f9';
 
   try {
-    const graphqlEndpoint = '/content/graphql/faq/endpoint.json';
-    const query = `
-      query getFAQList($rootPath: String!) {
-        faqItemList(
-          filter: {
-            _path: {
-              _expressions: [
-                {
-                  value: $rootPath
-                  _operator: STARTS_WITH
-                }
-              ]
-            }
-          }
-        ) {
-          items {
-            _path
-            title
-            description {
-              html
-              plaintext
-            }
-          }
-        }
-      }
-    `;
+    // Usa la configurazione centralizzata
+    const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/allAccordionItems');
+    
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    
+    // Aggiungi autenticazione solo in sviluppo locale
+    if (DEV_CONFIG.isLocalDevelopment) {
+      headers['Authorization'] = getAuthHeader();
+    }
 
     const response = await fetch(graphqlEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: {
-          rootPath
-        }
-      })
+      method: 'GET',
+      headers: headers
     });
 
     if (!response.ok) {
@@ -61,7 +38,7 @@ export default async function decorate(block) {
     }
 
     const data = await response.json();
-    const faqItems = data.data?.faqItemList?.items || [];
+    const faqItems = data.data?.accordionItemList?.items || [];
 
     block.innerHTML = '';
 
@@ -77,12 +54,12 @@ export default async function decorate(block) {
 
       const details = document.createElement('details');
       const summary = document.createElement('summary');
-      summary.textContent = item.title;
+      summary.textContent = item.txTitle;
       summary.classList.add('accordion-summary');
       
       const content = document.createElement('div');
       content.classList.add('accordion-content');
-      content.innerHTML = item.description.html;
+      content.innerHTML = item.txDescription.html;
 
       details.addEventListener('toggle', () => {
         if (details.open) {
@@ -106,7 +83,7 @@ export default async function decorate(block) {
 
   } catch (error) {
     console.error('Errore nel caricamento delle FAQ:', error);
-    block.innerHTML = '<p>Errore nel caricamento delle FAQ. Riprova più tardi.</p>';
+    block.innerHTML = '';
   }
 
   return block;
