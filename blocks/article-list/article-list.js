@@ -97,21 +97,21 @@ export default async function decorate(block) {
 
   /* inizializza UI vuota per prevenire CLS */
   block.innerHTML = `
-    <div class="plus-wrapper" style="background:${sectionBg}">
+    <div class="plus-wrapper" style="background:${sectionBg}" data-aue-prop="background" data-aue-type="text">
       <div class="plus-head">
         <div class="title">
           <a data-disabled="false" aria-label="Unipol Plus" href="/plus">
             <div class="plus-image-container">
-              <img class="plus-logo" src="${logoUrl}" alt="${logoAlt}" title="${logoAlt}" loading="lazy">
+              <img class="plus-logo" src="${logoUrl}" alt="${logoAlt}" title="${logoAlt}" loading="lazy" data-aue-prop="logoUrl" data-aue-type="text">
             </div>
           </a>
           <div class="text">
-            <div class="plus-tagline">${tagline}</div>
+            <div class="plus-tagline" data-aue-prop="tagline" data-aue-type="text">${tagline}</div>
           </div>
         </div>
       </div>
       <div class="plus-cards"></div>
-      <div class="plus-footer"><a class="plus-more button primary-cta" href="#">${moreButtonText}</a></div>
+      <div class="plus-footer"><a class="plus-more button primary-cta" href="#" data-aue-prop="moreButtonText" data-aue-type="text">${moreButtonText}</a></div>
     </div>`;
 
   const cardsContainer = block.querySelector('.plus-cards');
