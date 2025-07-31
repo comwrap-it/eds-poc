@@ -237,7 +237,7 @@
       {
         "component": "text",
         "name": "Title-1",
-        "label": "Primary Title"
+        "label": "Primary Title Text"
       },
       {
         "component": "select",
@@ -320,7 +320,7 @@
       {
         "component": "text",
         "name": "Title-2",
-        "label": "Secondary Title"
+        "label": "Secondary Title Text"
       },
       {
         "component": "select",
@@ -404,7 +404,7 @@
         "component": "richtext",
         "name": "text",
         "value": "",
-        "label": "Text",
+        "label": "Paragraph Text",
         "valueType": "string"
       },
       {
@@ -456,8 +456,8 @@
       },
       {
         "component": "select",
-        "name": "Background-colorBox",
-        "label": "Background-color Box",
+        "name": "BoxBackground-color",
+        "label": "Box Background-color",
         "options": [
           {
             "name": "Black",
