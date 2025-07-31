@@ -10,7 +10,12 @@
   min-height: 334px;
 }
 
-.carousel h1 {
+.carousel h1,
+.carousel h2,
+.carousel h3,
+.carousel h4,
+.carousel h5,
+.carousel h6 {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;

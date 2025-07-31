@@ -9,6 +9,76 @@ export default function decorate(block) {
   let autoSlideTimer;
   const autoPlayInterval = 5000;
 
+  slides.forEach((slide) => {
+    const slideChildren = [...slide.children];
+
+    // Titolo primario
+    const primaryTitleText = slideChildren[1]?.textContent.trim();
+    const primaryTitleTag = slideChildren[2]?.textContent.trim().toLowerCase();
+    const primaryColor = slideChildren[3]?.textContent.trim();
+
+    // Titolo secondario
+    const secondaryTitleText = slideChildren[4]?.textContent.trim();
+    const secondaryTitleTag = slideChildren[5]?.textContent.trim().toLowerCase();
+    const secondaryColor = slideChildren[6]?.textContent.trim();
+
+    // Testo paragrafo (già rich text probabilmente con <p> dentro)
+    const paragraphNode = slideChildren[7]; // <div> che contiene il paragrafo e il bottone
+    const paragraphColor = slideChildren[8]?.textContent.trim();
+    const boxBgColor = slideChildren[9]?.textContent.trim();
+
+
+    // CREA ELEMENTI
+    const newPrimary = document.createElement(primaryTitleTag);
+    newPrimary.textContent = primaryTitleText;
+    if (primaryColor) newPrimary.style.color = primaryColor;
+
+    const newSecondary = document.createElement(secondaryTitleTag);
+    newSecondary.textContent = secondaryTitleText;
+    if (secondaryColor) newSecondary.style.color = secondaryColor;
+
+    if (paragraphNode && paragraphNode.querySelectorAll('p').length) {
+      const textParagraph = paragraphNode.querySelector('p');
+      if (textParagraph && paragraphColor) {
+        textParagraph.style.color = paragraphColor;
+      }
+    }
+
+    const newTitleWrapper1 = document.createElement('div');
+    newTitleWrapper1.appendChild(newPrimary);
+    const newTitleWrapper2 = document.createElement('div');
+    newTitleWrapper2.appendChild(newSecondary);
+
+    // RIMUOVI NODI ORIGINALI (valori testo, tag, palette)
+    slideChildren[1]?.remove(); // titolo 1
+    slideChildren[2]?.remove(); // tag 1
+    slideChildren[3]?.remove(); // palette 1
+    slideChildren[4]?.remove(); // titolo 2
+    slideChildren[5]?.remove(); // tag 2
+    slideChildren[6]?.remove(); // palette 2
+    slideChildren[8]?.remove(); // palette 3
+
+    // CREA il contenitore slider-box
+    const sliderBox = document.createElement('div');
+    sliderBox.className = 'slider-box';
+    if (boxBgColor) {
+      sliderBox.style.backgroundColor = boxBgColor;
+    }
+
+    // Sposta dentro sliderBox i tre elementi: titoli e paragrafo
+    sliderBox.appendChild(newTitleWrapper1);
+    sliderBox.appendChild(newTitleWrapper2);
+
+    if (paragraphNode) {
+      sliderBox.appendChild(paragraphNode);
+    }
+
+    // Inserisci sliderBox nel DOM (dopo l'immagine)
+    slide.insertBefore(sliderBox, slide.children[1]);
+
+  });
+
+
   //ACCESSIBILITÀ
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Carosello');
@@ -32,11 +102,6 @@ export default function decorate(block) {
       slide.setAttribute('role', 'group');
       slide.setAttribute('aria-label', `Slide ${index + 1} di ${slides.length}`);
       slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
-
-      const contentBox = slide.querySelectorAll('div')[1];
-      if (contentBox) {
-        contentBox.classList.add('slider-box');
-      }
     });
 
     if (dotsWrapper) {
