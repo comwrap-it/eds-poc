@@ -210,6 +210,26 @@ button.secondary {
   color: var(--text-color);
 }
 
+/* Primary CTA Button */
+a.button.primary-cta,
+button.primary-cta {
+  border-radius: 0;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  border: 0;
+  border-bottom: 6px solid #c4151c;
+  transition: color .2s ease;
+}
+
+a.button.primary-cta:hover,
+a.button.primary-cta:focus,
+button.primary-cta:hover,
+button.primary-cta:focus {
+  color: #c4151c;
+  background-color: white;
+}
+
 main img {
   max-width: 100%;
   width: auto;

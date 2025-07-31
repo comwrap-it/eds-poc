@@ -2,8 +2,9 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
   readBlockConfig,
-  createOptimizedPicture,        /* helper EDS per immagini responsive */
+  createOptimizedPicture, /* helper EDS per immagini responsive */
 } from '../../scripts/aem.js';
+import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
 
 function buildCard(item) {
   const { title, _path, image } = item;
@@ -16,12 +17,15 @@ function buildCard(item) {
   link.setAttribute('aria-label', title);
   link.className = 'plus-card-link';
 
+  const imagePath = image?._path || image?._publishUrl || image?._authorUrl;
+
   /* immagine ottimizzata EDS (lazy + srcset) */
   const picture = createOptimizedPicture(
-    image?._publishUrl || image?._authorUrl,
+    imagePath,
     title,
     false,
     [{ width: 400 }, { width: 768 }, { width: 1200 }],
+    DEV_CONFIG,
   );
   picture.className = 'plus-card-picture';
 
@@ -39,82 +43,77 @@ function buildCard(item) {
 }
 
 /**
- * Fetches GraphQL data from AEM using XWalk server-side integration
- * This bypasses CORS issues by having AEM serve the data directly
+ * Fetches GraphQL data from AEM using centralized configuration
+ * Uses the same approach as accordion-list component
  */
-async function fetchArticlesFromAEM(endpoint, query) {
+async function fetchArticlesFromAEM() {
   try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic YWRtaW46YWRtaW4=' // admin:admin in base64
-      },
-      body: JSON.stringify({
-        query: query,
-        operationName: 'allArticles'
-      })
-    });
-     
-    if (!response.ok) {
-      throw new Error(`GraphQL request failed: ${response.status}`);
+    // Usa la configurazione centralizzata come accordion-list
+    const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/articleCardList');
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    // Aggiungi autenticazione solo in sviluppo locale
+    if (DEV_CONFIG.isLocalDevelopment) {
+      headers.Authorization = getAuthHeader();
     }
-    
+
+    const response = await fetch(graphqlEndpoint, {
+      method: 'GET',
+      headers: headers
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
     return data.data?.articleCardList?.items || [];
   } catch (error) {
-    console.warn('GraphQL fetch failed (CORS or network error):', error.message);
+    console.error('Errore nel caricamento degli articoli:', error);
     return null;
   }
 }
 
 export default async function decorate(block) {
-  /* Config letta da righe del blocco (supporta XWalk) */
+  /* Config letta da righe del blocco */
   const cfg = readBlockConfig(block);
   const sectionBg = cfg.background || '#e6f4ff';
-  const graphqlEndpoint = cfg.graphqlEndpoint || '/content/cq:graphql/unipol/endpoint.json';
-  const graphqlQuery = cfg.graphqlQuery || `query allArticles {
-    articleCardList {
-      items {
-        _path
-        title
-        image {
-          ... on ImageRef {
-            _path
-            _publishUrl
-            _authorUrl
-            width
-            height
-          }
-        }
-      }
-    }
-  }`;
+  const logoUrl = cfg.logoUrl || 'https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh';
+  const logoAlt = cfg.logoAlt || 'Logo Plus';
+  const tagline = cfg.tagline || 'più informati, più sereni';
+  const moreButtonText = cfg.moreButtonText || 'Leggi di più';
 
   /* inizializza UI vuota per prevenire CLS */
   block.innerHTML = `
     <div class="plus-wrapper" style="background:${sectionBg}">
-      <header class="plus-head">
-        <img class="plus-logo" src="https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh" alt="Plus+">
-        <p class="plus-tagline">più informati, più sereni</p>
-      </header>
+      <div class="plus-head">
+        <div class="title">
+          <a data-disabled="false" aria-label="Unipol Plus" href="/plus">
+            <div class="plus-image-container">
+              <img class="plus-logo" src="${logoUrl}" alt="${logoAlt}" title="${logoAlt}" loading="lazy">
+            </div>
+          </a>
+          <div class="text">
+            <div class="plus-tagline">${tagline}</div>
+          </div>
+        </div>
+      </div>
       <div class="plus-cards"></div>
-      <div class="plus-footer"><a class="plus-more" href="#">Leggi di più</a></div>
+      <div class="plus-footer"><a class="plus-more button primary-cta" href="#">${moreButtonText}</a></div>
     </div>`;
 
   const cardsContainer = block.querySelector('.plus-cards');
 
-  /* Prova prima a ottenere dati reali tramite XWalk */
+  /* Prova a ottenere dati reali da AEM usando la configurazione centralizzata */
   let articles = null;
-  
-  // Try to fetch from AEM GraphQL endpoint (works with XWalk or direct AEM access)
-  // For localhost development, we'll try the configured endpoint
-  const fullEndpoint = graphqlEndpoint.startsWith('http') 
-    ? graphqlEndpoint 
-    : `http://localhost:4502${graphqlEndpoint}`;
-  
-  articles = await fetchArticlesFromAEM(fullEndpoint, graphqlQuery);
-  console.log('🔍 Tentativo di connessione a:', fullEndpoint);
+  try {
+    articles = await fetchArticlesFromAEM();
+  } catch (error) {
+    console.error('Errore nel caricamento degli articoli:', error);
+  }
 
   if (articles && articles.length > 0) {
     /* Usa dati reali da AEM */
@@ -122,8 +121,8 @@ export default async function decorate(block) {
       const card = buildCard(item);
       cardsContainer.appendChild(card);
     });
-    
-    console.log('✅ Dati caricati da AEM tramite XWalk');
+
+    console.log('✅ Dati caricati da AEM');
   } else {
     /* Fallback con dati di esempio per sviluppo locale */
     const sampleArticles = [
@@ -141,7 +140,7 @@ export default async function decorate(block) {
         image: {
           _publishUrl: 'https://via.placeholder.com/400x300/cc6600/ffffff?text=Article+2',
           _authorUrl: 'https://via.placeholder.com/400x300/cc6600/ffffff?text=Article+2'
-        }
+        },
       },
       {
         _path: '/content/articles/article3',
@@ -149,15 +148,15 @@ export default async function decorate(block) {
         image: {
           _publishUrl: 'https://via.placeholder.com/400x300/009900/ffffff?text=Article+3',
           _authorUrl: 'https://via.placeholder.com/400x300/009900/ffffff?text=Article+3'
-        }
-      }
+        },
+      },
     ];
-    
+
     sampleArticles.forEach((item) => {
       const card = buildCard(item);
       cardsContainer.appendChild(card);
     });
-    
+
     console.log('ℹ️ Usando dati di esempio (sviluppo locale)');
   }
 
