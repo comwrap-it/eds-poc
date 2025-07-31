@@ -100,7 +100,6 @@
         {
           "id": "article-list",
           "title": "Article List",
-          "icon": "list",
           "plugins": {
             "xwalk": {
               "page": {
