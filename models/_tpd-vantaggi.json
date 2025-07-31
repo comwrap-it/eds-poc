@@ -1,0 +1,39 @@
+{
+  "id": "tpd-vantaggi",
+  "fields": [
+    {
+      "component": "text",
+      "name": "title",
+      "label": "Titolo Sezione",
+      "value": "Vantaggi"
+    },
+    {
+      "component": "text",
+      "name": "background",
+      "label": "Colore Sfondo",
+      "description": "Inserisci un valore CSS (es. #f8f9fa)",
+      "value": "#f8f9fa"
+    },
+    {
+      "component": "text",
+      "name": "graphqlEndpoint",
+      "label": "GraphQL Endpoint",
+      "description": "URL dell'endpoint GraphQL per recuperare i vantaggi",
+      "value": "/content/cq:graphql/unipol/endpoint.json"
+    },
+    {
+      "component": "richtext",
+      "name": "graphqlQuery",
+      "label": "GraphQL Query",
+      "description": "Query GraphQL per recuperare i dati dei vantaggi",
+      "value": "query allVantaggi {\n  vantaggiList {\n    items {\n      _path\n      title\n      description\n      icon {\n        _publishUrl\n        _authorUrl\n      }\n      linkUrl\n      linkText\n    }\n  }\n}"
+    },
+    {
+      "component": "number",
+      "name": "maxItems",
+      "label": "Numero Massimo Elementi",
+      "description": "Numero massimo di vantaggi da mostrare (max 6)",
+      "value": 6
+    }
+  ]
+}

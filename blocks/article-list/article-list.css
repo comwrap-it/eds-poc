@@ -1,0 +1,110 @@
+/* Palette */
+:root {
+  --plus-light-blue: #e6f4ff;
+  --plus-dark-blue: #005aa7;
+  --plus-link: #00437a;
+  --plus-neutral: #1d1d1b;
+  --plus-radius: 8px;
+  --plus-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+/* wrapper generico del blocco */
+.plus-wrapper {
+  padding: 48px 24px;
+  text-align: center;
+  background: var(--plus-light-blue);
+  overflow: hidden;
+}
+
+/* header */
+.plus-head {
+  margin-bottom: 40px;
+}
+.plus-logo {
+  width: 110px;
+  height: auto;
+}
+.plus-tagline {
+  margin: 8px 0 0;
+  color: var(--plus-dark-blue);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* grid delle card */
+.plus-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+  gap: 20px;
+  max-width: 1,100px;
+  margin: 0 auto 32px;
+}
+
+/* singola card */
+.plus-card {
+  border-radius: var(--plus-radius);
+  background: #fff;
+  box-shadow: var(--plus-shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.plus-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+}
+.plus-card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+.plus-card-picture img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--plus-radius) var(--plus-radius) 0 0;
+  object-fit: cover;
+}
+.plus-card-title {
+  flex: 1 0 auto;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  padding: 16px 20px 12px;
+  color: var(--plus-neutral);
+}
+.plus-card-cta {
+  display: block;
+  font-size: .875rem;
+  font-weight: 600;
+  padding: 0 20px 20px;
+  color: var(--plus-link);
+}
+.plus-card-cta::after {
+  content: ' ↗';
+  font-weight: 400;
+}
+
+/* footer */
+.plus-footer {
+  display: flex;
+  justify-content: center;
+}
+.plus-more {
+  background: var(--plus-dark-blue);
+  color: #fff;
+  padding: 12px 32px;
+  border-radius: var(--plus-radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .2s ease;
+}
+.plus-more:hover,
+.plus-more:focus {
+  background: #00437a;
+}
+
+/* responsive fine-tuning */
+@media (max-width: 640px) {
+  .plus-wrapper { padding: 32px 16px; }
+  .plus-card-title { font-size: .95rem; }
+}

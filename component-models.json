@@ -176,6 +176,29 @@
     ]
   },
   {
+    "id": "article-list",
+    "fields": [
+      {
+        "component": "text",
+        "name": "background",
+        "label": "Background Color",
+        "placeholder": "#e6f4ff"
+      },
+      {
+        "component": "text",
+        "name": "graphqlEndpoint",
+        "label": "GraphQL Endpoint",
+        "value": "/content/cq:graphql/unipol/endpoint.json"
+      },
+      {
+        "component": "text",
+        "name": "graphqlQuery",
+        "label": "GraphQL Query",
+        "value": "query { articleList { items { title description image { _path } } } }"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -191,6 +214,292 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "slider",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "Title-1",
+        "label": "Primary Title Text"
+      },
+      {
+        "component": "select",
+        "name": "TitleType-1",
+        "label": "Primary-Title Type",
+        "options": [
+          {
+            "name": "h1",
+            "value": "h1"
+          },
+          {
+            "name": "h2",
+            "value": "h2"
+          },
+          {
+            "name": "h3",
+            "value": "h3"
+          },
+          {
+            "name": "h4",
+            "value": "h4"
+          },
+          {
+            "name": "h5",
+            "value": "h5"
+          },
+          {
+            "name": "h6",
+            "value": "h6"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "ColorPalette-1",
+        "label": "Primary-Title Color Palette",
+        "options": [
+          {
+            "name": "Black",
+            "value": "#000000"
+          },
+          {
+            "name": "White",
+            "value": "#FFFFFF"
+          },
+          {
+            "name": "Blue",
+            "value": "#4169E1"
+          },
+          {
+            "name": "Red",
+            "value": "#CE2029"
+          },
+          {
+            "name": "Green",
+            "value": "#228B22"
+          },
+          {
+            "name": "Gray",
+            "value": "#708090"
+          },
+          {
+            "name": "Brown",
+            "value": "#8B4513"
+          },
+          {
+            "name": "Sky-Blue",
+            "value": "#87CEEB"
+          },
+          {
+            "name": "Light-Green",
+            "value": "#90EE90"
+          },
+          {
+            "name": "Orange",
+            "value": "#FFA500"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "Title-2",
+        "label": "Secondary Title Text"
+      },
+      {
+        "component": "select",
+        "name": "TitleType-2",
+        "label": "Secondary-Title Type",
+        "options": [
+          {
+            "name": "h1",
+            "value": "h1"
+          },
+          {
+            "name": "h2",
+            "value": "h2"
+          },
+          {
+            "name": "h3",
+            "value": "h3"
+          },
+          {
+            "name": "h4",
+            "value": "h4"
+          },
+          {
+            "name": "h5",
+            "value": "h5"
+          },
+          {
+            "name": "h6",
+            "value": "h6"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "ColorPalette-2",
+        "label": "Secondary-Title Color Palette",
+        "options": [
+          {
+            "name": "Black",
+            "value": "#000000"
+          },
+          {
+            "name": "White",
+            "value": "#FFFFFF"
+          },
+          {
+            "name": "Blue",
+            "value": "#4169E1"
+          },
+          {
+            "name": "Red",
+            "value": "#CE2029"
+          },
+          {
+            "name": "Green",
+            "value": "#228B22"
+          },
+          {
+            "name": "Gray",
+            "value": "#708090"
+          },
+          {
+            "name": "Brown",
+            "value": "#8B4513"
+          },
+          {
+            "name": "Sky-Blue",
+            "value": "#87CEEB"
+          },
+          {
+            "name": "Light-Green",
+            "value": "#90EE90"
+          },
+          {
+            "name": "Orange",
+            "value": "#FFA500"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Paragraph Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "ColorPalette-3",
+        "label": "Paragraph Color Palette",
+        "options": [
+          {
+            "name": "Black",
+            "value": "#000000"
+          },
+          {
+            "name": "White",
+            "value": "#FFFFFF"
+          },
+          {
+            "name": "Blue",
+            "value": "#4169E1"
+          },
+          {
+            "name": "Red",
+            "value": "#CE2029"
+          },
+          {
+            "name": "Green",
+            "value": "#228B22"
+          },
+          {
+            "name": "Gray",
+            "value": "#708090"
+          },
+          {
+            "name": "Brown",
+            "value": "#8B4513"
+          },
+          {
+            "name": "Sky-Blue",
+            "value": "#87CEEB"
+          },
+          {
+            "name": "Light-Green",
+            "value": "#90EE90"
+          },
+          {
+            "name": "Orange",
+            "value": "#FFA500"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "BoxBackground-color",
+        "label": "Box Background-color",
+        "options": [
+          {
+            "name": "Black",
+            "value": "#000000"
+          },
+          {
+            "name": "White",
+            "value": "#FFFFFF"
+          },
+          {
+            "name": "Blue",
+            "value": "#4169E1"
+          },
+          {
+            "name": "Red",
+            "value": "#CE2029"
+          },
+          {
+            "name": "Green",
+            "value": "#228B22"
+          },
+          {
+            "name": "Gray",
+            "value": "#708090"
+          },
+          {
+            "name": "Brown",
+            "value": "#8B4513"
+          },
+          {
+            "name": "Sky-Blue",
+            "value": "#87CEEB"
+          },
+          {
+            "name": "Light-Green",
+            "value": "#90EE90"
+          },
+          {
+            "name": "Orange",
+            "value": "#FFA500"
+          }
+        ]
       }
     ]
   },
@@ -250,6 +559,73 @@
     ]
   },
   {
+    "id": "section-title",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "select",
+        "name": "titleType",
+        "label": "Title Type",
+        "options": [
+          {
+            "name": "h1",
+            "value": "h1"
+          },
+          {
+            "name": "h2",
+            "value": "h2"
+          },
+          {
+            "name": "h3",
+            "value": "h3"
+          },
+          {
+            "name": "h4",
+            "value": "h4"
+          },
+          {
+            "name": "h5",
+            "value": "h5"
+          },
+          {
+            "name": "h6",
+            "value": "h6"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "titleAlignment",
+        "label": "Title Alignment",
+        "options": [
+          {
+            "name": "left",
+            "value": "left"
+          },
+          {
+            "name": "right",
+            "value": "right"
+          },
+          {
+            "name": "center",
+            "value": "center"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "textColor",
+        "label": "Text Color",
+        "description": "Enter CSS value (#f0f0f0 or rgb(240, 240, 240)...)",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "text-image",
     "fields": [
       {
@@ -295,6 +671,135 @@
         "label": "Colore Sfondo Testo",
         "description": "Inserisci un valore CSS (es. #f0f0f0 o rgb(240,240,240))",
         "value": ""
+      }
+    ]
+  },
+  {
+    "id": "tpd-rich-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "FontSize",
+        "label": "Font Size",
+        "options": [
+          {
+            "name": "Font-size-xl",
+            "value": "Font-size-xl"
+          },
+          {
+            "name": "Font-size-l",
+            "value": "Font-size-l"
+          },
+          {
+            "name": "Font-size-m",
+            "value": "Font-size-m"
+          },
+          {
+            "name": "Font-size-s",
+            "value": "Font-size-s"
+          },
+          {
+            "name": "Font-size-xs",
+            "value": "Font-size-xs"
+          },
+          {
+            "name": "Font-size-xxs",
+            "value": "Font-size-xxs"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "ColorPalette",
+        "label": "Color Palette",
+        "options": [
+          {
+            "name": "Black",
+            "value": "#000000"
+          },
+          {
+            "name": "White",
+            "value": "#FFFFFF"
+          },
+          {
+            "name": "Blue",
+            "value": "#4169E1"
+          },
+          {
+            "name": "Red",
+            "value": "#CE2029"
+          },
+          {
+            "name": "Green",
+            "value": "#228B22"
+          },
+          {
+            "name": "Gray",
+            "value": "#708090"
+          },
+          {
+            "name": "Brown",
+            "value": "#8B4513"
+          },
+          {
+            "name": "Sky-Blue",
+            "value": "#87CEEB"
+          },
+          {
+            "name": "Light-Green",
+            "value": "#90EE90"
+          },
+          {
+            "name": "Orange",
+            "value": "#FFA500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tpd-vantaggi",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo Sezione",
+        "value": "Vantaggi"
+      },
+      {
+        "component": "text",
+        "name": "background",
+        "label": "Colore Sfondo",
+        "description": "Inserisci un valore CSS (es. #f8f9fa)",
+        "value": "#f8f9fa"
+      },
+      {
+        "component": "text",
+        "name": "graphqlEndpoint",
+        "label": "GraphQL Endpoint",
+        "description": "URL dell'endpoint GraphQL per recuperare i vantaggi",
+        "value": "/content/cq:graphql/unipol/endpoint.json"
+      },
+      {
+        "component": "richtext",
+        "name": "graphqlQuery",
+        "label": "GraphQL Query",
+        "description": "Query GraphQL per recuperare i dati dei vantaggi",
+        "value": "query allVantaggi {\n  vantaggiList {\n    items {\n      _path\n      title\n      description\n      icon {\n        _publishUrl\n        _authorUrl\n      }\n      linkUrl\n      linkText\n    }\n  }\n}"
+      },
+      {
+        "component": "number",
+        "name": "maxItems",
+        "label": "Numero Massimo Elementi",
+        "description": "Numero massimo di vantaggi da mostrare (max 6)",
+        "value": 6
       }
     ]
   }

@@ -1,0 +1,90 @@
+{
+  "id": "tpd-rich-text",
+  "fields": [
+    {
+      "component": "richtext",
+      "name": "text",
+      "value": "",
+      "label": "Text",
+      "valueType": "string"
+    },
+    {
+      "component": "select",
+      "name": "FontSize",
+      "label": "Font Size",
+      "options": [
+        {
+          "name": "Font-size-xl",
+          "value": "Font-size-xl"
+        },
+        {
+          "name": "Font-size-l",
+          "value": "Font-size-l"
+        },
+        {
+          "name": "Font-size-m",
+          "value": "Font-size-m"
+        },
+        {
+          "name": "Font-size-s",
+          "value": "Font-size-s"
+        },
+        {
+          "name": "Font-size-xs",
+          "value": "Font-size-xs"
+        },
+        {
+          "name": "Font-size-xxs",
+          "value": "Font-size-xxs"
+        }
+      ]
+    },
+    {
+      "component": "select",
+      "name": "ColorPalette",
+      "label": "Color Palette",
+      "options": [
+        {
+          "name": "Black",
+          "value": "#000000"
+        },
+        {
+          "name": "White",
+          "value": "#FFFFFF"
+        },
+        {
+          "name": "Blue",
+          "value": "#4169E1"
+        },
+        {
+          "name": "Red",
+          "value": "#CE2029"
+        },
+        {
+          "name": "Green",
+          "value": "#228B22"
+        },
+        {
+          "name": "Gray",
+          "value": "#708090"
+        },
+        {
+          "name": "Brown",
+          "value": "#8B4513"
+        },
+        {
+          "name": "Sky-Blue",
+          "value": "#87CEEB"
+        },
+        {
+          "name": "Light-Green",
+          "value": "#90EE90"
+        },
+        {
+          "name": "Orange",
+          "value": "#FFA500"
+        }
+      ]
+    }
+  ]
+}
