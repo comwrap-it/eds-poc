@@ -1,9 +1,5 @@
-/* eslint-disable no-underscore-dangle */
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import {
-  readBlockConfig,
-  createOptimizedPicture, /* helper EDS per immagini responsive */
-} from '../../scripts/aem.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
 
 function buildCard(item) {
@@ -19,13 +15,12 @@ function buildCard(item) {
 
   const imagePath = image?._path || image?._publishUrl || image?._authorUrl;
 
-  /* immagine ottimizzata EDS (lazy + srcset) */
   const picture = createOptimizedPicture(
     imagePath,
     title,
     false,
     [{ width: 400 }, { width: 768 }, { width: 1200 }],
-    DEV_CONFIG,
+    DEV_CONFIG
   );
   picture.className = 'plus-card-picture';
 
@@ -42,27 +37,33 @@ function buildCard(item) {
   return card;
 }
 
-/**
- * Fetches GraphQL data from AEM using centralized configuration
- * Uses the same approach as accordion-list component
- */
-async function fetchArticlesFromAEM() {
-  try {
-    const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/articleCardList');
-
-    if (!graphqlEndpoint) {
-      return null;
+export default async function decorate(block) {
+  const config = {};
+  block.querySelectorAll(':scope > div').forEach((row) => {
+    if (row.children.length === 2) {
+      const key = row.children[0].textContent.trim().toLowerCase().replace(/\s+/g, '');
+      const value = row.children[1].textContent.trim();
+      config[key] = value;
     }
+  });
 
+  const sectionBg = config.background || '#e6f4ff';
+  const logoUrl = config.logourl || 'https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh';
+  const logoAlt = config.logoalt || 'Logo Plus';
+  const tagline = config.tagline || 'più informati, più sereni';
+  const moreButtonText = config.morebuttontext || 'Leggi di più';
+
+  try {
+    // Usa la configurazione centralizzata
+    const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/articleCardList');
+    
     const headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     };
-
+    
+    // Aggiungi autenticazione solo in sviluppo locale
     if (DEV_CONFIG.isLocalDevelopment) {
-      const authHeader = getAuthHeader();
-      if (authHeader) {
-        headers.Authorization = authHeader;
-      }
+      headers['Authorization'] = getAuthHeader();
     }
 
     const response = await fetch(graphqlEndpoint, {
@@ -71,120 +72,84 @@ async function fetchArticlesFromAEM() {
     });
 
     if (!response.ok) {
-      return null;
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
-    
-    if (!data || !data.data) {
-      return null;
-    }
+    const articles = data.data?.articleCardList?.items || [];
 
-    return data.data?.articleCardList?.items || [];
-  } catch (error) {
-    return null;
-  }
-}
+    block.innerHTML = '';
 
-export default async function decorate(block) {
-  /* Config letta da righe del blocco */
-  const cfg = readBlockConfig(block);
-  const sectionBg = cfg.background || '#e6f4ff';
-  const logoUrl = cfg.logoUrl || 'https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh';
-  const logoAlt = cfg.logoAlt || 'Logo Plus';
-  const tagline = cfg.tagline || 'più informati, più sereni';
-  const moreButtonText = cfg.moreButtonText || 'Leggi di più';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'plus-wrapper';
+    wrapper.style.backgroundColor = sectionBg;
 
-  /* inizializza UI vuota per prevenire CLS */
-  block.innerHTML = `
-    <div class="plus-wrapper" style="background:${sectionBg}" data-aue-prop="background" data-aue-type="text">
-      <div class="plus-head">
-        <div class="title">
-          <a data-disabled="false" aria-label="Unipol Plus" href="/plus">
-            <div class="plus-image-container">
-              <img class="plus-logo" src="${logoUrl}" alt="${logoAlt}" title="${logoAlt}" loading="lazy" data-aue-prop="logoUrl" data-aue-type="text">
-            </div>
-          </a>
-          <div class="text">
-            <div class="plus-tagline" data-aue-prop="tagline" data-aue-type="text">${tagline}</div>
-          </div>
-        </div>
-      </div>
-      <div class="plus-cards"></div>
-      <div class="plus-footer"><a class="plus-more button primary-cta" href="#" data-aue-prop="moreButtonText" data-aue-type="text">${moreButtonText}</a></div>
-    </div>`;
+    const head = document.createElement('div');
+    head.className = 'plus-head';
 
-  const cardsContainer = block.querySelector('.plus-cards');
+    const title = document.createElement('div');
+    title.className = 'title';
 
-  /* Prova a ottenere dati reali da AEM usando la configurazione centralizzata */
-  let articles = null;
-  try {
-    articles = await fetchArticlesFromAEM();
-  } catch (error) {
-    articles = null;
-  }
+    const logoLink = document.createElement('a');
+    logoLink.setAttribute('data-disabled', 'false');
+    logoLink.setAttribute('aria-label', 'Unipol Plus');
+    logoLink.href = '/plus';
 
-  if (articles && articles.length > 0) {
-    /* Usa dati reali da AEM */
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'plus-image-container';
+
+    const logo = document.createElement('img');
+    logo.className = 'plus-logo';
+    logo.src = logoUrl;
+    logo.alt = logoAlt;
+    logo.title = logoAlt;
+    logo.loading = 'lazy';
+
+    const textDiv = document.createElement('div');
+    textDiv.className = 'text';
+
+    const taglineDiv = document.createElement('div');
+    taglineDiv.className = 'plus-tagline';
+    taglineDiv.textContent = tagline;
+
+    const cardsContainer = document.createElement('div');
+    cardsContainer.className = 'plus-cards';
+
+    const footer = document.createElement('div');
+    footer.className = 'plus-footer';
+
+    const moreButton = document.createElement('a');
+    moreButton.className = 'plus-more button primary-cta';
+    moreButton.href = '#';
+    moreButton.textContent = moreButtonText;
+
+    // Costruisci la struttura
+    imageContainer.appendChild(logo);
+    logoLink.appendChild(imageContainer);
+    textDiv.appendChild(taglineDiv);
+    title.appendChild(logoLink);
+    title.appendChild(textDiv);
+    head.appendChild(title);
+    footer.appendChild(moreButton);
+    wrapper.appendChild(head);
+    wrapper.appendChild(cardsContainer);
+    wrapper.appendChild(footer);
+    block.appendChild(wrapper);
+
+    // Aggiungi le card degli articoli
     articles.slice(0, 3).forEach((item) => {
-      if (item) {
-        try {
-          const card = buildCard(item);
-          if (card) {
-            cardsContainer.appendChild(card);
-          }
-        } catch (error) {
-          // Ignora errori nella creazione delle singole card
-        }
-      }
+      const card = buildCard(item);
+      cardsContainer.appendChild(card);
     });
 
-    console.log('✅ Dati caricati da AEM');
-  } else {
-    /* Fallback con dati di esempio per sviluppo locale */
-    const sampleArticles = [
-      {
-        _path: '/content/articles/article1',
-        title: 'Primo Articolo di Esempio',
-        image: {
-          _publishUrl: 'https://via.placeholder.com/400x300/0066cc/ffffff?text=Article+1',
-          _authorUrl: 'https://via.placeholder.com/400x300/0066cc/ffffff?text=Article+1'
-        }
-      },
-      {
-        _path: '/content/articles/article2',
-        title: 'Secondo Articolo di Esempio',
-        image: {
-          _publishUrl: 'https://via.placeholder.com/400x300/cc6600/ffffff?text=Article+2',
-          _authorUrl: 'https://via.placeholder.com/400x300/cc6600/ffffff?text=Article+2'
-        },
-      },
-      {
-        _path: '/content/articles/article3',
-        title: 'Terzo Articolo di Esempio',
-        image: {
-          _publishUrl: 'https://via.placeholder.com/400x300/009900/ffffff?text=Article+3',
-          _authorUrl: 'https://via.placeholder.com/400x300/009900/ffffff?text=Article+3'
-        },
-      },
-    ];
+    moveInstrumentation(block, block);
+    block.setAttribute('role', 'region');
+    block.setAttribute('aria-label', 'Lista articoli Plus');
 
-    sampleArticles.forEach((item) => {
-      try {
-        const card = buildCard(item);
-        if (card) {
-          cardsContainer.appendChild(card);
-        }
-      } catch (error) {
-        // Ignora errori nella creazione delle card di fallback
-      }
-    });
-
-    console.log('ℹ️ Usando dati di esempio (sviluppo locale)');
+  } catch (error) {
+    console.error('Errore nel caricamento degli articoli:', error);
+    block.innerHTML = '';
   }
 
-  /* instrumentation per Universal Editor e analytics */
-  moveInstrumentation(block, block);
-  block.setAttribute('role', 'region');
-  block.setAttribute('aria-label', 'Lista articoli Plus');
+  return block;
 }
