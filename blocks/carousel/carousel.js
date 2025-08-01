@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-
+/*
 export default function decorate(block) {
   const children = [...block.children];
   const slides = children.filter((child) => child.tagName !== 'BUTTON');
@@ -183,3 +183,4 @@ export default function decorate(block) {
     });
   }
 }
+*/
