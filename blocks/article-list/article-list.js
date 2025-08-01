@@ -225,7 +225,7 @@ export default async function decorate(block) {
     logoUrl: config['logo-url'] || 'https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh',
     logoAlt: config['logo-alt'] || 'Logo Plus',
     tagline: config.tagline || 'più informati, più sereni',
-    moreButtonText: config['more-button-text'] || 'Leggi di più'
+    moreButtonText: config['more-button-text'] || config.moreButtonText || 'Leggi di più'
   };
 
   // Pulisci il contenuto del blocco
