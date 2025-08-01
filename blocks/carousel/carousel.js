@@ -10,28 +10,14 @@ export default function decorate(block) {
     const autoPlayInterval = 5000;
 
     slides.forEach((slide) => {
-        const children = [...slide.children];
-        console.log(children[1]?.textContent.trim());
-        console.log(children[1]);
-        console.log(children[2]?.textContent.trim());
-        console.log(children[2]);
-        console.log(children[3]?.textContent.trim());
-        console.log(children[3]);
-        console.log(children[4]?.textContent.trim());
-        console.log(children[4]);
-        console.log(children[5]?.textContent.trim());
-        console.log(children[5]);
-        console.log(children[6]?.textContent.trim());
-        console.log(children[6]);
-
-/*
-        const iconPath = children[1]?.textContent.trim();
-        const mainTitle = children[2];
-        const secondaryBlock = children[3];
-        const ctaLinkBlock = children[4];
-        const ctaLabelBlock = children[5];
-        const textColor = children[6]?.querySelector('a')?.textContent.trim() || '';
-        const backgroundColor = children[7]?.querySelector('a')?.textContent.trim() || '';
+        const boxAlign = children[1]?.textContent.trim();
+        const iconPath = children[2]?.textContent.trim();
+        const mainTitle = children[3];
+        const secondaryBlock = children[4];
+        const ctaLinkBlock = children[5];
+        const ctaLabelBlock = children[6];
+        const textColor = children[7]?.querySelector('a')?.textContent.trim() || '';
+        const backgroundColor = children[8]?.querySelector('a')?.textContent.trim() || '';
 
         // Applica textColor
         if (textColor) {
@@ -57,6 +43,10 @@ export default function decorate(block) {
         const sliderBox = document.createElement('div');
         sliderBox.className = 'slider-box';
 
+        if (boxAlign) {
+          sliderBox.classList.add(boxAlign);
+        }
+
         if (backgroundColor) {
             sliderBox.style.backgroundColor = backgroundColor;
         }
@@ -76,7 +66,7 @@ export default function decorate(block) {
 
         // Inserisci sliderBox dopo l'immagine
         slide.insertBefore(sliderBox, slide.children[1]);
-        */
+
     });
 
     // ACCESSIBILITÀ
