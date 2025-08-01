@@ -3,26 +3,35 @@
   "fields": [
     {
       "component": "text",
+      "valueType": "string",
       "name": "background",
       "label": "Background Color",
-      "placeholder": "#e6f4ff"
-    }, {
+      "value": "#e6f4ff"
+    },
+    {
       "component": "text",
+      "valueType": "string",
       "name": "logoUrl",
       "label": "Logo URL",
       "value": "https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh"
-    }, {
+    },
+    {
       "component": "text",
+      "valueType": "string",
       "name": "logoAlt",
       "label": "Logo Alt Text",
       "value": "Logo Plus"
-    }, {
+    },
+    {
       "component": "text",
+      "valueType": "string",
       "name": "tagline",
       "label": "Tagline",
       "value": "più informati, più sereni"
-    }, {
+    },
+    {
       "component": "text",
+      "valueType": "string",
       "name": "moreButtonText",
       "label": "More Button Text",
       "value": "Leggi di più"

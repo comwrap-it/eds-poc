@@ -98,8 +98,8 @@
           }
         },
         {
-          "id": "article-list",
           "title": "Article List",
+          "id": "article-list",
           "plugins": {
             "xwalk": {
               "page": {
