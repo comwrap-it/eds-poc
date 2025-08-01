@@ -36,6 +36,30 @@ export default function decorate(block) {
             return;
         }
 
+        const applyClassesAndStyles = () => {
+          const applyClassToAllElements = (container, selector, className) => {
+            container?.querySelectorAll(selector).forEach((el) => {
+              el.classList.add(className);
+            });
+          };
+
+          // Applica classi specifiche
+          applyClassToAllElements(mainTitle, '*', 'custom-title-small');
+          applyClassToAllElements(secondaryBlock, 'h1, h2, h3, h4, h5, h6', 'custom-title-large');
+
+          // Applica il colore del testo se definito
+          if (textColor) {
+            [mainTitle, secondaryBlock].forEach((block) => {
+              block?.querySelectorAll('*').forEach((el) => {
+                el.style.color = textColor;
+              });
+            });
+          }
+        };
+
+        applyClassesAndStyles();
+
+
         // Applica textColor
         if (textColor) {
             [mainTitle, secondaryBlock].forEach((block) => {
@@ -47,6 +71,7 @@ export default function decorate(block) {
 
         // Sostituisci testo del link CTA
         const ctaAnchor = ctaLinkBlock?.querySelector('a');
+        ctaLinkBlock.classList.add("slider-box-cta-cont");
         if (ctaAnchor && ctaLabelBlock?.textContent.trim()) {
             ctaAnchor.textContent = ctaLabelBlock.textContent.trim();
         }
@@ -180,7 +205,7 @@ export default function decorate(block) {
             if (e.target.closest('a, button')) return;
 
             const activeSlide = slides[currentSlide];
-            const cta = activeSlide.querySelector('.button-container a.button');
+            const cta = activeSlide.querySelector('.button-container a.button, .slider-box .slider-box-cta-cont a');
 
             if (cta) {
                 cta.click();

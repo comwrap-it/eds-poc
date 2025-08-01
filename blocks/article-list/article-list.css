@@ -10,9 +10,13 @@
   --dark-blue: rgb(15, 50, 80);
 }
 
+.section .article-list-wrapper {
+    max-width: unset;
+    padding: 0;
+}
+
 /* wrapper generico del blocco */
 .plus-wrapper {
-  width: 100vw;
   margin-left: calc(-50vw + 50%);
   padding: 40px 20px;
   text-align: center;
