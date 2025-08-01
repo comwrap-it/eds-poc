@@ -32,7 +32,7 @@
   {
     "id": "carousel",
     "components": [
-      "slider"
+      "slide"
     ]
   },
   {

@@ -235,7 +235,7 @@
     ]
   },
   {
-    "id": "slider",
+    "id": "slide",
     "fields": [
       {
         "component": "tab",
