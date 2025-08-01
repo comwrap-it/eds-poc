@@ -290,9 +290,10 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link"
+        "component": "component",
+        "name": "button",
+        "label": "Button",
+        "valueType": "button"
       },
       {
         "component": "select",
