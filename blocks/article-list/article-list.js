@@ -270,9 +270,6 @@ export default async function decorate(block) {
   // Aggiungi attributi di accessibilità
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Lista articoli Plus');
-  
-  // Strumentazione generale per l'editabilità
-  moveInstrumentation(block);
 
   return block;
 }
