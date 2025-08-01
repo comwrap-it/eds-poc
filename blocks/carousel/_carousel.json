@@ -55,6 +55,25 @@
           "value": ""
         },
         {
+          "component": "select",
+          "name": "AllineamentoBox",
+          "label": "Allineamento Box",
+          "options": [
+            {
+              "name": "Destra",
+              "value": "slider-box-dx"
+            },
+            {
+              "name": "Sinistra",
+              "value": "slider-box-sx"
+            },
+            {
+              "name": "Non mostrare",
+              "value": "slider-box-d-none"
+            }
+          ]
+        },
+        {
           "component": "tab",
           "label": "Configurazione Box",
           "name": "ConfigurazioneBox"
