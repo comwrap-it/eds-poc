@@ -310,6 +310,16 @@
         "valueType": "string"
       },
       {
+        "component": "aem-content",
+        "name": "CtaPath",
+        "label": "Cta Path"
+      },
+      {
+        "component": "text",
+        "name": "TestoCta",
+        "label": "Testo Cta"
+      },
+      {
         "component": "select",
         "name": "ColorPaletteTesto",
         "label": "Colore del Testo",

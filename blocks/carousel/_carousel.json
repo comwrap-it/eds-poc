@@ -21,7 +21,7 @@
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block",
+            "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "name": "Slide",
               "model": "slide"
@@ -106,6 +106,16 @@
           "value": "",
           "label": "Contenuto Testuale",
           "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "CtaPath",
+          "label": "Cta Path"
+        },
+        {
+          "component": "text",
+          "name": "TestoCta",
+          "label": "Testo Cta"
         },
         {
           "component": "select",
