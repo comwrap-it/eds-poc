@@ -3,7 +3,19 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
 
 function buildCard(item) {
+  // Validazione sicura dei dati
+  if (!item || typeof item !== 'object') {
+    console.warn('Invalid item data received for card building');
+    return null;
+  }
+
   const { title, _path, image } = item;
+  
+  // Validazione dei campi obbligatori
+  if (!title || !_path) {
+    console.warn('Missing required fields (title or _path) for card building');
+    return null;
+  }
 
   const card = document.createElement('article');
   card.className = 'plus-card';
@@ -13,16 +25,29 @@ function buildCard(item) {
   link.setAttribute('aria-label', title);
   link.className = 'plus-card-link';
 
-  const imagePath = image?._path || image?._publishUrl || image?._authorUrl;
+  // Gestione sicura dell'immagine con fallback
+  let imagePath = null;
+  if (image && typeof image === 'object') {
+    imagePath = image._path || image._publishUrl || image._authorUrl;
+  }
 
-  const picture = createOptimizedPicture(
-    imagePath,
-    title,
-    false,
-    [{ width: 400 }, { width: 768 }, { width: 1200 }],
-    DEV_CONFIG
-  );
-  picture.className = 'plus-card-picture';
+  // Crea immagine solo se esiste un percorso valido
+  let picture = null;
+  if (imagePath) {
+    try {
+      picture = createOptimizedPicture(
+        imagePath,
+        title,
+        false,
+        [{ width: 400 }, { width: 768 }, { width: 1200 }],
+        DEV_CONFIG
+      );
+      picture.className = 'plus-card-picture';
+    } catch (error) {
+      console.warn('Failed to create optimized picture:', error);
+      // Continua senza immagine invece di fallire completamente
+    }
+  }
 
   const caption = document.createElement('h3');
   caption.className = 'plus-card-title';
@@ -32,29 +57,80 @@ function buildCard(item) {
   cta.className = 'plus-card-cta';
   cta.textContent = 'Leggi di più';
 
-  link.append(picture, caption, cta);
-  card.append(link);
+  // Aggiungi solo gli elementi che esistono
+  if (picture) {
+    link.appendChild(picture);
+  }
+  link.appendChild(caption);
+  link.appendChild(cta);
+  card.appendChild(link);
+  
   return card;
 }
 
-export default async function decorate(block) {
-  const config = {};
-  block.querySelectorAll(':scope > div').forEach((row) => {
-    if (row.children.length === 2) {
-      const key = row.children[0].textContent.trim().toLowerCase().replace(/\s+/g, '');
-      const value = row.children[1].textContent.trim();
-      config[key] = value;
-    }
-  });
+function createUIStructure(config) {
+  const { sectionBg, logoUrl, logoAlt, tagline, moreButtonText } = config;
+  
+  const wrapper = document.createElement('div');
+  wrapper.className = 'plus-wrapper';
+  wrapper.style.backgroundColor = sectionBg;
 
-  const sectionBg = config.background || '#e6f4ff';
-  const logoUrl = config.logourl || 'https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh';
-  const logoAlt = config.logoalt || 'Logo Plus';
-  const tagline = config.tagline || 'più informati, più sereni';
-  const moreButtonText = config.morebuttontext || 'Leggi di più';
+  const head = document.createElement('div');
+  head.className = 'plus-head';
 
+  const title = document.createElement('div');
+  title.className = 'title';
+
+  const logoLink = document.createElement('a');
+  logoLink.setAttribute('data-disabled', 'false');
+  logoLink.setAttribute('aria-label', 'Unipol Plus');
+  logoLink.href = '/plus';
+
+  const imageContainer = document.createElement('div');
+  imageContainer.className = 'plus-image-container';
+
+  const logo = document.createElement('img');
+  logo.className = 'plus-logo';
+  logo.src = logoUrl;
+  logo.alt = logoAlt;
+  logo.title = logoAlt;
+  logo.loading = 'lazy';
+
+  const textDiv = document.createElement('div');
+  textDiv.className = 'text';
+
+  const taglineDiv = document.createElement('div');
+  taglineDiv.className = 'plus-tagline';
+  taglineDiv.textContent = tagline;
+
+  const cardsContainer = document.createElement('div');
+  cardsContainer.className = 'plus-cards';
+
+  const footer = document.createElement('div');
+  footer.className = 'plus-footer';
+
+  const moreButton = document.createElement('a');
+  moreButton.className = 'plus-more button primary-cta';
+  moreButton.href = '#';
+  moreButton.textContent = moreButtonText;
+
+  // Costruisci la struttura
+  imageContainer.appendChild(logo);
+  logoLink.appendChild(imageContainer);
+  textDiv.appendChild(taglineDiv);
+  title.appendChild(logoLink);
+  title.appendChild(textDiv);
+  head.appendChild(title);
+  footer.appendChild(moreButton);
+  wrapper.appendChild(head);
+  wrapper.appendChild(cardsContainer);
+  wrapper.appendChild(footer);
+
+  return { wrapper, cardsContainer };
+}
+
+async function fetchArticles() {
   try {
-    // Usa la configurazione centralizzata
     const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/articleCardList');
     
     const headers = {
@@ -71,183 +147,103 @@ export default async function decorate(block) {
       headers: headers
     });
 
+    // Gestione più rigorosa degli errori HTTP
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorMessage = `HTTP error! status: ${response.status}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
-    const articles = data.data?.articleCardList?.items || [];
+    
+    // Validazione della struttura della risposta
+    if (!data || typeof data !== 'object') {
+      throw new Error('Invalid response format: not a valid JSON object');
+    }
 
-    block.innerHTML = '';
+    // Validazione più approfondita della struttura GraphQL
+    if (!data.data) {
+      console.warn('GraphQL response missing data field');
+      return [];
+    }
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'plus-wrapper';
-    wrapper.style.backgroundColor = sectionBg;
+    if (!data.data.articleCardList) {
+      console.warn('GraphQL response missing articleCardList field');
+      return [];
+    }
 
-    const head = document.createElement('div');
-    head.className = 'plus-head';
+    const articles = data.data.articleCardList.items;
+    
+    // Validazione degli articoli
+    if (!Array.isArray(articles)) {
+      console.warn('ArticleCardList items is not an array');
+      return [];
+    }
 
-    const title = document.createElement('div');
-    title.className = 'title';
-
-    const logoLink = document.createElement('a');
-    logoLink.setAttribute('data-disabled', 'false');
-    logoLink.setAttribute('aria-label', 'Unipol Plus');
-    logoLink.href = '/plus';
-
-    const imageContainer = document.createElement('div');
-    imageContainer.className = 'plus-image-container';
-
-    const logo = document.createElement('img');
-    logo.className = 'plus-logo';
-    logo.src = logoUrl;
-    logo.alt = logoAlt;
-    logo.title = logoAlt;
-    logo.loading = 'lazy';
-
-    const textDiv = document.createElement('div');
-    textDiv.className = 'text';
-
-    const taglineDiv = document.createElement('div');
-    taglineDiv.className = 'plus-tagline';
-    taglineDiv.textContent = tagline;
-
-    const cardsContainer = document.createElement('div');
-    cardsContainer.className = 'plus-cards';
-
-    const footer = document.createElement('div');
-    footer.className = 'plus-footer';
-
-    const moreButton = document.createElement('a');
-    moreButton.className = 'plus-more button primary-cta';
-    moreButton.href = '#';
-    moreButton.textContent = moreButtonText;
-
-    // Costruisci la struttura
-    imageContainer.appendChild(logo);
-    logoLink.appendChild(imageContainer);
-    textDiv.appendChild(taglineDiv);
-    title.appendChild(logoLink);
-    title.appendChild(textDiv);
-    head.appendChild(title);
-    footer.appendChild(moreButton);
-    wrapper.appendChild(head);
-    wrapper.appendChild(cardsContainer);
-    wrapper.appendChild(footer);
-    block.appendChild(wrapper);
-
-    // Aggiungi le card degli articoli
-    articles.slice(0, 3).forEach((item) => {
-      const card = buildCard(item);
-      cardsContainer.appendChild(card);
-    });
-
-    moveInstrumentation(block, block);
-    block.setAttribute('role', 'region');
-    block.setAttribute('aria-label', 'Lista articoli Plus');
+    return articles;
 
   } catch (error) {
-    console.error('Errore nel caricamento degli articoli:', error);
+    console.error('Error fetching articles:', error);
+    return []; // Ritorna array vuoto invece di lanciare l'errore
+  }
+}
+
+export default async function decorate(block) {
+  // Estrazione configurazione
+  const config = {};
+  block.querySelectorAll(':scope > div').forEach((row) => {
+    if (row.children.length === 2) {
+      const key = row.children[0].textContent.trim().toLowerCase().replace(/\s+/g, '');
+      const value = row.children[1].textContent.trim();
+      config[key] = value;
+    }
+  });
+
+  // Configurazione con valori di default
+  const componentConfig = {
+    sectionBg: config.background || '#e6f4ff',
+    logoUrl: config.logourl || 'https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh',
+    logoAlt: config.logoalt || 'Logo Plus',
+    tagline: config.tagline || 'più informati, più sereni',
+    moreButtonText: config.morebuttontext || 'Leggi di più'
+  };
+
+  // Pulisci il contenuto del blocco
+  block.innerHTML = '';
+
+  // Crea la struttura UI una sola volta
+  const { wrapper, cardsContainer } = createUIStructure(componentConfig);
+  block.appendChild(wrapper);
+
+  // Fetch degli articoli
+  const articles = await fetchArticles();
+
+  // Se non ci sono articoli, mostra solo la struttura base senza carte
+  if (articles.length === 0) {
+    console.info('No articles available, displaying component without cards');
     
-    // Fallback con dati di esempio per sviluppo locale
-    block.innerHTML = '';
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'plus-wrapper';
-    wrapper.style.backgroundColor = sectionBg;
-
-    const head = document.createElement('div');
-    head.className = 'plus-head';
-
-    const title = document.createElement('div');
-    title.className = 'title';
-
-    const logoLink = document.createElement('a');
-    logoLink.setAttribute('data-disabled', 'false');
-    logoLink.setAttribute('aria-label', 'Unipol Plus');
-    logoLink.href = '/plus';
-
-    const imageContainer = document.createElement('div');
-    imageContainer.className = 'plus-image-container';
-
-    const logo = document.createElement('img');
-    logo.className = 'plus-logo';
-    logo.src = logoUrl;
-    logo.alt = logoAlt;
-    logo.title = logoAlt;
-    logo.loading = 'lazy';
-
-    const textDiv = document.createElement('div');
-    textDiv.className = 'text';
-
-    const taglineDiv = document.createElement('div');
-    taglineDiv.className = 'plus-tagline';
-    taglineDiv.textContent = tagline;
-
-    const cardsContainer = document.createElement('div');
-    cardsContainer.className = 'plus-cards';
-
-    const footer = document.createElement('div');
-    footer.className = 'plus-footer';
-
-    const moreButton = document.createElement('a');
-    moreButton.className = 'plus-more button primary-cta';
-    moreButton.href = '#';
-    moreButton.textContent = moreButtonText;
-
-    // Costruisci la struttura
-    imageContainer.appendChild(logo);
-    logoLink.appendChild(imageContainer);
-    textDiv.appendChild(taglineDiv);
-    title.appendChild(logoLink);
-    title.appendChild(textDiv);
-    head.appendChild(title);
-    footer.appendChild(moreButton);
-    wrapper.appendChild(head);
-    wrapper.appendChild(cardsContainer);
-    wrapper.appendChild(footer);
-    block.appendChild(wrapper);
-
-    // Dati di esempio per fallback
-    const sampleArticles = [
-      {
-        _path: '/content/articles/article1',
-        title: 'Primo Articolo di Esempio',
-        image: {
-          _publishUrl: 'https://via.placeholder.com/400x300/0066cc/ffffff?text=Article+1',
-          _authorUrl: 'https://via.placeholder.com/400x300/0066cc/ffffff?text=Article+1'
-        }
-      },
-      {
-        _path: '/content/articles/article2',
-        title: 'Secondo Articolo di Esempio',
-        image: {
-          _publishUrl: 'https://via.placeholder.com/400x300/cc6600/ffffff?text=Article+2',
-          _authorUrl: 'https://via.placeholder.com/400x300/cc6600/ffffff?text=Article+2'
-        }
-      },
-      {
-        _path: '/content/articles/article3',
-        title: 'Terzo Articolo di Esempio',
-        image: {
-          _publishUrl: 'https://via.placeholder.com/400x300/009900/ffffff?text=Article+3',
-          _authorUrl: 'https://via.placeholder.com/400x300/009900/ffffff?text=Article+3'
-        }
-      }
-    ];
-
-    // Aggiungi le card di fallback
-    sampleArticles.forEach((item) => {
+    // Aggiungi un messaggio informativo opzionale (può essere rimosso se non desiderato)
+    const noContentMessage = document.createElement('div');
+    noContentMessage.className = 'plus-no-content';
+    noContentMessage.textContent = 'Contenuti in arrivo...';
+    noContentMessage.style.display = 'none'; // Nascosto di default, rimuovi se vuoi mostrarlo
+    cardsContainer.appendChild(noContentMessage);
+  } else {
+    // Aggiungi le card degli articoli (massimo 3)
+    articles.slice(0, 3).forEach((item) => {
       const card = buildCard(item);
-      cardsContainer.appendChild(card);
+      if (card) { // Aggiungi solo le card valide
+        cardsContainer.appendChild(card);
+      }
     });
 
-    moveInstrumentation(block, block);
-    block.setAttribute('role', 'region');
-    block.setAttribute('aria-label', 'Lista articoli Plus');
-
-    console.log('ℹ️ Usando dati di esempio (sviluppo locale)');
+    console.info(`Successfully loaded ${Math.min(articles.length, 3)} article cards`);
   }
+
+  // Aggiungi attributi di accessibilità
+  moveInstrumentation(block, block);
+  block.setAttribute('role', 'region');
+  block.setAttribute('aria-label', 'Lista articoli Plus');
 
   return block;
 }
