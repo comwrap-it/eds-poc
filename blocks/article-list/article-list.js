@@ -1,5 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, readBlockConfig } from '../../scripts/aem.js';
 import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
 
 function buildCard(item) {
@@ -216,23 +216,16 @@ export default async function decorate(block) {
   // Estrai i contenuti dai figli per l'editabilità
   const children = [...block.children];
   
-  // Estrazione configurazione
-  const config = {};
-  block.querySelectorAll(':scope > div').forEach((row) => {
-    if (row.children.length === 2) {
-      const key = row.children[0].textContent.trim().toLowerCase().replace(/\s+/g, '');
-      const value = row.children[1].textContent.trim();
-      config[key] = value;
-    }
-  });
+  // Estrazione configurazione usando readBlockConfig di AEM
+  const config = readBlockConfig(block);
 
   // Configurazione con valori di default
   const componentConfig = {
     sectionBg: config.background || '#e6f4ff',
-    logoUrl: config.logourl || 'https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh',
-    logoAlt: config.logoalt || 'Logo Plus',
+    logoUrl: config['logo-url'] || 'https://www.unipol.it/wcm/myconnect/574a7c8c-07f0-495a-a4b0-bfa94825a5ff/Logo+Plus.webp?MOD=AJPERES&CACHEID=ROOTWORKSPACE-574a7c8c-07f0-495a-a4b0-bfa94825a5ff-p6T7rWh',
+    logoAlt: config['logo-alt'] || 'Logo Plus',
     tagline: config.tagline || 'più informati, più sereni',
-    moreButtonText: config.morebuttontext || 'Leggi di più'
+    moreButtonText: config['more-button-text'] || 'Leggi di più'
   };
 
   // Pulisci il contenuto del blocco
