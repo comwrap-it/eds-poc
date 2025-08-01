@@ -30,7 +30,9 @@ export default function decorate(block) {
         );
 
         if (shouldHideSliderBox) {
-            slide.innerHTML = '';
+            [...slide.children].forEach((child, index) => {
+                if (index > 0) child.remove();
+            });
             return;
         }
 
