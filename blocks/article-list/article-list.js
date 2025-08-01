@@ -68,12 +68,18 @@ function buildCard(item) {
   return card;
 }
 
-function createUIStructure(config) {
+function createUIStructure(config, children) {
   const { sectionBg, logoUrl, logoAlt, tagline, moreButtonText } = config;
   
   const wrapper = document.createElement('div');
   wrapper.className = 'plus-wrapper';
   wrapper.style.backgroundColor = sectionBg;
+  wrapper.setAttribute('data-aue-label', 'Background');
+  wrapper.setAttribute('data-aue-type', 'text');
+  // Trasferisci strumentazione dal primo child (background) se esiste
+  if (children[0]) {
+    moveInstrumentation(children[0], wrapper);
+  }
 
   const head = document.createElement('div');
   head.className = 'plus-head';
@@ -95,6 +101,12 @@ function createUIStructure(config) {
   logo.alt = logoAlt;
   logo.title = logoAlt;
   logo.loading = 'lazy';
+  logo.setAttribute('data-aue-label', 'Logo');
+  logo.setAttribute('data-aue-type', 'media');
+  // Trasferisci strumentazione dal secondo child (logoUrl) se esiste
+  if (children[1]) {
+    moveInstrumentation(children[1], logo);
+  }
 
   const textDiv = document.createElement('div');
   textDiv.className = 'text';
@@ -102,6 +114,12 @@ function createUIStructure(config) {
   const taglineDiv = document.createElement('div');
   taglineDiv.className = 'plus-tagline';
   taglineDiv.textContent = tagline;
+  taglineDiv.setAttribute('data-aue-label', 'Tagline');
+  taglineDiv.setAttribute('data-aue-type', 'text');
+  // Trasferisci strumentazione dal quarto child (tagline) se esiste
+  if (children[3]) {
+    moveInstrumentation(children[3], taglineDiv);
+  }
 
   const cardsContainer = document.createElement('div');
   cardsContainer.className = 'plus-cards';
@@ -113,6 +131,12 @@ function createUIStructure(config) {
   moreButton.className = 'plus-more button primary-cta';
   moreButton.href = '#';
   moreButton.textContent = moreButtonText;
+  moreButton.setAttribute('data-aue-label', 'More Button Text');
+  moreButton.setAttribute('data-aue-type', 'text');
+  // Trasferisci strumentazione dal quinto child (moreButtonText) se esiste
+  if (children[4]) {
+    moveInstrumentation(children[4], moreButton);
+  }
 
   // Costruisci la struttura
   imageContainer.appendChild(logo);
@@ -189,6 +213,9 @@ async function fetchArticles() {
 }
 
 export default async function decorate(block) {
+  // Estrai i contenuti dai figli per l'editabilità
+  const children = [...block.children];
+  
   // Estrazione configurazione
   const config = {};
   block.querySelectorAll(':scope > div').forEach((row) => {
@@ -212,7 +239,7 @@ export default async function decorate(block) {
   block.innerHTML = '';
 
   // Crea la struttura UI una sola volta
-  const { wrapper, cardsContainer } = createUIStructure(componentConfig);
+  const { wrapper, cardsContainer } = createUIStructure(componentConfig, children);
   block.appendChild(wrapper);
 
   // Fetch degli articoli
@@ -241,9 +268,11 @@ export default async function decorate(block) {
   }
 
   // Aggiungi attributi di accessibilità
-  moveInstrumentation(block, block);
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Lista articoli Plus');
+  
+  // Strumentazione generale per l'editabilità
+  moveInstrumentation(block);
 
   return block;
 }
