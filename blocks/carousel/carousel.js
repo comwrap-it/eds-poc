@@ -20,6 +20,20 @@ export default function decorate(block) {
         const textColor = slideChildren[7]?.querySelector('a')?.textContent.trim() || '';
         const backgroundColor = slideChildren[8]?.querySelector('a')?.textContent.trim() || '';
 
+
+        const hasMainTitle = mainTitle?.textContent.trim().length > 0;
+        const hasSecondaryContent = secondaryBlock?.textContent.trim().length > 0;
+
+        const shouldHideSliderBox = (
+            (!hasMainTitle && !hasSecondaryContent) ||
+            boxAlign === 'slider-box-d-none'
+        );
+
+        if (shouldHideSliderBox) {
+            slide.innerHTML = '';
+            return;
+        }
+
         // Applica textColor
         if (textColor) {
             [mainTitle, secondaryBlock].forEach((block) => {
@@ -35,7 +49,7 @@ export default function decorate(block) {
             ctaAnchor.textContent = ctaLabelBlock.textContent.trim();
         }
 
-        // Rimuovi i blocchi inutili
+        // Rimuovi blocchi inutili
         [slideChildren[1], slideChildren[6], slideChildren[7], slideChildren[8]].forEach((slide) => {
             if (slide?.remove) slide.remove();
         });
@@ -45,19 +59,11 @@ export default function decorate(block) {
         sliderBox.className = 'slider-box';
 
         if (boxAlign) {
-          sliderBox.classList.add(boxAlign);
+            sliderBox.classList.add(boxAlign);
         }
 
         if (backgroundColor) {
             sliderBox.style.backgroundColor = backgroundColor;
-        }
-
-        // Verifica se titolo o paragrafo sono configurati
-        const hasMainTitle = mainTitle?.textContent.trim().length > 0;
-        const hasSecondaryContent = secondaryBlock?.textContent.trim().length > 0;
-
-        if (!hasMainTitle && !hasSecondaryContent) {
-            return;
         }
 
         // Inserisci blocchi dentro lo sliderBox
