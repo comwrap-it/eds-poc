@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-/*
+
 export default function decorate(block) {
   const children = [...block.children];
   const slides = children.filter((child) => child.tagName !== 'BUTTON');
@@ -9,68 +9,62 @@ export default function decorate(block) {
   let autoSlideTimer;
   const autoPlayInterval = 5000;
 
-  slides.forEach((slide) => {
-    const slideChildren = [...slide.children];
+    slides.forEach((slide) => {
+      const children = [...slide.children];
 
-    const primaryTitleText = slideChildren[1]?.textContent.trim() || '';
-    const primaryTitleTag = slideChildren[2]?.textContent.trim().toLowerCase() || 'h2';
-    const primaryColor = slideChildren[3]?.textContent.trim() || '';
+      const iconPath = children[1]?.textContent.trim();
+      const mainTitle = children[2];
+      const secondaryBlock = children[3];
+      const ctaLinkBlock = children[4];
+      const ctaLabelBlock = children[5];
+      const textColor = children[6]?.querySelector('a')?.textContent.trim() || '';
+      const backgroundColor = children[7]?.querySelector('a')?.textContent.trim() || '';
 
-    const secondaryTitleText = slideChildren[4]?.textContent.trim() || '';
-    const secondaryTitleTag = slideChildren[5]?.textContent.trim().toLowerCase() || 'h3';
-    const secondaryColor = slideChildren[6]?.textContent.trim() || '';
+      // Applica textColor
+      if (textColor) {
+        [mainTitle, secondaryBlock].forEach((block) => {
+          block?.querySelectorAll('*').forEach((el) => {
+            el.style.color = textColor;
+          });
+        });
+      }
 
-    const paragraphNode = slideChildren[7] || document.createElement('div');
-    const paragraphColor = slideChildren[8]?.textContent.trim() || '';
-    const boxBgColor = slideChildren[9]?.textContent.trim() || '';
+      // Sostituisci testo del link CTA
+      const ctaAnchor = ctaLinkBlock?.querySelector('a');
+      if (ctaAnchor && ctaLabelBlock?.textContent.trim()) {
+        ctaAnchor.textContent = ctaLabelBlock.textContent.trim();
+      }
 
-    const hasPrimaryTitle = !!primaryTitleText;
-    const hasSecondaryTitle = !!secondaryTitleText;
-    const hasParagraph = paragraphNode && paragraphNode.querySelector('p');
+      // Rimuovi i blocchi inutili
+      [children[5], children[6], children[7]].forEach((block) => {
+        if (block?.remove) block.remove();
+      });
 
-    const sliderBox = document.createElement('div');
-    sliderBox.className = 'slider-box';
+      // Crea sliderBox
+      const sliderBox = document.createElement('div');
+      sliderBox.className = 'slider-box';
 
-    if (boxBgColor) {
-      sliderBox.style.backgroundColor = boxBgColor;
-    }
+      if (backgroundColor) {
+        sliderBox.style.backgroundColor = backgroundColor;
+      }
 
-    if (hasPrimaryTitle) {
-      const newPrimary = document.createElement(primaryTitleTag);
-      newPrimary.textContent = primaryTitleText;
-      if (primaryColor) newPrimary.style.color = primaryColor;
+      // Nascondi se manca tutto il contenuto significativo
+      const hasMainTitle = mainTitle?.textContent.trim().length > 0;
+      const hasSecondaryContent = secondaryBlock?.textContent.trim().length > 0;
 
-      const titleWrapper = document.createElement('div');
-      titleWrapper.appendChild(newPrimary);
-      sliderBox.appendChild(titleWrapper);
-    }
+      if (!hasMainTitle && !hasSecondaryContent) {
+        sliderBox.style.display = 'none';
+      }
 
-    if (hasSecondaryTitle) {
-      const newSecondary = document.createElement(secondaryTitleTag);
-      newSecondary.textContent = secondaryTitleText;
-      if (secondaryColor) newSecondary.style.color = secondaryColor;
+      // Inserisci blocchi dentro lo sliderBox
+      [children[1], children[2], children[3], children[4]].forEach((block) => {
+        if (block) sliderBox.appendChild(block);
+      });
 
-      const titleWrapper = document.createElement('div');
-      titleWrapper.appendChild(newSecondary);
-      sliderBox.appendChild(titleWrapper);
-    }
-
-    if (hasParagraph) {
-      const paragraph = paragraphNode.querySelector('p');
-      if (paragraphColor) paragraph.style.color = paragraphColor;
-      sliderBox.appendChild(paragraphNode);
-    }
-
-    if (!hasPrimaryTitle && !hasSecondaryTitle && !hasParagraph) {
-      sliderBox.style.display = 'none';
-    }
-
-    slide.insertBefore(sliderBox, slide.children[1]);
-
-    [1, 2, 3, 4, 5, 6, 8, 9].forEach((index) => {
-      if (slideChildren[index]) slideChildren[index].remove();
+      // Inserisci sliderBox dopo l'immagine
+      slide.insertBefore(sliderBox, slide.children[1]);
     });
-  });
+
 
   // ACCESSIBILITÀ
   block.setAttribute('role', 'region');
@@ -183,4 +177,3 @@ export default function decorate(block) {
     });
   }
 }
-*/
