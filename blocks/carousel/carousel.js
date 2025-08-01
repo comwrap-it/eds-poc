@@ -10,14 +10,15 @@ export default function decorate(block) {
     const autoPlayInterval = 5000;
 
     slides.forEach((slide) => {
-        const boxAlign = children[1]?.textContent.trim();
-        const iconPath = children[2]?.textContent.trim();
-        const mainTitle = children[3];
-        const secondaryBlock = children[4];
-        const ctaLinkBlock = children[5];
-        const ctaLabelBlock = children[6];
-        const textColor = children[7]?.querySelector('a')?.textContent.trim() || '';
-        const backgroundColor = children[8]?.querySelector('a')?.textContent.trim() || '';
+        const slideChildren = [...slide.children];
+        const boxAlign = slideChildren[1]?.textContent.trim();
+        const iconPath = slideChildren[2]?.textContent.trim();
+        const mainTitle = slideChildren[3];
+        const secondaryBlock = slideChildren[4];
+        const ctaLinkBlock = slideChildren[5];
+        const ctaLabelBlock = slideChildren[6];
+        const textColor = slideChildren[7]?.querySelector('a')?.textContent.trim() || '';
+        const backgroundColor = slideChildren[8]?.querySelector('a')?.textContent.trim() || '';
 
         // Applica textColor
         if (textColor) {
@@ -35,8 +36,8 @@ export default function decorate(block) {
         }
 
         // Rimuovi i blocchi inutili
-        [children[5], children[6], children[7]].forEach((block) => {
-            if (block?.remove) block.remove();
+        [slideChildren[1], slideChildren[6], slideChildren[7], slideChildren[8]].forEach((slide) => {
+            if (slide?.remove) slide.remove();
         });
 
         // Crea sliderBox
@@ -60,13 +61,12 @@ export default function decorate(block) {
         }
 
         // Inserisci blocchi dentro lo sliderBox
-        [children[1], children[2], children[3], children[4]].forEach((block) => {
-            if (block) sliderBox.appendChild(block);
+        [slideChildren[2], slideChildren[3], slideChildren[4], slideChildren[5]].forEach((slide) => {
+            if (slide) sliderBox.appendChild(slide);
         });
 
         // Inserisci sliderBox dopo l'immagine
         slide.insertBefore(sliderBox, slide.children[1]);
-
     });
 
     // ACCESSIBILITÀ
