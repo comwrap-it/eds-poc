@@ -176,6 +176,22 @@
     ]
   },
   {
+    "id": "accordion-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo FAQ"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrizione FAQ",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "article-list",
     "fields": [
       {
