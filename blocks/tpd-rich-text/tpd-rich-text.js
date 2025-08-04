@@ -19,9 +19,6 @@ export default function decorate(block) {
   children[1]?.remove();
   children[2]?.remove();
 
-  paragraph.setAttribute('data-aue-label', 'Paragrafo');
-  paragraph.setAttribute('data-aue-type', 'text');
-
   moveInstrumentation(paragraph);
   moveInstrumentation(block);
 
