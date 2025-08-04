@@ -19,9 +19,6 @@ export default function decorate(block) {
   children[1]?.remove();
   children[2]?.remove();
 
-  heading.setAttribute('data-aue-label', 'Titolo');
-  heading.setAttribute('data-aue-type', 'text');
-
   moveInstrumentation(heading);
   moveInstrumentation(block);
 }

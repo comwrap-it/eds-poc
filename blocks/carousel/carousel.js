@@ -78,30 +78,27 @@ export default function decorate(block) {
 
         const sliderBox = document.createElement('div');
         sliderBox.className = 'slider-box';
+        if (boxAlign) sliderBox.classList.add(boxAlign);
+        if (backgroundColor) sliderBox.style.backgroundColor = backgroundColor;
 
-        if (boxAlign) {
-            sliderBox.classList.add(boxAlign);
-        }
+        const sliderBoxInner = document.createElement('div');
 
-        if (backgroundColor) {
-            sliderBox.style.backgroundColor = backgroundColor;
-        }
-
-      if (iconPath && slideChildren[2] && slideChildren[3]) {
+        if (iconPath && slideChildren[2] && slideChildren[3]) {
           const iconTitleCont = document.createElement('div');
           iconTitleCont.className = 'iconTitle-cont';
 
           iconTitleCont.appendChild(slideChildren[2]);
           iconTitleCont.appendChild(slideChildren[3]);
 
-          sliderBox.appendChild(iconTitleCont);
-      } else {
-          if (slideChildren[3]) sliderBox.appendChild(slideChildren[3]);
-      }
+          sliderBoxInner.appendChild(iconTitleCont);
+        } else {
+          if (slideChildren[3]) sliderBoxInner.appendChild(slideChildren[3]);
+        }
 
-      if (slideChildren[4]) sliderBox.appendChild(slideChildren[4]);
-      if (slideChildren[5]) sliderBox.appendChild(slideChildren[5]);
+        if (slideChildren[4]) sliderBoxInner.appendChild(slideChildren[4]);
+        if (slideChildren[5]) sliderBoxInner.appendChild(slideChildren[5]);
 
+        sliderBox.appendChild(sliderBoxInner);
 
         slide.insertBefore(sliderBox, slide.children[1]);
     });
