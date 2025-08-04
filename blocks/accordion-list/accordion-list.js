@@ -47,6 +47,32 @@ export default async function decorate(block) {
     const accordionContainer = document.createElement('div');
     accordionContainer.classList.add('accordion-container');
 
+    // Funzione helper per processare il testo
+    function processTextContent(htmlContent) {
+      // Crea un elemento temporaneo per parsare l'HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlContent;
+      
+      // Estrai solo il testo senza tag HTML
+      const fullText = tempDiv.textContent || tempDiv.innerText || '';
+      
+      // Trova la prima riga (fino al primo \n o al primo punto)
+      const firstLine = fullText.split(/[\n\r]/)[0].trim();
+      
+      let previewText, remainingText;
+      
+      // Se la prima riga è troppo lunga, trimmala
+      if (firstLine.length > 100) {
+        previewText = firstLine.substring(0, 100) + '...';
+        remainingText = firstLine.substring(100) + fullText.substring(firstLine.length);
+      } else {
+        previewText = firstLine;
+        remainingText = fullText.substring(firstLine.length);
+      }
+      
+      return { previewText, remainingText, fullText };
+    }
+
     faqItems.forEach((item, index) => {
       const accordionItem = document.createElement('div');
       accordionItem.classList.add('accordion-item');
@@ -54,18 +80,44 @@ export default async function decorate(block) {
 
       const details = document.createElement('details');
       const summary = document.createElement('summary');
-      summary.textContent = item.txTitle;
+      
+      // Processa il contenuto del testo
+      const textContent = processTextContent(item.txDescription.html);
+      
+      // Crea il contenuto del summary con titolo + prima riga
+      const summaryContent = document.createElement('div');
+      summaryContent.classList.add('accordion-summary-content');
+      
+      const titleElement = document.createElement('div');
+      titleElement.classList.add('accordion-title');
+      titleElement.textContent = item.txTitle;
+      
+      const previewElement = document.createElement('div');
+      previewElement.classList.add('accordion-preview');
+      previewElement.textContent = textContent.previewText;
+      
+      summaryContent.appendChild(titleElement);
+      summaryContent.appendChild(previewElement);
+      summary.appendChild(summaryContent);
       summary.classList.add('accordion-summary');
       
       const content = document.createElement('div');
       content.classList.add('accordion-content');
-      content.innerHTML = item.txDescription.html;
-
+      
+      // Inizialmente mostra solo il testo rimanente (nascosto)
+      content.style.display = 'none';
+      
       details.addEventListener('toggle', () => {
         if (details.open) {
           accordionItem.style.backgroundColor = openBackgroundColor;
+          // Quando si apre, rimuovi i "..." e mostra il testo completo
+          previewElement.textContent = textContent.fullText;
+          content.style.display = 'none'; // Non serve più il content separato
         } else {
           accordionItem.style.backgroundColor = closedBackgroundColor;
+          // Quando si chiude, torna alla preview trimmata
+          previewElement.textContent = textContent.previewText;
+          content.style.display = 'none';
         }
       });
 
@@ -83,7 +135,7 @@ export default async function decorate(block) {
 
   } catch (error) {
     console.error('Errore nel caricamento delle FAQ:', error);
-    block.innerHTML = '';
+    block.innerHTML = '<p>Errore nel caricamento delle FAQ. Riprova più tardi.</p>';
   }
 
   return block;
