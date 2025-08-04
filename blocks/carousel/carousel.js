@@ -18,8 +18,8 @@ export default function decorate(block) {
         const secondaryBlock = slideChildren[4];
         const ctaLinkBlock = slideChildren[5];
         const ctaLabelBlock = slideChildren[6];
-        const textColor = slideChildren[7]?.querySelector('a')?.textContent.trim() || '#000000';
-        const backgroundColor = slideChildren[8]?.querySelector('a')?.textContent.trim() || '#ffffff';
+        const textColor = slideChildren[7]?.textContent.trim() || '#000000';
+        const backgroundColor = slideChildren[8]?.textContent.trim() || '#ffffff';
 
 
         const hasMainTitle = mainTitle?.textContent.trim().length > 0;
