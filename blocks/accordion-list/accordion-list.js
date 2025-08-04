@@ -73,6 +73,11 @@ export default async function decorate(block) {
       return { previewText, remainingText, fullText };
     }
 
+    // Aggiungi attributi Universal Editor al blocco principale
+    block.setAttribute('data-aue-label', 'Lista Accordion');
+    block.setAttribute('data-aue-type', 'container');
+    block.setAttribute('data-aue-model', 'accordion-list');
+
     faqItems.forEach((item, index) => {
       const accordionItem = document.createElement('div');
       accordionItem.classList.add('accordion-item');
