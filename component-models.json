@@ -360,44 +360,92 @@
         "label": "Colore del Testo",
         "options": [
           {
-            "name": "Black",
+            "name": "Nero",
             "value": "#000000"
           },
           {
-            "name": "White",
+            "name": "Bianco",
             "value": "#FFFFFF"
           },
           {
-            "name": "Blue",
-            "value": "#4169E1"
+            "name": "Bianco sporco",
+            "value": "rgba(241,241,241,1)"
+          },
+          {
+            "name": "Arancione",
+            "value": "rgba(233,78,16,1)"
+          },
+          {
+            "name": "Arancione chiaro",
+            "value": "rgba(243,146,0,1)"
+          },
+          {
+            "name": "Arancione bianco",
+            "value": "rgba(253,245,242,1)"
+          },
+          {
+            "name": "Blu",
+            "value": "rgba(1,105,180,1)"
+          },
+          {
+            "name": "Blu bond",
+            "value": "rgba(15,50,80,1)"
+          },
+          {
+            "name": "Blu chiaro",
+            "value": "rgba(0,175,203,1)"
+          },
+          {
+            "name": "Blu bianco",
+            "value": "rgba(232,245,255,1)"
+          },
+          {
+            "name": "Blu unipol",
+            "value": "rgba(25,58,86,1)"
+          },
+          {
+            "name": "Light blue",
+            "value": "rgba(226,240,249,1)"
+          },
+          {
+            "name": "Medium light blue",
+            "value": "rgba(83,147,188,1)"
+          },
+          {
+            "name": "Verde",
+            "value": "rgba(89,166,39,1)"
+          },
+          {
+            "name": "Verde chiaro",
+            "value": "rgba(136,184,23,1)"
+          },
+          {
+            "name": "Verde bianco",
+            "value": "rgba(245,250,237,1)"
+          },
+          {
+            "name": "Grigio",
+            "value": "rgba(155,155,155,1)"
+          },
+          {
+            "name": "Grigio argentato",
+            "value": "rgba(204,204,204,1)"
+          },
+          {
+            "name": "Soft grey",
+            "value": "rgba(240,240,240,1)"
+          },
+          {
+            "name": "Light grey",
+            "value": "rgba(102,102,102,1)"
+          },
+          {
+            "name": "Main red",
+            "value": "rgba(196,21,28,1)"
           },
           {
             "name": "Red",
-            "value": "#CE2029"
-          },
-          {
-            "name": "Green",
-            "value": "#228B22"
-          },
-          {
-            "name": "Gray",
-            "value": "#708090"
-          },
-          {
-            "name": "Brown",
-            "value": "#8B4513"
-          },
-          {
-            "name": "Sky-Blue",
-            "value": "#87CEEB"
-          },
-          {
-            "name": "Light-Green",
-            "value": "#90EE90"
-          },
-          {
-            "name": "Orange",
-            "value": "#FFA500"
+            "value": "rgba(255,0,31,1)"
           }
         ]
       },
@@ -407,44 +455,92 @@
         "label": "Colore di Sfondo del Box",
         "options": [
           {
-            "name": "Black",
+            "name": "Nero",
             "value": "#000000"
           },
           {
-            "name": "White",
+            "name": "Bianco",
             "value": "#FFFFFF"
           },
           {
-            "name": "Blue",
-            "value": "#4169E1"
+            "name": "Bianco sporco",
+            "value": "rgba(241,241,241,1)"
+          },
+          {
+            "name": "Arancione",
+            "value": "rgba(233,78,16,1)"
+          },
+          {
+            "name": "Arancione chiaro",
+            "value": "rgba(243,146,0,1)"
+          },
+          {
+            "name": "Arancione bianco",
+            "value": "rgba(253,245,242,1)"
+          },
+          {
+            "name": "Blu",
+            "value": "rgba(1,105,180,1)"
+          },
+          {
+            "name": "Blu bond",
+            "value": "rgba(15,50,80,1)"
+          },
+          {
+            "name": "Blu chiaro",
+            "value": "rgba(0,175,203,1)"
+          },
+          {
+            "name": "Blu bianco",
+            "value": "rgba(232,245,255,1)"
+          },
+          {
+            "name": "Blu unipol",
+            "value": "rgba(25,58,86,1)"
+          },
+          {
+            "name": "Light blue",
+            "value": "rgba(226,240,249,1)"
+          },
+          {
+            "name": "Medium light blue",
+            "value": "rgba(83,147,188,1)"
+          },
+          {
+            "name": "Verde",
+            "value": "rgba(89,166,39,1)"
+          },
+          {
+            "name": "Verde chiaro",
+            "value": "rgba(136,184,23,1)"
+          },
+          {
+            "name": "Verde bianco",
+            "value": "rgba(245,250,237,1)"
+          },
+          {
+            "name": "Grigio",
+            "value": "rgba(155,155,155,1)"
+          },
+          {
+            "name": "Grigio argentato",
+            "value": "rgba(204,204,204,1)"
+          },
+          {
+            "name": "Soft grey",
+            "value": "rgba(240,240,240,1)"
+          },
+          {
+            "name": "Light grey",
+            "value": "rgba(102,102,102,1)"
+          },
+          {
+            "name": "Main red",
+            "value": "rgba(196,21,28,1)"
           },
           {
             "name": "Red",
-            "value": "#CE2029"
-          },
-          {
-            "name": "Green",
-            "value": "#228B22"
-          },
-          {
-            "name": "Gray",
-            "value": "#708090"
-          },
-          {
-            "name": "Brown",
-            "value": "#8B4513"
-          },
-          {
-            "name": "Sky-Blue",
-            "value": "#87CEEB"
-          },
-          {
-            "name": "Light-Green",
-            "value": "#90EE90"
-          },
-          {
-            "name": "Orange",
-            "value": "#FFA500"
+            "value": "rgba(255,0,31,1)"
           }
         ]
       }
