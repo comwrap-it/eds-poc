@@ -21,12 +21,13 @@
       "id": "accordion-list",
       "fields": [
         {
-          "component": "text",
+          "component": "aem-content",
           "valueType": "string",
           "name": "rootPath",
-          "label": "Root Path Content Fragments",
-          "description": "Percorso root dei Content Fragments FAQ.",
-          "value": "/content/dam"
+          "label": "Percorso CF elementi accordion",
+          "validation": {
+            "rootPath": "/content/dam/unipol/cf"
+          }
         },
         {
           "component": "text",
