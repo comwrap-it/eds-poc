@@ -13,6 +13,7 @@ export default function decorate(block) {
         const slideChildren = [...slide.children];
         const boxAlign = slideChildren[1]?.textContent.trim();
         const iconPath = slideChildren[2]?.textContent.trim();
+        const iconPathTag = slideChildren[2];
         const mainTitle = slideChildren[3];
         const secondaryBlock = slideChildren[4];
         const ctaLinkBlock = slideChildren[5];
@@ -43,13 +44,11 @@ export default function decorate(block) {
             });
           };
 
-          // Applica classi specifiche
           applyClassToAllElements(mainTitle, '*', 'custom-title-small');
           applyClassToAllElements(secondaryBlock, 'h1, h2, h3, h4, h5, h6', 'custom-title-large');
 
-          // Applica il colore del testo se definito
           if (textColor) {
-            [mainTitle, secondaryBlock].forEach((block) => {
+            [mainTitle, secondaryBlock, iconPathTag].forEach((block) => {
               block?.querySelectorAll('*').forEach((el) => {
                 el.style.color = textColor;
               });
@@ -59,8 +58,6 @@ export default function decorate(block) {
 
         applyClassesAndStyles();
 
-
-        // Applica textColor
         if (textColor) {
             [mainTitle, secondaryBlock].forEach((block) => {
                 block?.querySelectorAll('*').forEach((el) => {
@@ -69,19 +66,16 @@ export default function decorate(block) {
             });
         }
 
-        // Sostituisci testo del link CTA
         const ctaAnchor = ctaLinkBlock?.querySelector('a');
         ctaLinkBlock.classList.add("slider-box-cta-cont");
         if (ctaAnchor && ctaLabelBlock?.textContent.trim()) {
             ctaAnchor.textContent = ctaLabelBlock.textContent.trim();
         }
 
-        // Rimuovi blocchi inutili
         [slideChildren[1], slideChildren[6], slideChildren[7], slideChildren[8]].forEach((slide) => {
             if (slide?.remove) slide.remove();
         });
 
-        // Crea sliderBox
         const sliderBox = document.createElement('div');
         sliderBox.className = 'slider-box';
 
@@ -93,12 +87,22 @@ export default function decorate(block) {
             sliderBox.style.backgroundColor = backgroundColor;
         }
 
-        // Inserisci blocchi dentro lo sliderBox
-        [slideChildren[2], slideChildren[3], slideChildren[4], slideChildren[5]].forEach((slide) => {
-            if (slide) sliderBox.appendChild(slide);
-        });
+      if (iconPath && slideChildren[2] && slideChildren[3]) {
+          const iconTitleCont = document.createElement('div');
+          iconTitleCont.className = 'iconTitle-cont';
 
-        // Inserisci sliderBox dopo l'immagine
+          iconTitleCont.appendChild(slideChildren[2]);
+          iconTitleCont.appendChild(slideChildren[3]);
+
+          sliderBox.appendChild(iconTitleCont);
+      } else {
+          if (slideChildren[3]) sliderBox.appendChild(slideChildren[3]);
+      }
+
+      if (slideChildren[4]) sliderBox.appendChild(slideChildren[4]);
+      if (slideChildren[5]) sliderBox.appendChild(slideChildren[5]);
+
+
         slide.insertBefore(sliderBox, slide.children[1]);
     });
 
