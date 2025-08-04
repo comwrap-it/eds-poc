@@ -45,7 +45,7 @@
       "name": "ConfigurazioneBox"
     },
     {
-      "component": "aem-content",
+      "component": "text",
       "name": "pathIcona",
       "label": "Path Icona"
     },
@@ -95,7 +95,7 @@
     {
       "component": "aem-content",
       "name": "CtaPath",
-      "label": "Cta Path"
+      "label": "Path CTA"
     },
     {
       "component": "text",
