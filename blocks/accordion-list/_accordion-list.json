@@ -31,24 +31,25 @@
         },
         {
           "component": "text",
+          "name": "title",
+          "label": "Titolo per il componente",
+          "value": ""
+        },
+        {
+          "component": "select",
           "name": "backgroundColor",
-          "valueType": "string",
-          "label": "Colore Sfondo Componente.",
-          "value": "#ffffff"
-        },
-        {
-          "component": "text",
-          "name": "openBackgroundColor",
-          "valueType": "string",
-          "label": "Colore Sfondo FAQ Aperta.",
-          "value": "#f0f8ff"
-        },
-        {
-          "component": "text",
-          "name": "closedBackgroundColor",
-          "valueType": "string",
-          "label": "Colore Sfondo FAQ Chiusa.",
-          "value": "#f9f9f9"
+          "label": "Colore Sfondo Componente",
+          "options": [
+            {
+              "name": "Grigio Chiaro",
+              "value": "#fafafa"
+            },
+            {
+              "name": "Azzurro Chiaro",
+              "value": "#e2f0f9"
+            }
+          ],
+          "defaultValue": "#fafafa"
         }
       ]
     }

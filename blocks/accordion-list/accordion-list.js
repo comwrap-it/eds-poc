@@ -5,9 +5,10 @@ export default async function decorate(block) {
   const children = [...block.children];
 
   const rootPath = children[0]?.querySelector('a')?.innerHTML;
-  const backgroundColor = children[1] || '#ffffff';
-  const openBackgroundColor = children[2] || '#f0f8ff';
-  const closedBackgroundColor = children[3] || '#f9f9f9';
+  const title = children[1];
+  const backgroundColor = children[2]?.querySelector('a')?.innerHTML || '#fafafa';
+  const openBackgroundColor = '#eef4f6';
+  const closedBackgroundColor = '#ffffff';
   
   // Verifica che rootPath sia configurato
   if (!rootPath) {
@@ -42,8 +43,20 @@ export default async function decorate(block) {
     const faqItems = data.data?.accordionItemList?.items || [];
 
     block.innerHTML = '';
-
     block.style.backgroundColor = backgroundColor;
+
+    // Aggiungi il titolo se presente
+    if (title && title.textContent.trim()) {
+      const titleElement = document.createElement('h2');
+      titleElement.classList.add('accordion-title');
+      titleElement.textContent = title.textContent.trim();
+      titleElement.style.textAlign = 'left';
+      titleElement.style.marginBottom = '20px';
+      titleElement.setAttribute('data-aue-label', 'Titolo Accordion');
+      titleElement.setAttribute('data-aue-type', 'text');
+      titleElement.setAttribute('data-aue-prop', 'title');
+      block.appendChild(titleElement);
+    }
 
     const accordionContainer = document.createElement('div');
     accordionContainer.classList.add('accordion-container');
