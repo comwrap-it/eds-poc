@@ -14,10 +14,18 @@ export default async function decorate(block) {
   const backgroundColor = config.backgroundcolor || '#ffffff';
   const openBackgroundColor = config.openbackgroundcolor || '#f0f8ff';
   const closedBackgroundColor = config.closedbackgroundcolor || '#f9f9f9';
+  const rootPath = config.rootpath;
+
+  // Verifica che rootPath sia configurato
+  if (!rootPath) {
+    console.warn('rootPath non configurato per accordion-list');
+    block.innerHTML = '';
+    return block;
+  }
 
   try {
     // Usa la configurazione centralizzata
-    const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/allAccordionItems');
+    const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/accordionItemsPerPath') + ';rootPath=' + rootPath;
     
     const headers = {
       'Content-Type': 'application/json'
@@ -140,7 +148,7 @@ export default async function decorate(block) {
 
   } catch (error) {
     console.error('Errore nel caricamento delle FAQ:', error);
-    block.innerHTML = '<p>Errore nel caricamento delle FAQ. Riprova più tardi.</p>';
+    block.innerHTML = '';
   }
 
   return block;
