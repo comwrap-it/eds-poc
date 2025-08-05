@@ -1,6 +1,58 @@
+main > .section > div.accordion-list-wrapper {
+  max-width: 100%;
+  padding: 0px;
+}
+
 .accordion-list {
   width: 100%;
   margin: 0;
+  /* Il contenitore principale mantiene il 100% per lo sfondo */
+}
+
+/* Contenitore interno per i contenuti con larghezze responsive */
+.accordion-list-content {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px; /* Padding laterale di base */
+}
+
+/* Media queries responsive seguendo le regole Bootstrap-like */
+@media (min-width: 576px) {
+  .accordion-list-content {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .accordion-list-content {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .accordion-list-content {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .accordion-list-content {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .accordion-list-content {
+    max-width: 1320px;
+  }
+}
+
+.accordion-list-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 .accordion-container {
@@ -10,10 +62,11 @@
 }
 
 .accordion-item {
-  border: 1px solid #ddd;
+  margin-bottom: 24px;
   border-radius: 8px;
   overflow: hidden;
   transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 8px -4px rgba(26, 26, 26, 0.2);
 }
 
 .accordion-item details {
@@ -23,7 +76,7 @@
 .accordion-summary {
   cursor: pointer;
   font-weight: bold;
-  padding: 15px 20px;
+  padding: 24px;
   margin: 0;
   list-style: none;
   position: relative;
@@ -38,15 +91,13 @@
   content: '+';
   position: absolute;
   right: 20px;
-  top: 15px; /* Posizionato a livello del titolo */
+  top: 15px;
   font-size: 18px;
-  line-height: 1.1em; /* Allineato con il titolo */
-  /* Rimossa la transizione per eliminare l'animazione */
+  line-height: 1.1em;
 }
 
 details[open] .accordion-summary::after {
   content: '−';
-  /* Rimossa la transform per eliminare l'animazione */
 }
 
 .accordion-content {
@@ -63,17 +114,17 @@ details[open] .accordion-summary::after {
 }
 
 @media (max-width: 768px) {
-  .accordion-list {
-    padding: 10px;
+  .accordion-list-content {
+    padding: 0 10px;
   }
   
   .accordion-summary {
-    padding: 12px 15px;
+    padding: 24px;
   }
   
   .accordion-summary::after {
     right: 15px;
-    top: 12px; /* Adattato per mobile */
+    top: 12px;
   }
   
   .accordion-content {
@@ -85,28 +136,32 @@ details[open] .accordion-summary::after {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding-right: 30px; /* Spazio per l'icona */
+  padding-right: 30px;
 }
 
 .accordion-title {
+  color: #193a56;
   font-weight: bold;
-  font-size: 1.1em;
-  color: #333;
+  font-size: 30px;
+  line-height: 37.5px;
+  margin: 0;
 }
 
-.accordion-preview {
-  font-size: 0.9em;
+.accordion-summary-content .accordion-title {
+  color: #193a56;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 23px;
+}
+
+.accordion-summary-content .accordion-preview {
+  font-size: 16px;
+  line-height: 23px;
   color: #666;
-  font-style: italic;
-  line-height: 1.3;
 }
 
 .accordion-summary {
   cursor: pointer;
-  padding: 12px;
+  padding: 24px;
   border-bottom: 1px solid #eee;
-}
-
-.accordion-summary:hover .accordion-title {
-  color: #0066cc;
 }

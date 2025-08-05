@@ -47,8 +47,9 @@ export default async function decorate(block) {
     block.style.backgroundColor = backgroundColor;
 
     // Aggiungi il titolo se presente
+    let titleElement;
     if (title && title.textContent.trim()) {
-      const titleElement = document.createElement('h2');
+      titleElement = document.createElement('h2');
       titleElement.classList.add('accordion-title');
       titleElement.textContent = title.textContent.trim();
       titleElement.style.textAlign = 'left';
@@ -58,8 +59,6 @@ export default async function decorate(block) {
       titleElement.setAttribute('data-aue-label', 'Titolo Accordion');
       titleElement.setAttribute('data-aue-type', 'text');
       titleElement.setAttribute('data-aue-prop', 'title');
-      
-      block.appendChild(titleElement);
     }
 
     const accordionContainer = document.createElement('div');
@@ -171,7 +170,18 @@ export default async function decorate(block) {
       accordionContainer.appendChild(accordionItem);
     });
 
-    block.appendChild(accordionContainer);
+    // Nel punto dove crei la struttura HTML, aggiungi:
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'accordion-list-content';
+    
+    // Aggiungi solo il titleElement instrumentato se presente
+    if (titleElement) {
+      contentWrapper.appendChild(titleElement);
+    }
+    contentWrapper.appendChild(accordionContainer);
+    
+    // E infine aggiungi contentWrapper al block
+    block.appendChild(contentWrapper);
 
     block.setAttribute('role', 'region');
     block.setAttribute('aria-label', 'Lista FAQ');
