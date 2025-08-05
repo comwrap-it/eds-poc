@@ -54,11 +54,6 @@ export default async function decorate(block) {
       titleElement.style.textAlign = 'left';
       titleElement.style.marginBottom = '20px';
       
-      // AGGIUNGI QUESTI ATTRIBUTI:
-      titleElement.setAttribute('data-aue-label', 'Titolo Accordion');
-      titleElement.setAttribute('data-aue-type', 'text');
-      titleElement.setAttribute('data-aue-prop', 'title');
-      
       block.appendChild(titleElement);
     }
 
