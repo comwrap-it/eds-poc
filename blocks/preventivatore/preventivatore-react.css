@@ -1,0 +1,28 @@
+.preventivatore-react {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.preventivatore-react .step-1,
+.preventivatore-react .step-2,
+.preventivatore-react .step-3 {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.preventivatore-react button {
+  background: #007cba;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.preventivatore-react button:hover {
+  background: #005a87;
+}
