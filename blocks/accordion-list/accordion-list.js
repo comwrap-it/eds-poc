@@ -4,7 +4,7 @@ import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-
 export default async function decorate(block) {
   const children = [...block.children];
 
-  const rootPath = children[0];
+  const rootPath = children[0]?.querySelector('a')?.innerHTML;
   const backgroundColor = children[1] || '#ffffff';
   const openBackgroundColor = children[2] || '#f0f8ff';
   const closedBackgroundColor = children[3] || '#f9f9f9';
