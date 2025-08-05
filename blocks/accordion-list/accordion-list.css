@@ -157,7 +157,21 @@ details[open] .accordion-summary::after {
 .accordion-summary-content .accordion-preview {
   font-size: 16px;
   line-height: 23px;
+  font-weight: normal;
   color: #666;
+  width: 100%;
+  /* Gestione dinamica dell'overflow con ellipsis */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+}
+
+/* Quando l'accordion è aperto, mostra tutto il testo */
+details[open] .accordion-preview {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
 
 .accordion-summary {

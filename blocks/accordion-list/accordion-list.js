@@ -76,18 +76,11 @@ export default async function decorate(block) {
       // Trova la prima riga (fino al primo \n o al primo punto)
       const firstLine = fullText.split(/[\n\r]/)[0].trim();
       
-      let previewText, remainingText;
-      
-      // Se la prima riga è troppo lunga, trimmala
-      if (firstLine.length > 100) {
-        previewText = firstLine.substring(0, 100) + '...';
-        remainingText = firstLine.substring(100) + fullText.substring(firstLine.length);
-      } else {
-        previewText = firstLine;
-        remainingText = fullText.substring(firstLine.length);
-      }
-      
-      return { previewText, remainingText, fullText };
+      // Rimuovi la logica di trim fisso - ora gestiamo tutto con CSS
+      return { 
+        previewText: firstLine, // Testo completo della prima riga
+        fullText: fullText 
+      };
     }
 
     // Aggiungi attributi Universal Editor al blocco principale
@@ -144,21 +137,19 @@ export default async function decorate(block) {
           accordionItem.style.backgroundColor = openBackgroundColor;
           
           if (showFirstDescriptionLine) {
-            // Comportamento originale: mostra tutto nel preview
-            previewElement.textContent = textContent.fullText;
+            // Il CSS gestisce automaticamente la visualizzazione completa
+            // Non serve più cambiare il textContent
             content.style.display = 'none';
           } else {
-            // Nuovo comportamento: mostra tutto nel content body
             content.style.display = 'block';
           }
         } else {
           accordionItem.style.backgroundColor = closedBackgroundColor;
           
           if (showFirstDescriptionLine) {
-            // Torna alla preview trimmata
-            previewElement.textContent = textContent.previewText;
+            // Il CSS gestisce automaticamente il trim con ellipsis
+            // Non serve più cambiare il textContent
           } else {
-            // Nascondi il content
             content.style.display = 'none';
           }
         }
