@@ -53,6 +53,12 @@ export default async function decorate(block) {
       titleElement.textContent = title.textContent.trim();
       titleElement.style.textAlign = 'left';
       titleElement.style.marginBottom = '20px';
+      
+      // AGGIUNGI QUESTI ATTRIBUTI:
+      titleElement.setAttribute('data-aue-label', 'Titolo Accordion');
+      titleElement.setAttribute('data-aue-type', 'text');
+      titleElement.setAttribute('data-aue-prop', 'title');
+      
       block.appendChild(titleElement);
     }
 
@@ -89,7 +95,7 @@ export default async function decorate(block) {
     block.setAttribute('data-aue-label', 'Lista Accordion');
     block.setAttribute('data-aue-type', 'container');
     block.setAttribute('data-aue-model', 'accordion-list');
-
+    block.setAttribute('data-aue-behavior', 'component');
     faqItems.forEach((item, index) => {
       const accordionItem = document.createElement('div');
       accordionItem.classList.add('accordion-item');
