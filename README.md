@@ -37,10 +37,13 @@ npm run lint
 ## Local development
 
 1. Create a new repository based on the `aem-boilerplate` template and add a mountpoint in the `fstab.yaml`
-1. Add the [AEM Code Sync GitHub App](https://github.com/apps/aem-code-sync) to the repository
-1. Install the [AEM CLI](https://github.com/adobe/helix-cli): `npm install -g @adobe/aem-cli`
-1. Start AEM Proxy: `aem up` (opens your browser at `http://localhost:3000`)
-1. Open the `{repo}` directory in your favorite IDE and start coding :)
+2. Add the [AEM Code Sync GitHub App](https://github.com/apps/aem-code-sync) to the repository
+3. Install the [AEM CLI](https://github.com/adobe/helix-cli): `npm install -g @adobe/aem-cli`
+4. Start AEM Proxy: `aem up` (opens your browser at `http://localhost:3000`)
+5. Open the `{repo}` directory in your favorite IDE and start coding :)
+6. To build react component in dist folder, 'npm run build:react', then commit the builded js
+7. To enable react in whats mode npm run dev:react
 
 ## Additional Docs
 1. [Field Types](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/implementing/developing/universal-editor/field-types)
+
