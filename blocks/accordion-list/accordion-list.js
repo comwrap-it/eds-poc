@@ -2,20 +2,13 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
 
 export default async function decorate(block) {
-  const config = {};
-  block.querySelectorAll(':scope > div').forEach((row) => {
-    if (row.children.length === 2) {
-      const key = row.children[0].textContent.trim().toLowerCase().replace(/\s+/g, '');
-      const value = row.children[1].textContent.trim();
-      config[key] = value;
-    }
-  });
+  const children = [...block.children];
 
-  const backgroundColor = config.backgroundcolor || '#ffffff';
-  const openBackgroundColor = config.openbackgroundcolor || '#f0f8ff';
-  const closedBackgroundColor = config.closedbackgroundcolor || '#f9f9f9';
-  const rootPath = config.rootpath;
-
+  const rootPath = children[0];
+  const backgroundColor = children[1] || '#ffffff';
+  const openBackgroundColor = children[2] || '#f0f8ff';
+  const closedBackgroundColor = children[3] || '#f9f9f9';
+  
   // Verifica che rootPath sia configurato
   if (!rootPath) {
     console.warn('rootPath non configurato per accordion-list');
