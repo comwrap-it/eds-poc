@@ -50,6 +50,12 @@
             }
           ],
           "defaultValue": "#fafafa"
+        },
+        {
+          "component": "boolean",
+          "label": "Mostra la prima linea della descrizione",
+          "name": "showFirstDescriptionLine",
+          "valueType": "boolean"
         }
       ]
     }

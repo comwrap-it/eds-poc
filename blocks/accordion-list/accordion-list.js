@@ -7,6 +7,7 @@ export default async function decorate(block) {
   const rootPath = children[0]?.querySelector('a')?.innerHTML;
   const title = children[1];
   const backgroundColor = children[2]?.querySelector('a')?.innerHTML || '#fafafa';
+  const showFirstDescriptionLine = children[3]?.textContent?.trim().toLowerCase() === 'true';
   const openBackgroundColor = '#eef4f6';
   const closedBackgroundColor = '#ffffff';
   
@@ -103,7 +104,7 @@ export default async function decorate(block) {
       // Processa il contenuto del testo
       const textContent = processTextContent(item.txDescription.html);
       
-      // Crea il contenuto del summary con titolo + prima riga
+      // Crea il contenuto del summary
       const summaryContent = document.createElement('div');
       summaryContent.classList.add('accordion-summary-content');
       
@@ -111,32 +112,53 @@ export default async function decorate(block) {
       titleElement.classList.add('accordion-title');
       titleElement.textContent = item.txTitle;
       
-      const previewElement = document.createElement('div');
-      previewElement.classList.add('accordion-preview');
-      previewElement.textContent = textContent.previewText;
-      
       summaryContent.appendChild(titleElement);
-      summaryContent.appendChild(previewElement);
+      
+      // Aggiungi preview solo se showFirstDescriptionLine è true
+      let previewElement;
+      if (showFirstDescriptionLine) {
+        previewElement = document.createElement('div');
+        previewElement.classList.add('accordion-preview');
+        previewElement.textContent = textContent.previewText;
+        summaryContent.appendChild(previewElement);
+      }
+      
       summary.appendChild(summaryContent);
       summary.classList.add('accordion-summary');
       
       const content = document.createElement('div');
       content.classList.add('accordion-content');
       
-      // Inizialmente mostra solo il testo rimanente (nascosto)
-      content.style.display = 'none';
+      // Se showFirstDescriptionLine è false, prepara il contenuto completo nel body
+      if (!showFirstDescriptionLine) {
+        content.innerHTML = item.txDescription.html;
+        content.style.display = 'none';
+      } else {
+        content.style.display = 'none';
+      }
       
       details.addEventListener('toggle', () => {
         if (details.open) {
           accordionItem.style.backgroundColor = openBackgroundColor;
-          // Quando si apre, rimuovi i "..." e mostra il testo completo
-          previewElement.textContent = textContent.fullText;
-          content.style.display = 'none'; // Non serve più il content separato
+          
+          if (showFirstDescriptionLine) {
+            // Comportamento originale: mostra tutto nel preview
+            previewElement.textContent = textContent.fullText;
+            content.style.display = 'none';
+          } else {
+            // Nuovo comportamento: mostra tutto nel content body
+            content.style.display = 'block';
+          }
         } else {
           accordionItem.style.backgroundColor = closedBackgroundColor;
-          // Quando si chiude, torna alla preview trimmata
-          previewElement.textContent = textContent.previewText;
-          content.style.display = 'none';
+          
+          if (showFirstDescriptionLine) {
+            // Torna alla preview trimmata
+            previewElement.textContent = textContent.previewText;
+          } else {
+            // Nascondi il content
+            content.style.display = 'none';
+          }
         }
       });
 
