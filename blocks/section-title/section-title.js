@@ -19,6 +19,4 @@ export default function decorate(block) {
   children[1]?.remove();
   children[2]?.remove();
 
-  moveInstrumentation(heading);
-  moveInstrumentation(block);
 }
