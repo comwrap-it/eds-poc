@@ -1,5 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -164,3 +165,46 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 }
+
+async function fetchHeader() {
+  try {
+    const graphqlEndpoint = getGraphQLEndpoint('/bin/pub/retrieveStructure.json?rootPath=/content/unipol/us/en');
+
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+
+    if (DEV_CONFIG.isLocalDevelopment) {
+      headers['Authorization'] = getAuthHeader();
+    }
+
+    const response = await fetch(graphqlEndpoint, {
+      method: 'GET',
+      headers: headers
+    });
+
+    if (!response.ok) {
+      const errorMessage = `HTTP error! status: ${response.status}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+
+    if (!data || typeof data !== 'object') {
+      throw new Error('Invalid response format: not a valid JSON object');
+    }
+
+    console.log('Fetched data:', data);
+
+    return data;
+
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    return [];
+  }
+}
+
+fetchHeader().then(data => {
+  console.log('Data ricevuti dalla funzione fetchHeader:', data);
+});
