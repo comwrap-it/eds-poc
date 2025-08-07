@@ -1,4 +1,32 @@
-/* header and nav layout */
+header.header-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+header.header-wrapper ul li {
+  margin-right: 20px;
+}
+
+header.header-wrapper ul li:last-child {
+  margin-right: 0;
+}
+
+header.header-wrapper ul li a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+header.header-wrapper ul li a:hover {
+  color: #0078d7;
+  outline: none;
+}
+
+
+/*
 header .nav-wrapper {
   background-color: var(--background-color);
   width: 100%;
@@ -54,7 +82,6 @@ header nav a:any-link {
   color: currentcolor;
 }
 
-/* hamburger */
 header nav .nav-hamburger {
   grid-area: hamburger;
   height: 22px;
@@ -135,7 +162,6 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
   }
 }
 
-/* brand */
 header .nav-brand {
   grid-area: brand;
   flex-basis: 128px;
@@ -149,7 +175,6 @@ header nav .nav-brand img {
   height: auto;
 }
 
-/* sections */
 header nav .nav-sections {
   grid-area: sections;
   flex: 1 1 auto;
@@ -262,7 +287,8 @@ header nav .nav-sections ul > li > ul > li {
   }
 }
 
-/* tools */
 header nav .nav-tools {
   grid-area: tools;
 }
+
+*/

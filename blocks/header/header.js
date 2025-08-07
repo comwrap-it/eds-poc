@@ -2,7 +2,84 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
 
-// media query match that indicates mobile/tablet width
+async function fetchHeaderElm() {
+  try {
+    const retrieveStructureEndpoint = getGraphQLEndpoint('/bin/pub/retrieveStructure.json?rootPath=/content/unipol/us/en');
+
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+
+    if (DEV_CONFIG.isLocalDevelopment) {
+      headers['Authorization'] = getAuthHeader();
+    }
+
+    const response = await fetch(retrieveStructureEndpoint, {
+      method: 'GET',
+      headers: headers
+    });
+
+    if (!response.ok) {
+      const errorMessage = `HTTP error! status: ${response.status}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+
+    if (!data || typeof data !== 'object') {
+      throw new Error('Invalid response format: not a valid JSON object');
+    }
+
+    console.log('Fetched data:', data);
+
+    return data;
+
+  } catch (error) {
+    console.error('Err:', error);
+    return [];
+  }
+}
+
+async function buildMenu() {
+  const data = await fetchHeaderElm();
+
+  if (!data.children || !Array.isArray(data.children)) {
+    console.warn('Nessun elemento children trovato');
+    return;
+  }
+
+  const header = document.querySelector('header.header-wrapper');
+
+  if (!header) {
+    console.error('Header non trovato nella pagina');
+    return;
+  }
+
+  const ul = document.createElement('ul');
+
+  data.children.forEach(child => {
+    const li = document.createElement('li');
+
+    const a = document.createElement('a');
+    a.href = child.path;
+    a.textContent = child.title;
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  header.appendChild(ul);
+}
+
+buildMenu();
+
+
+
+
+
+
+/*
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
 function closeOnEscape(e) {
@@ -52,23 +129,23 @@ function focusNavSection() {
   document.activeElement.addEventListener('keydown', openOnKeydown);
 }
 
-/**
+
  * Toggles all nav sections
  * @param {Element} sections The container element
  * @param {Boolean} expanded Whether the element should be expanded or collapsed
- */
+
 function toggleAllNavSections(sections, expanded = false) {
   sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
   });
 }
 
-/**
+
  * Toggles the entire nav
  * @param {Element} nav The container element
  * @param {Element} navSections The nav sections within the container element
  * @param {*} forceExpanded Optional param to force nav expand behavior when not null
- */
+
 function toggleMenu(nav, navSections, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   const button = nav.querySelector('.nav-hamburger button');
@@ -104,10 +181,9 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   }
 }
 
-/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
- */
+
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
@@ -165,46 +241,4 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 }
-
-async function fetchHeader() {
-  try {
-    const graphqlEndpoint = getGraphQLEndpoint('/bin/pub/retrieveStructure.json?rootPath=/content/unipol/us/en');
-
-    const headers = {
-      'Content-Type': 'application/json'
-    };
-
-    if (DEV_CONFIG.isLocalDevelopment) {
-      headers['Authorization'] = getAuthHeader();
-    }
-
-    const response = await fetch(graphqlEndpoint, {
-      method: 'GET',
-      headers: headers
-    });
-
-    if (!response.ok) {
-      const errorMessage = `HTTP error! status: ${response.status}`;
-      console.error(errorMessage);
-      throw new Error(errorMessage);
-    }
-
-    const data = await response.json();
-
-    if (!data || typeof data !== 'object') {
-      throw new Error('Invalid response format: not a valid JSON object');
-    }
-
-    console.log('Fetched data:', data);
-
-    return data;
-
-  } catch (error) {
-    console.error('Error fetching articles:', error);
-    return [];
-  }
-}
-
-fetchHeader().then(data => {
-  console.log('Data ricevuti dalla funzione fetchHeader:', data);
-});
+*/
