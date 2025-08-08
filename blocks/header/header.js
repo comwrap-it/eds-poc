@@ -42,6 +42,7 @@ async function fetchHeaderElm() {
 }
 
 async function buildMenu() {
+
   const data = await fetchHeaderElm();
 
   if (!data.children || !Array.isArray(data.children)) {
@@ -56,20 +57,195 @@ async function buildMenu() {
     return;
   }
 
+  // Pulizia e struttura
+  header.innerHTML = '';
+
+  // HEADER TOP
+  const headerTop = document.createElement('div');
+  headerTop.classList.add('header-top');
+
+  // Container sinistra
+  const leftContainer = document.createElement('div');
+  leftContainer.classList.add('header-top-left');
+
+  const leftLink1 = document.createElement('a');
+  leftLink1.href = '#'; //DA CAMBIARE
+  leftLink1.textContent = 'PRIVATI';
+  leftLink1.setAttribute('aria-label', 'Privati');
+
+  const leftLink2 = document.createElement('a');
+  leftLink2.href = '#'; //DA CAMBIARE
+  leftLink2.textContent = 'AZIENDE';
+  leftLink2.setAttribute('aria-label', 'Aziende');
+
+
+  leftContainer.appendChild(leftLink1);
+  leftContainer.appendChild(leftLink2);
+
+  // CONTAINER HEADET TOP DX
+  const rightContainer = document.createElement('div');
+  rightContainer.classList.add('header-top-right');
+
+  // Primo link item
+  const linkItem1 = document.createElement('div');
+  linkItem1.classList.add('link-item');
+
+  const linkImg1 = document.createElement('img');
+  linkImg1.src = 'path/to/icon1.svg'; //DA CAMBAIRE
+  linkImg1.alt = 'Icona Link 1';
+  linkImg1.loading = 'lazy';
+  linkImg1.width = 24;
+  linkImg1.height = 24;
+
+  const rightLink1 = document.createElement('a');
+  rightLink1.href = '#'; //DA CAMBIARE
+  rightLink1.textContent = 'Trova Agenzia';
+  rightLink1.setAttribute('aria-label', 'Trova Agenzia');
+
+
+  linkItem1.appendChild(linkImg1);
+  linkItem1.appendChild(rightLink1);
+
+  // Secondo link item
+  const linkItem2 = document.createElement('div');
+  linkItem2.classList.add('link-item');
+
+  const linkImg2 = document.createElement('img');
+  linkImg2.src = 'path/to/icon2.svg'; //DA CAMBAIRE
+  linkImg2.alt = 'Icona Link 2';
+  linkImg2.loading = 'lazy';
+  linkImg2.width = 24;
+  linkImg2.height = 24;
+
+  const rightLink2 = document.createElement('a');
+  rightLink2.href = '#'; //DA CAMBIARE
+  rightLink2.textContent = 'Assistenza e sinistri';
+  rightLink2.setAttribute('aria-label', 'Assistenza e sinistri');
+
+
+  linkItem2.appendChild(linkImg2);
+  linkItem2.appendChild(rightLink2);
+
+  const selectContainer = document.createElement('div');
+  selectContainer.classList.add('popup-trigger-container');
+
+  // POP UP TRIGGER
+  const popupTrigger = document.createElement('button');
+  popupTrigger.classList.add('popup-trigger');
+  popupTrigger.textContent = 'Unipol Sito Cliente \u25BE'; // DA CAMBIARE L'ICONA DELLA FRECCIA
+  popupTrigger.setAttribute('aria-haspopup', 'dialog');
+  popupTrigger.setAttribute('aria-controls', 'popup-dialog');
+
+  // === POPUP ===
+  const popupOverlay = document.createElement('div');
+  popupOverlay.classList.add('popup-overlay');
+  popupOverlay.id = 'popup-dialog';
+  popupOverlay.setAttribute('role', 'dialog');
+  popupOverlay.setAttribute('aria-modal', 'true');
+  popupOverlay.setAttribute('aria-labelledby', 'popup-title');
+  popupOverlay.style.display = 'none';
+
+  const popupContent = document.createElement('div');
+  popupContent.classList.add('popup-content');
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = 'Unipol Sito Cliente';
+  cancelBtn.classList.add('popup-cancel');
+  cancelBtn.setAttribute('tabindex', '-1');
+
+
+  const confirmBtn = document.createElement('a');
+  confirmBtn.href = '#'; //DA CAMBIARE
+  confirmBtn.textContent = 'Gruppo Unipol';
+  confirmBtn.setAttribute('aria-label', 'Gruppo Unipol');
+  confirmBtn.setAttribute('target', '_blanck');
+  confirmBtn.setAttribute('tabindex', '-1');
+
+  popupContent.appendChild(cancelBtn);
+  popupContent.appendChild(confirmBtn);
+  popupOverlay.appendChild(popupContent);
+
+  selectContainer.appendChild(popupOverlay);
+
+  // Immagine Logo
+  const logoImg = document.createElement('img');
+  logoImg.src = 'path/to/flag.svg'; //DA CAMBAIRE
+  logoImg.alt = 'ALT'; //DA CAMBAIRE
+  logoImg.loading = 'lazy';
+  logoImg.width = 58;
+
+  selectContainer.appendChild(logoImg);
+  selectContainer.appendChild(popupTrigger);
+
+  // Assembla la parte destra
+  rightContainer.appendChild(linkItem1);
+  rightContainer.appendChild(linkItem2);
+  rightContainer.appendChild(selectContainer);
+
+  // Aggiunge i due container al headerTop
+  headerTop.appendChild(leftContainer);
+  headerTop.appendChild(rightContainer);
+
+  //LISTENER E ACCESSIBILITA POP UP
+  popupTrigger.addEventListener('click', () => {
+    popupOverlay.style.display = 'flex';
+    cancelBtn.setAttribute('tabindex', '0');
+    confirmBtn.setAttribute('tabindex', '0');
+    cancelBtn.focus();
+  });
+  cancelBtn.addEventListener('click', () => {
+
+    popupOverlay.style.display = 'none';
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && popupOverlay.style.display === 'flex') {
+      popupOverlay.style.display = 'none';
+      popupTrigger.focus();
+      cancelBtn.setAttribute('tabindex', '-1');
+      confirmBtn.setAttribute('tabindex', '-1');
+    }
+  });
+  document.addEventListener('click', (event) => {
+    const isClickInsidePopup = popupOverlay.contains(event.target);
+    const isClickOnTrigger = popupTrigger.contains(event.target);
+
+    if (!isClickInsidePopup && !isClickOnTrigger && popupOverlay.style.display === 'flex') {
+      popupOverlay.style.display = 'none';
+      cancelBtn.setAttribute('tabindex', '-1');
+      confirmBtn.setAttribute('tabindex', '-1');
+    }
+  });
+  document.addEventListener('focusin', (event) => {
+    const isPopupOpen = popupOverlay.style.display === 'flex';
+    if (isPopupOpen && !popupOverlay.contains(event.target)) {
+      popupOverlay.style.display = 'none';
+      popupTrigger.focus();
+      cancelBtn.setAttribute('tabindex', '-1');
+      confirmBtn.setAttribute('tabindex', '-1');
+    }
+  });
+
+
+  // HEADER BOTTOM
+  const headerBottom = document.createElement('div');
+  headerBottom.classList.add('header-bottom');
+
   const ul = document.createElement('ul');
 
   data.children.forEach(child => {
     const li = document.createElement('li');
-
     const a = document.createElement('a');
     a.href = child.path;
     a.textContent = child.title;
-
     li.appendChild(a);
     ul.appendChild(li);
   });
 
-  header.appendChild(ul);
+  headerBottom.appendChild(ul);
+
+  // Aggiunge le due sezioni all'header
+  header.appendChild(headerTop);
+  header.appendChild(headerBottom);
 }
 
 buildMenu();
@@ -242,3 +418,4 @@ export default async function decorate(block) {
   block.append(navWrapper);
 }
 */
+

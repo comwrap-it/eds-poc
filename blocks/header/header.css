@@ -1,28 +1,136 @@
-header.header-wrapper ul {
+.header-wrapper {
+  width: 100%;
+}
+
+/* HEADER TOP */
+.header-top {
+  height: 48px;
+  width: 100%;
+  border-bottom: 2px solid #f1f1f1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.header-top-left,
+.header-top-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-top-left a {
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.header-top-right a,
+.header-top-right button {
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link-item img {
+  width: 24px;
+  height: 24px;
+}
+
+.popup-trigger-container img {
+  width: 58px;
+  object-fit: contain;
+}
+
+/* POP UP*/
+.popup-overlay {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  border: 1px solid black;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    align-items: end;
+    width: 250px;
+}
+
+.popup-content button,
+.popup-content a {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+    background: none;
+    color: black;
+}
+
+.popup-content button:hover,
+.popup-content a:hover {
+    background: none;
+    color: black;
+    text-decoration: none;
+}
+
+.popup-content button:focus,
+.popup-content a:focus {
+    background: none;
+    color: black;
+    text-decoration: none;
+}
+
+.popup-trigger {
+  background: none;
+  cursor: pointer;
+  color: black;
+}
+
+.popup-trigger:hover {
+  background: none;
+  color: black;
+}
+
+.popup-trigger:focus {
+  background: none;
+  color: black;
+}
+
+
+/* HEADER BOTTOM */
+.header-bottom {
+  height: 90px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.header-bottom ul {
+  display: flex;
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
+  gap: 24px;
 }
 
-header.header-wrapper ul li {
-  margin-right: 20px;
-}
-
-header.header-wrapper ul li:last-child {
-  margin-right: 0;
-}
-
-header.header-wrapper ul li a {
+.header-bottom li a {
   text-decoration: none;
   color: #000;
   font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-header.header-wrapper ul li a:hover {
-  color: #0078d7;
-  outline: none;
 }
 
 

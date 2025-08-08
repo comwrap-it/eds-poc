@@ -4,6 +4,9 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
     const children = [...block.children];
     const slides = children.filter((child) => child.tagName !== 'BUTTON');
+    block.querySelectorAll('img').forEach((img) => {
+        img.setAttribute('loading', 'lazy');
+    });
     let currentSlide = 0;
     let dotsWrapper;
     let autoSlideTimer;
