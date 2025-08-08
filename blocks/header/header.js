@@ -110,7 +110,7 @@ async function buildMenu() {
   linkItem2.classList.add('link-item');
 
   const linkImg2 = document.createElement('img');
-  linkImg2.src = 'path/to/icon2.svg'; //DA CAMBAIRE
+  linkImg2.src = '/content/dam/unipoleds/b_servizio_clienti.svg'; //DA CAMBAIRE
   linkImg2.alt = 'Icona Link 2';
   linkImg2.loading = 'lazy';
   linkImg2.width = 24;
