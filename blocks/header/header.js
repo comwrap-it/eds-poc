@@ -49,7 +49,6 @@ async function buildMenu() {
     console.warn('Nessun elemento children trovato');
     return;
   }
-
   const header = document.querySelector('header.header-wrapper');
 
   if (!header) {
@@ -91,7 +90,7 @@ async function buildMenu() {
   linkItem1.classList.add('link-item');
 
   const linkImg1 = document.createElement('img');
-  linkImg1.src = 'path/to/icon1.svg'; //DA CAMBAIRE
+  linkImg1.src = '/content/dam/unipoleds/b_trova_agenzia.svg'; //DA CAMBAIRE
   linkImg1.alt = 'Icona Link 1';
   linkImg1.loading = 'lazy';
   linkImg1.width = 24;
@@ -132,7 +131,7 @@ async function buildMenu() {
   // POP UP TRIGGER
   const popupTrigger = document.createElement('button');
   popupTrigger.classList.add('popup-trigger');
-  popupTrigger.textContent = 'Unipol Sito Cliente \u25BE'; // DA CAMBIARE L'ICONA DELLA FRECCIA
+  popupTrigger.textContent = 'Unipol Sito Cliente ˅'; // DA CAMBIARE L'ICONA DELLA FRECCIA
   popupTrigger.setAttribute('aria-haspopup', 'dialog');
   popupTrigger.setAttribute('aria-controls', 'popup-dialog');
 
@@ -169,8 +168,8 @@ async function buildMenu() {
 
   // Immagine Logo
   const logoImg = document.createElement('img');
-  logoImg.src = 'path/to/flag.svg'; //DA CAMBAIRE
-  logoImg.alt = 'ALT'; //DA CAMBAIRE
+  logoImg.src = '/content/dam/unipoleds/LogoGruppoUnipolSai.png';
+  logoImg.alt = 'Logo-UnipolSai'; //DA CAMBAIRE
   logoImg.loading = 'lazy';
   logoImg.width = 58;
 
@@ -224,7 +223,6 @@ async function buildMenu() {
       confirmBtn.setAttribute('tabindex', '-1');
     }
   });
-
 
   // HEADER BOTTOM
   const headerBottom = document.createElement('div');
