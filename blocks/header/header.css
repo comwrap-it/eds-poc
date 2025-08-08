@@ -1,24 +1,24 @@
 .header-wrapper {
-  width: 100%;
+    width: 100%;
 }
 
 /* HEADER TOP */
 .header-top {
-  height: 48px;
-  width: 100%;
-  border-bottom: 2px solid #f1f1f1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 24px;
-  box-sizing: border-box;
+    height: 48px;
+    width: 100%;
+    border-bottom: 2px solid #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    box-sizing: border-box;
 }
 
 .header-top-left,
 .header-top-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .header-top-left a {
@@ -34,32 +34,35 @@
 }
 
 .link-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
 }
 
 .link-item img {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.popup-trigger-container {
+    display: flex;
 }
 
 .popup-trigger-container img {
-  width: 58px;
-  object-fit: contain;
+    width: 58px;
+    object-fit: contain;
 }
 
 /* POP UP*/
 .popup-overlay {
-  position: absolute;
-  top: 0;
-  right: 20px;
-  border: 1px solid black;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    border: 1px solid black;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
 }
 
 .popup-content {
@@ -95,42 +98,42 @@
 }
 
 .popup-trigger {
-  background: none;
-  cursor: pointer;
-  color: black;
+    background: none;
+    cursor: pointer;
+    color: black;
 }
 
 .popup-trigger:hover {
-  background: none;
-  color: black;
+    background: none;
+    color: black;
 }
 
 .popup-trigger:focus {
-  background: none;
-  color: black;
+    background: none;
+    color: black;
 }
 
 
 /* HEADER BOTTOM */
 .header-bottom {
-  height: 90px;
-  width: 100%;
-  display: flex;
-  align-items: center;
+height: 90px;
+width: 100%;
+display: flex;
+align-items: center;
 }
 
 .header-bottom ul {
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  gap: 24px;
+display: flex;
+list-style: none;
+padding: 0;
+margin: 0;
+gap: 24px;
 }
 
 .header-bottom li a {
-  text-decoration: none;
-  color: #000;
-  font-weight: 500;
+text-decoration: none;
+color: #000;
+font-weight: 500;
 }
 
 
