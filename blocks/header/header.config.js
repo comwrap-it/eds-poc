@@ -1,4 +1,3 @@
-// blocks/header/header.config.js
 export const HEADER_CONFIG = {
   leftLinks: [
     { href: '#', text: 'PRIVATI', aria: 'Privati' },
@@ -22,7 +21,7 @@ export const HEADER_CONFIG = {
   ],
   popup: {
     logo: '/content/dam/unipoleds/LogoGruppoUnipolSai.png',
-    triggerText: 'Unipol Sito Cliente ˅',
+    triggerText: 'Unipol Sito Cliente ⌵',
     cancelText: 'Unipol Sito Cliente',
     confirmText: 'Gruppo Unipol',
     confirmHref: '#'

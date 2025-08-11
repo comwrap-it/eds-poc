@@ -1,6 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
-// blocks/header/header.js
 import { getGraphQLEndpoint, getAuthHeader, DEV_CONFIG } from '../../config/dev-config.js';
 import { HEADER_CONFIG } from './header.config.js';
 import { initPopup } from './header.popup.js';
@@ -35,14 +34,144 @@ function createLinkItem(imgSrc, imgAlt, linkHref, linkText, ariaLabel) {
   return container;
 }
 
+function createHamburger() {
+  const btn = document.createElement('button');
+  btn.classList.add('hamburger-btn');
+  btn.setAttribute('aria-label', 'Apri menu di navigazione');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'mobile-menu');
+  btn.innerHTML = '&#9776;';
+  return btn;
+}
+
+function buildMobileMenu(headerTopRight, headerBottomList) {
+  const mobileMenu = document.createElement('div');
+  mobileMenu.id = 'mobile-menu';
+  mobileMenu.classList.add('mobile-menu');
+  mobileMenu.setAttribute('role', 'dialog');
+  mobileMenu.setAttribute('aria-modal', 'true');
+  mobileMenu.setAttribute('aria-labelledby', 'mobile-menu-title');
+  mobileMenu.style.display = 'none';
+
+  // Titolo nascosto per aria-labelledby
+  const hiddenTitle = document.createElement('h2');
+  hiddenTitle.id = 'mobile-menu-title';
+  hiddenTitle.textContent = 'Menu di navigazione';
+  hiddenTitle.classList.add('sr-only');
+
+  // Pulsante di chiusura
+  const closeBtn = document.createElement('button');
+  closeBtn.classList.add('mobile-menu-close');
+  closeBtn.setAttribute('aria-label', 'Chiudi menu di navigazione');
+  closeBtn.innerHTML = '&times;';
+
+  closeBtn.addEventListener('click', () => {
+    mobileMenu.style.display = 'none';
+    document.querySelector('.hamburger-btn')?.setAttribute('aria-expanded', 'false');
+    document.querySelector('.hamburger-btn')?.focus();
+  });
+
+  // Cloni i nodi
+  const clonedTopRight = headerTopRight.cloneNode(true);
+  const clonedBottomList = headerBottomList.cloneNode(true);
+  clonedBottomList.classList.add('mobile-menu-list');
+
+  // Rimuovi classi desktop che nascondono elementi e aggiungi classi mobile
+  clonedTopRight.classList.remove('header-top-right');
+  clonedTopRight.classList.add('mobile-menu-section');
+  clonedBottomList.classList.remove('bottom-page-list');
+  clonedBottomList.classList.add('mobile-menu-section');
+
+  // RIMUOVI eventuali overlay clonati (se presenti)
+  const possibleOverlay = clonedTopRight.querySelector('.popup-overlay');
+  if (possibleOverlay) possibleOverlay.remove();
+
+  //INIZIALIZZA un nuovo popup
+  const clonedTrigger = clonedTopRight.querySelector('.popup-trigger');
+  if (clonedTrigger) {
+    const overlayId = `popup-dialog-mobile-${Math.random().toString(36).slice(2,6)}`;
+    const clonedOverlay = initPopup(HEADER_CONFIG.popup, clonedTrigger, overlayId);
+    clonedTopRight.appendChild(clonedOverlay);
+  }
+
+  // Appendi tutto
+  mobileMenu.append(hiddenTitle, closeBtn, clonedBottomList, clonedTopRight);
+  return mobileMenu;
+}
+
+function setupMobileMenu(headerBottom, headerTopRight, headerBottomList) {
+  const hamburger = createHamburger();
+  const mobileMenu = buildMobileMenu(headerTopRight, headerBottomList);
+
+  headerBottom.append(hamburger, mobileMenu);
+
+  function openMenu() {
+    hamburger.setAttribute('aria-expanded', 'true');
+    mobileMenu.style.display = 'flex';
+    const firstFocusable = mobileMenu.querySelector('a, button');
+    firstFocusable?.focus();
+  }
+
+  function closeMenu() {
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileMenu.style.display = 'none';
+    hamburger.focus();
+  }
+
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    if (expanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  // Chiudi con Esc
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.style.display !== 'none') {
+      closeMenu();
+    }
+  });
+
+  // Chiudi cliccando fuori
+  document.addEventListener('click', (e) => {
+    if (
+      mobileMenu.style.display !== 'none' &&
+      !mobileMenu.contains(e.target) &&
+      e.target !== hamburger
+    ) {
+      closeMenu();
+    }
+  });
+
+  // Chiudi se perde focus
+  mobileMenu.addEventListener('focusout', (e) => {
+    setTimeout(() => {
+      if (
+        mobileMenu.style.display !== 'none' &&
+        !mobileMenu.contains(document.activeElement)
+      ) {
+        closeMenu();
+      }
+    }, 0);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1024) {
+      closeMenu();
+    }
+  });
+}
+
+
 async function buildHeader() {
   const headerEl = document.querySelector('header.header-wrapper');
   if (!headerEl) return;
 
+
   const data = await fetchHeaderData();
   if (!data?.children) return;
-
-  const fragment = document.createDocumentFragment();
 
   // === HEADER TOP ===
   const headerTop = document.createElement('div');
@@ -90,6 +219,7 @@ async function buildHeader() {
   headerBottom.classList.add('header-bottom');
 
   const ul = document.createElement('ul');
+  ul.classList.add('bottom-page-list');
 
   data.children.forEach(c => {
     const li = document.createElement('li');
@@ -99,11 +229,27 @@ async function buildHeader() {
     li.appendChild(a);
     ul.appendChild(li);
   });
-
   headerBottom.appendChild(ul);
 
+  const fragment = document.createDocumentFragment();
   fragment.append(headerTop, headerBottom);
   headerEl.replaceChildren(fragment);
+
+  // Setup mobile menu solo sotto i 1024px
+  if (window.innerWidth <= 1024) {
+    setupMobileMenu(headerBottom, right, ul);
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth <= 1024 && !document.querySelector('.hamburger-btn')) {
+      setupMobileMenu(headerBottom, right, ul);
+    } else if (window.innerWidth > 1024) {
+      const hamburger = document.querySelector('.hamburger-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (hamburger) hamburger.remove();
+      if (mobileMenu) mobileMenu.remove();
+    }
+  });
 }
 
 buildHeader();
