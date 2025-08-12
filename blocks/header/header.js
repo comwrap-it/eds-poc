@@ -267,8 +267,8 @@ async function buildHeader() {
         img.src = btn.imgSrc;
         img.alt = btn.imgAlt;
         img.loading = 'lazy';
-        img.width = 24;
-        img.height = 24;
+        img.width = 32;
+        img.height = 32;
 
         link.appendChild(img);
         if (btn.text) {
@@ -289,8 +289,8 @@ async function buildHeader() {
         img.src = btn.imgSrc;
         img.alt = btn.imgAlt || '';
         img.loading = 'lazy';
-        img.width = 24;
-        img.height = 24;
+        img.width = 40;
+        img.height = 40;
 
         link.appendChild(img);
 
