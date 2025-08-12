@@ -53,7 +53,7 @@ export const HEADER_CONFIG = {
       type: 'custom',
       aria: 'Area riservata',
       imgSrc: '/content/dam/unipoleds/b_users.svg',
-      imgAlt: 'Alt a.ris',
+      imgAlt: 'Icona area riservata',
       href: '#',
       text: 'Area riservata'
     }

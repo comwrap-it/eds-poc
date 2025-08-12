@@ -1,8 +1,13 @@
+/* =========================
+LAYOUT BASE WRAPPER
+========================= */
 .header-wrapper {
     width: 100%;
 }
 
-/* HEADER TOP */
+/* =========================
+HEADER TOP
+========================= */
 .header-top {
     height: 48px;
     width: 100%;
@@ -29,10 +34,13 @@
 .header-top-right a,
 .header-top-right button {
     font-size: 14px;
-    text-decoration: none;
     font-weight: normal;
+    text-decoration: none;
 }
 
+/* =========================
+LINK ITEMS
+========================= */
 .link-item {
     display: flex;
     align-items: center;
@@ -43,6 +51,9 @@
     height: 24px;
 }
 
+/* =========================
+POPUP TRIGGER
+========================= */
 .popup-trigger-container {
     display: flex;
 }
@@ -52,13 +63,27 @@
     object-fit: contain;
 }
 
-/* POP UP*/
+.popup-trigger {
+    background: none;
+    cursor: pointer;
+    color: black;
+}
+
+.popup-trigger:hover,
+.popup-trigger:focus {
+    background: none;
+    color: black;
+}
+
+/* =========================
+POPUP OVERLAY
+========================= */
 .popup-overlay {
     position: absolute;
     top: 0;
     right: 20px;
     border: 1px solid black;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,12 +109,7 @@
 }
 
 .popup-content button:hover,
-.popup-content a:hover {
-    background: none;
-    color: black;
-    text-decoration: none;
-}
-
+.popup-content a:hover,
 .popup-content button:focus,
 .popup-content a:focus {
     background: none;
@@ -97,24 +117,9 @@
     text-decoration: none;
 }
 
-.popup-trigger {
-    background: none;
-    cursor: pointer;
-    color: black;
-}
-
-.popup-trigger:hover {
-    background: none;
-    color: black;
-}
-
-.popup-trigger:focus {
-    background: none;
-    color: black;
-}
-
-
-/* HEADER BOTTOM */
+/* =========================
+HEADER BOTTOM
+========================= */
 .header-bottom {
     width: 100%;
     display: flex;
@@ -130,24 +135,14 @@
     justify-content: space-between;
 }
 
-.header-bottom-left {
-    display: flex;
-    align-items: center;
-}
-
+.header-bottom-left,
 .header-bottom-right {
     display: flex;
     align-items: center;
 }
 
 .header-bottom-icons {
-    border-right: 1px solid #CCCCCC;
-}
-
-.header-bottom li a {
-    text-decoration: none;
-    color: #000;
-    font-weight: 500;
+    border-right: 1px solid #cccccc;
 }
 
 .header-bottom .bottom-page-list {
@@ -158,28 +153,20 @@
     gap: 24px;
 }
 
+.header-bottom li a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+
 .header-bottom-right a.custom-bottom-btn {
     display: flex;
     margin-left: 15px;
 }
 
-.mobile-menu {
-    background: white;
-    position: absolute;
-    top:0;
-    right: 0;
-    width: 80%;
-    height: fit-content;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    flex-direction: column;
-    display: none;
-    z-index: 1000;
-}
-
-.mobile-menu-section {
-    padding: 10px;
-}
-
+/* =========================
+HAMBURGER & MOBILE MENU
+========================= */
 .hamburger-btn {
     background: none;
     border: none;
@@ -194,15 +181,26 @@
     background: none;
 }
 
-@media(min-width: 1025px) {
-    .hamburger-btn, .mobile-menu {
-        display: none !important;
-    }
+.mobile-menu {
+    background: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: fit-content;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    display: none;
+    z-index: 1000;
 }
 
-.header-top-right, .bottom-page-list{
-    display: flex;
-    gap: 15px;
+.mobile-menu-section {
+    padding: 10px;
+}
+
+.mobile-menu-list {
+    list-style: none;
+    padding-bottom: 0;
 }
 
 .mobile-menu-close {
@@ -220,6 +218,9 @@
     background-color: transparent;
 }
 
+/* =========================
+SCREEN READER ONLY
+========================= */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -232,11 +233,28 @@
     border: 0;
 }
 
-@media (max-width: 1024px) {
+/* =========================
+DESKTOP ONLY
+========================= */
+@media (min-width: 1025px) {
+    .hamburger-btn,
+    .mobile-menu {
+        display: none !important;
+    }
+}
 
+/* =========================
+TABLET & MOBILE
+========================= */
+@media (max-width: 1024px) {
     .header-top-right,
     .bottom-page-list {
         display: none !important;
+    }
+
+    .header-top-left {
+        width: 100%;
+        justify-content: space-around;
     }
 
     .link-item img {
@@ -247,12 +265,17 @@
         justify-content: space-between;
     }
 
-    .header-bottom-right .search-btn{
+    .header-bottom-right .search-btn {
         display: none;
     }
 
-    .header-bottom-right .custom-bottom-btn span{
+    .header-bottom-right .custom-bottom-btn span {
         display: none;
+    }
+
+    .header-bottom-right-wrapper {
+        display: flex;
+        align-items: center;
     }
 
     .popup-trigger-container img {
@@ -268,27 +291,20 @@
         padding-top: 0;
     }
 
-    .mobile-menu-list {
-        list-style: none;
-        padding-bottom: 0;
-    }
-
-    .header-top-left {
-        width:100%;
-        justify-content: space-around;
-    }
-
     .popup-overlay {
         position: unset;
-        background:unset;
+        background: unset;
         justify-content: start;
     }
 
     .popup-content {
-        align-items : start;
+        align-items: start;
     }
 }
 
+/* =========================
+MOBILE SMALL
+========================= */
 @media (max-width: 768px) {
     .header-bottom-cont {
         padding: 12px;
@@ -301,6 +317,3 @@
         height: 32px;
     }
 }
-
-
-

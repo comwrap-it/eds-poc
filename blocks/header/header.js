@@ -103,7 +103,10 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
   const hamburger = createHamburger();
   const mobileMenu = buildMobileMenu(headerTopRight, headerBottomList);
 
-  headerBottomCont.append(hamburger, mobileMenu);
+  const wrapper = headerBottomCont.querySelector('.header-bottom-right-wrapper');
+  wrapper.appendChild(hamburger);
+
+  headerBottomCont.appendChild(mobileMenu);
 
   function openMenu() {
     hamburger.setAttribute('aria-expanded', 'true');
@@ -127,14 +130,12 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
     }
   });
 
-  // Chiudi con Esc
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu.style.display !== 'none') {
       closeMenu();
     }
   });
 
-  // Chiudi cliccando fuori
   document.addEventListener('click', (e) => {
     if (
       mobileMenu.style.display !== 'none' &&
@@ -151,7 +152,6 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
     }
   });
 }
-
 
 async function buildHeader() {
   const headerEl = document.querySelector('header.header-wrapper');
@@ -213,101 +213,98 @@ async function buildHeader() {
   const leftContainer = document.createElement('div');
   leftContainer.classList.add('header-bottom-left');
 
-    // IMMAGINE LOGO UNIPOL
-    if (HEADER_CONFIG.bottomImage) {
-      const imgLink = document.createElement('a');
-      imgLink.href = HEADER_CONFIG.bottomImage.href;
-      imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImage.aria);
+  if (HEADER_CONFIG.bottomImage) {
+    const imgLink = document.createElement('a');
+    imgLink.href = HEADER_CONFIG.bottomImage.href;
+    imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImage.aria);
 
-      const imgEl = document.createElement('img');
-      imgEl.src = HEADER_CONFIG.bottomImage.src;
-      imgEl.alt = HEADER_CONFIG.bottomImage.alt;
-      imgEl.width = HEADER_CONFIG.bottomImage.width || 24;
-      imgEl.height = HEADER_CONFIG.bottomImage.height || 24;
-      imgEl.loading = 'lazy';
+    const imgEl = document.createElement('img');
+    imgEl.src = HEADER_CONFIG.bottomImage.src;
+    imgEl.alt = HEADER_CONFIG.bottomImage.alt;
+    imgEl.width = HEADER_CONFIG.bottomImage.width || 24;
+    imgEl.height = HEADER_CONFIG.bottomImage.height || 24;
+    imgEl.loading = 'lazy';
 
-      imgLink.appendChild(imgEl);
-      leftContainer.appendChild(imgLink);
-    }
+    imgLink.appendChild(imgEl);
+    leftContainer.appendChild(imgLink);
+  }
 
-    // LISTA
-    const ul = document.createElement('ul');
-    ul.classList.add('bottom-page-list');
+  const ul = document.createElement('ul');
+  ul.classList.add('bottom-page-list');
 
-    data.children.forEach(c => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = c.path;
-      a.textContent = c.title;
-      li.appendChild(a);
-      ul.appendChild(li);
-    });
+      data.children.forEach(c => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = c.path;
+        a.textContent = c.title;
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
 
-    leftContainer.appendChild(ul);
+  leftContainer.appendChild(ul);
 
-    // Container 2: search + carrello + area riservata
-    const rightContainer = document.createElement('div');
-    rightContainer.classList.add('header-bottom-right');
+  // Container 2: search + carrello + area riservata
+  const rightContainer = document.createElement('div');
+  rightContainer.classList.add('header-bottom-right');
 
-    // Contenitore solo per le icone
-    const iconsContainer = document.createElement('div');
-    iconsContainer.classList.add('header-bottom-icons');
+  const iconsContainer = document.createElement('div');
+  iconsContainer.classList.add('header-bottom-icons');
 
-    let customButton = null;
+  let customButton = null;
+  HEADER_CONFIG.bottomRightButtons.forEach(btn => {
+    if (btn.type === 'custom') {
+      const link = document.createElement('a');
+      link.href = btn.href;
+      link.setAttribute('aria-label', btn.aria);
+      link.classList.add('custom-bottom-btn');
 
-    HEADER_CONFIG.bottomRightButtons.forEach(btn => {
-      if (btn.type === 'custom') {
-        // Pulsante con immagine + testo (link)
-        const link = document.createElement('a');
-        link.href = btn.href;
-        link.setAttribute('aria-label', btn.aria);
-        link.classList.add('custom-bottom-btn');
+      const img = document.createElement('img');
+      img.src = btn.imgSrc;
+      img.alt = btn.imgAlt;
+      img.loading = 'lazy';
+      img.width = 32;
+      img.height = 32;
 
-        const img = document.createElement('img');
-        img.src = btn.imgSrc;
-        img.alt = btn.imgAlt;
-        img.loading = 'lazy';
-        img.width = 32;
-        img.height = 32;
-
-        link.appendChild(img);
-        if (btn.text) {
-          const span = document.createElement('span');
-          span.textContent = btn.text;
-          link.appendChild(span);
-        }
-        customButton = link;
+      link.appendChild(img);
+      if (btn.text) {
+        const span = document.createElement('span');
+        span.textContent = btn.text;
+        link.appendChild(span);
       }
-      else {
-        // Pulsante con immagine
-        const link = document.createElement('a');
-        link.href = btn.href || '#';
-        link.setAttribute('aria-label', btn.aria);
-        link.classList.add(`${btn.type}-btn`);
+      customButton = link;
+    } else {
+      const link = document.createElement('a');
+      link.href = btn.href || '#';
+      link.setAttribute('aria-label', btn.aria);
+      link.classList.add(`${btn.type}-btn`);
 
-        const img = document.createElement('img');
-        img.src = btn.imgSrc;
-        img.alt = btn.imgAlt || '';
-        img.loading = 'lazy';
-        img.width = 40;
-        img.height = 40;
+      const img = document.createElement('img');
+      img.src = btn.imgSrc;
+      img.alt = btn.imgAlt || '';
+      img.loading = 'lazy';
+      img.width = 40;
+      img.height = 40;
 
-        link.appendChild(img);
+      link.appendChild(img);
 
-        if (btn.type === 'search' || btn.type === 'cart') {
-          iconsContainer.appendChild(link);
-        }
+      if (btn.type === 'search' || btn.type === 'cart') {
+        iconsContainer.appendChild(link);
       }
-    });
-
-    rightContainer.appendChild(iconsContainer);
-    if (customButton) {
-      rightContainer.appendChild(customButton);
     }
+  });
 
-    headerBottomCont.append(leftContainer, rightContainer);
-    headerBottom.appendChild(headerBottomCont);
+  rightContainer.appendChild(iconsContainer);
+  if (customButton) {
+    rightContainer.appendChild(customButton);
+  }
 
+  // === WRAPPER per .header-bottom-right + hamburger
+  const rightHamburgerWrapper = document.createElement('div');
+  rightHamburgerWrapper.classList.add('header-bottom-right-wrapper');
+  rightHamburgerWrapper.appendChild(rightContainer);
+
+  headerBottomCont.append(leftContainer, rightHamburgerWrapper);
+  headerBottom.appendChild(headerBottomCont);
 
   const fragment = document.createDocumentFragment();
   fragment.append(headerTop, headerBottom);
