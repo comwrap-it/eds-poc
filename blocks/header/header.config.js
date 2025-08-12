@@ -33,5 +33,29 @@ export const HEADER_CONFIG = {
     width: 200,
     height: 55,
     aria: 'Vai alla pagina Home'
-  }
+  },
+  bottomRightButtons: [
+    {
+      type: 'search',
+      aria: 'Apri ricerca',
+      imgSrc: '/content/dam/unipoleds/b_search.svg',
+      imgAlt: 'Icona ricerca',
+      href: '#'
+    },
+    {
+      type: 'cart',
+      aria: 'Apri carrello',
+      imgSrc: '/content/dam/unipoleds/b_carrello.svg',
+      imgAlt: 'Icona carrello',
+      href: '#'
+    },
+    {
+      type: 'custom',
+      aria: 'Area riservata',
+      imgSrc: '/content/dam/unipoleds/b_users.svg',
+      imgAlt: 'Alt a.ris',
+      href: '#',
+      text: 'Area riservata'
+    }
+  ]
 };

@@ -127,6 +127,20 @@
     height: 90px;
     width: 100%;
     align-items: center;
+    justify-content: space-between;
+}
+
+.header-bottom-left {
+    display: flex;
+}
+
+.header-bottom-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-bottom-icons {
+    border-right: 1px solid #CCCCCC;
 }
 
 .header-bottom .bottom-page-list {
@@ -213,6 +227,11 @@
 }
 
 @media (max-width: 1024px) {
+
+    .header-bottom-right {
+        display: none;
+    }
+
     .header-top-right,
     .bottom-page-list {
         display: none !important;

@@ -145,18 +145,6 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
     }
   });
 
-  // Chiudi se perde focus
-  mobileMenu.addEventListener('focusout', (e) => {
-    setTimeout(() => {
-      if (
-        mobileMenu.style.display !== 'none' &&
-        !mobileMenu.contains(document.activeElement)
-      ) {
-        closeMenu();
-      }
-    }, 0);
-  });
-
   window.addEventListener('resize', () => {
     if (window.innerWidth > 1024) {
       closeMenu();
@@ -217,33 +205,34 @@ async function buildHeader() {
   const headerBottom = document.createElement('div');
   headerBottom.classList.add('header-bottom');
 
-  //container interno
+  // container interno principale
   const headerBottomCont = document.createElement('div');
   headerBottomCont.classList.add('header-bottom-cont');
 
-  // IMMAGINE LOGO UNIPOL
-  if (HEADER_CONFIG.bottomImage) {
-    const imgLink = document.createElement('a');
-    imgLink.href = HEADER_CONFIG.bottomImage.href;
-    imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImage.aria);
+  // Container 1: logo + lista
+  const leftContainer = document.createElement('div');
+  leftContainer.classList.add('header-bottom-left');
 
-    const imgEl = document.createElement('img');
-    imgEl.src = HEADER_CONFIG.bottomImage.src;
-    imgEl.alt = HEADER_CONFIG.bottomImage.alt;
-    imgEl.width = HEADER_CONFIG.bottomImage.width || 24;
-    imgEl.height = HEADER_CONFIG.bottomImage.height || 24;
-    imgEl.loading = 'lazy';
+    // IMMAGINE LOGO UNIPOL
+    if (HEADER_CONFIG.bottomImage) {
+      const imgLink = document.createElement('a');
+      imgLink.href = HEADER_CONFIG.bottomImage.href;
+      imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImage.aria);
 
-    imgLink.appendChild(imgEl);
-    headerBottomCont.appendChild(imgLink);
-  }
+      const imgEl = document.createElement('img');
+      imgEl.src = HEADER_CONFIG.bottomImage.src;
+      imgEl.alt = HEADER_CONFIG.bottomImage.alt;
+      imgEl.width = HEADER_CONFIG.bottomImage.width || 24;
+      imgEl.height = HEADER_CONFIG.bottomImage.height || 24;
+      imgEl.loading = 'lazy';
 
-  // LISTA RECUPERATA DALLA FETCH
-  const ul = document.createElement('ul');
-  ul.classList.add('bottom-page-list');
+      imgLink.appendChild(imgEl);
+      leftContainer.appendChild(imgLink);
+    }
 
-  headerBottomCont.appendChild(ul);
-  headerBottom.appendChild(headerBottomCont);
+    // LISTA
+    const ul = document.createElement('ul');
+    ul.classList.add('bottom-page-list');
 
     data.children.forEach(c => {
       const li = document.createElement('li');
@@ -253,6 +242,71 @@ async function buildHeader() {
       li.appendChild(a);
       ul.appendChild(li);
     });
+
+    leftContainer.appendChild(ul);
+
+    // Container 2: search + carrello + area riservata
+    const rightContainer = document.createElement('div');
+    rightContainer.classList.add('header-bottom-right');
+
+    // Contenitore solo per le icone
+    const iconsContainer = document.createElement('div');
+    iconsContainer.classList.add('header-bottom-icons');
+
+    let customButton = null;
+
+    HEADER_CONFIG.bottomRightButtons.forEach(btn => {
+      if (btn.type === 'custom') {
+        // Pulsante con immagine + testo (link)
+        const link = document.createElement('a');
+        link.href = btn.href;
+        link.setAttribute('aria-label', btn.aria);
+        link.classList.add('custom-bottom-btn');
+
+        const img = document.createElement('img');
+        img.src = btn.imgSrc;
+        img.alt = btn.imgAlt;
+        img.loading = 'lazy';
+        img.width = 24;
+        img.height = 24;
+
+        link.appendChild(img);
+        if (btn.text) {
+          const span = document.createElement('span');
+          span.textContent = btn.text;
+          link.appendChild(span);
+        }
+        customButton = link;
+      }
+      else {
+        // Pulsante con immagine
+        const link = document.createElement('a');
+        link.href = btn.href || '#';
+        link.setAttribute('aria-label', btn.aria);
+        link.classList.add(`${btn.type}-btn`);
+
+        const img = document.createElement('img');
+        img.src = btn.imgSrc;
+        img.alt = btn.imgAlt || '';
+        img.loading = 'lazy';
+        img.width = 24;
+        img.height = 24;
+
+        link.appendChild(img);
+
+        if (btn.type === 'search' || btn.type === 'cart') {
+          iconsContainer.appendChild(link);
+        }
+      }
+    });
+
+    rightContainer.appendChild(iconsContainer);
+    if (customButton) {
+      rightContainer.appendChild(customButton);
+    }
+
+    headerBottomCont.append(leftContainer, rightContainer);
+    headerBottom.appendChild(headerBottomCont);
 
 
   const fragment = document.createDocumentFragment();
