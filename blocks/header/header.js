@@ -99,11 +99,11 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   return mobileMenu;
 }
 
-function setupMobileMenu(headerBottom, headerTopRight, headerBottomList) {
+function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
   const hamburger = createHamburger();
   const mobileMenu = buildMobileMenu(headerTopRight, headerBottomList);
 
-  headerBottom.append(hamburger, mobileMenu);
+  headerBottomCont.append(hamburger, mobileMenu);
 
   function openMenu() {
     hamburger.setAttribute('aria-expanded', 'true');
@@ -169,7 +169,6 @@ async function buildHeader() {
   const headerEl = document.querySelector('header.header-wrapper');
   if (!headerEl) return;
 
-
   const data = await fetchHeaderData();
   if (!data?.children) return;
 
@@ -218,7 +217,11 @@ async function buildHeader() {
   const headerBottom = document.createElement('div');
   headerBottom.classList.add('header-bottom');
 
-  // IMMAGINE LOFO UNIPOL
+  //container interno
+  const headerBottomCont = document.createElement('div');
+  headerBottomCont.classList.add('header-bottom-cont');
+
+  // IMMAGINE LOGO UNIPOL
   if (HEADER_CONFIG.bottomImage) {
     const imgLink = document.createElement('a');
     imgLink.href = HEADER_CONFIG.bottomImage.href;
@@ -232,23 +235,25 @@ async function buildHeader() {
     imgEl.loading = 'lazy';
 
     imgLink.appendChild(imgEl);
-    headerBottom.appendChild(imgLink);
+    headerBottomCont.appendChild(imgLink);
   }
 
-  //LISTA RECUPERATA DALLA FETCH
+  // LISTA RECUPERATA DALLA FETCH
   const ul = document.createElement('ul');
   ul.classList.add('bottom-page-list');
 
-  data.children.forEach(c => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = c.path;
-    a.textContent = c.title;
-    li.appendChild(a);
-    ul.appendChild(li);
-  });
+  headerBottomCont.appendChild(ul);
+  headerBottom.appendChild(headerBottomCont);
 
-  headerBottom.appendChild(ul);
+    data.children.forEach(c => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = c.path;
+      a.textContent = c.title;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
 
   const fragment = document.createDocumentFragment();
   fragment.append(headerTop, headerBottom);
@@ -256,12 +261,12 @@ async function buildHeader() {
 
   // Setup mobile menu solo sotto i 1024px
   if (window.innerWidth <= 1024) {
-    setupMobileMenu(headerBottom, right, ul);
+    setupMobileMenu(headerBottomCont, right, ul);
   }
 
   window.addEventListener('resize', () => {
     if (window.innerWidth <= 1024 && !document.querySelector('.hamburger-btn')) {
-      setupMobileMenu(headerBottom, right, ul);
+      setupMobileMenu(headerBottomCont, right, ul);
     } else if (window.innerWidth > 1024) {
       const hamburger = document.querySelector('.hamburger-btn');
       const mobileMenu = document.getElementById('mobile-menu');

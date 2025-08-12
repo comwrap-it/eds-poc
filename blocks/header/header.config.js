@@ -30,8 +30,8 @@ export const HEADER_CONFIG = {
     src: '/content/dam/unipoleds/logo_unipol.svg',
     alt: 'Home',
     href: '#',
-    width: 32,
-    height: 32,
+    width: 200,
+    height: 55,
     aria: 'Vai alla pagina Home'
   }
 };

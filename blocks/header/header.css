@@ -116,9 +116,16 @@
 
 /* HEADER BOTTOM */
 .header-bottom {
-    height: 90px;
     width: 100%;
     display: flex;
+    align-items: center;
+}
+
+.header-bottom-cont {
+    display: flex;
+    padding: 0 40px;
+    height: 90px;
+    width: 100%;
     align-items: center;
 }
 
@@ -154,14 +161,14 @@
 }
 
 .hamburger-btn {
-    position:absolute;
-    right: 0;
     background: none;
     border: none;
     font-size: 2rem;
     cursor: pointer;
     color: #333;
+    padding: 0;
 }
+
 .hamburger-btn:focus,
 .hamburger-btn:hover {
     background: none;
@@ -215,6 +222,10 @@
         display: none;
     }
 
+    .header-bottom-cont {
+        justify-content: space-between;
+    }
+
     .popup-trigger-container img {
         display: none;
     }
@@ -246,6 +257,19 @@
 
     .popup-content {
         align-items : start;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-bottom-cont {
+        padding: 12px;
+        height: 32px;
+        width: 100%;
+    }
+
+    .header-bottom a img {
+        width: 112px;
+        height: 32px;
     }
 }
 
