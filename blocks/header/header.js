@@ -218,6 +218,24 @@ async function buildHeader() {
   const headerBottom = document.createElement('div');
   headerBottom.classList.add('header-bottom');
 
+  // IMMAGINE LOFO UNIPOL
+  if (HEADER_CONFIG.bottomImage) {
+    const imgLink = document.createElement('a');
+    imgLink.href = HEADER_CONFIG.bottomImage.href;
+    imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImage.aria);
+
+    const imgEl = document.createElement('img');
+    imgEl.src = HEADER_CONFIG.bottomImage.src;
+    imgEl.alt = HEADER_CONFIG.bottomImage.alt;
+    imgEl.width = HEADER_CONFIG.bottomImage.width || 24;
+    imgEl.height = HEADER_CONFIG.bottomImage.height || 24;
+    imgEl.loading = 'lazy';
+
+    imgLink.appendChild(imgEl);
+    headerBottom.appendChild(imgLink);
+  }
+
+  //LISTA RECUPERATA DALLA FETCH
   const ul = document.createElement('ul');
   ul.classList.add('bottom-page-list');
 
@@ -229,6 +247,7 @@ async function buildHeader() {
     li.appendChild(a);
     ul.appendChild(li);
   });
+
   headerBottom.appendChild(ul);
 
   const fragment = document.createDocumentFragment();

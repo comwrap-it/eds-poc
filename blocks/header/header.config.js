@@ -25,5 +25,13 @@ export const HEADER_CONFIG = {
     cancelText: 'Unipol Sito Cliente',
     confirmText: 'Gruppo Unipol',
     confirmHref: '#'
+  },
+  bottomImage: {
+    src: '/content/dam/unipoleds/logo_unipol.svg',
+    alt: 'Home',
+    href: '#',
+    width: 32,
+    height: 32,
+    aria: 'Vai alla pagina Home'
   }
 };

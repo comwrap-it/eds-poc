@@ -42,7 +42,6 @@ export function initPopup(config, triggerBtn, overlayId = null) {
 
   function openPopup() {
     overlay.style.display = 'flex';
-    triggerBtn.setAttribute('aria-expanded', 'true');
     cancelBtn.setAttribute('tabindex', '0');
     confirmBtn.setAttribute('tabindex', '0');
     cancelBtn.focus();
@@ -53,10 +52,20 @@ export function initPopup(config, triggerBtn, overlayId = null) {
     triggerBtn.setAttribute('aria-expanded', 'false');
     cancelBtn.setAttribute('tabindex', '-1');
     confirmBtn.setAttribute('tabindex', '-1');
-    triggerBtn.focus();
   }
 
-  triggerBtn.addEventListener('click', openPopup);
+  triggerBtn.addEventListener('click', () => {
+    const isExpanded = triggerBtn.getAttribute('aria-expanded') === 'true';
+
+    if (isExpanded) {
+      closePopup();
+      triggerBtn.setAttribute('aria-expanded', 'false');
+    } else {
+      openPopup();
+      triggerBtn.setAttribute('aria-expanded', 'true');
+    }
+  });
+
   cancelBtn.addEventListener('click', closePopup);
 
   document.addEventListener('keydown', e => {
@@ -70,9 +79,15 @@ export function initPopup(config, triggerBtn, overlayId = null) {
   });
 
   document.addEventListener('focusin', e => {
-    if (overlay.style.display === 'flex' && !overlay.contains(e.target)) {
-      closePopup();
-    }
+    if (overlay.style.display !== 'flex') return;
+
+    setTimeout(() => {
+      const active = document.activeElement;
+
+      if (!overlay.contains(active) && active !== triggerBtn) {
+        closePopup();
+      }
+    }, 0);
   });
 
   return overlay;
