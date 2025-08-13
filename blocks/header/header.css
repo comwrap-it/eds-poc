@@ -15,7 +15,6 @@ HEADER TOP
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 24px;
     box-sizing: border-box;
 }
 
@@ -23,12 +22,28 @@ HEADER TOP
 .header-top-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    height: 100%;
 }
 
-.header-top-left a {
+.header-top-right{
+    gap: 25px;
+}
+
+.header-top-left div {
+    display: flex;
+    width: 160px;
+    height: 100%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f1;
+}
+
+.header-top-left div a {
     font-size: 16px;
     text-decoration: none;
+    color: #337ab7;
+    font-weight: 600;
 }
 
 .header-top-right a,
@@ -36,6 +51,7 @@ HEADER TOP
     font-size: 14px;
     font-weight: normal;
     text-decoration: none;
+    color: #193A56;
 }
 
 /* =========================
@@ -56,6 +72,8 @@ POPUP TRIGGER
 ========================= */
 .popup-trigger-container {
     display: flex;
+    background-color: #f1f1f1;
+    padding: 0 17px;
 }
 
 .popup-trigger-container img {
@@ -63,10 +81,12 @@ POPUP TRIGGER
     object-fit: contain;
 }
 
-.popup-trigger {
+.popup-trigger-container .popup-trigger {
     background: none;
     cursor: pointer;
     color: black;
+    margin: 0;
+    color: #9b9b9b;
 }
 
 .popup-trigger:hover,
@@ -152,6 +172,8 @@ HEADER BOTTOM
 
 .header-bottom-right .custom-bottom-btn span {
     margin-left: 10px;
+    font-size: 16px;
+    color: rgb(22, 72, 116);
 }
 
 
@@ -160,18 +182,22 @@ HEADER BOTTOM
     list-style: none;
     padding: 0;
     margin: 0;
-    gap: 24px;
+    margin-left: 20px;
+    gap: 25px;
 }
 
-.header-bottom .bottom-page-list li  a {
+.header-bottom .bottom-page-list li a.first-headet-bottom-link{
     display: flex;
     align-items: center;
 }
 
-.header-bottom li a {
+.header-bottom-left li a {
+    display: flex;
     text-decoration: none;
-    color: #000;
+    color: #0f3250;
     font-weight: 500;
+    text-transform: uppercase;
+    font-size: 16px;
 }
 
 .header-bottom-right a.custom-bottom-btn {
@@ -271,6 +297,10 @@ TABLET & MOBILE
     .header-top-left {
         width: 100%;
         justify-content: space-around;
+    }
+
+    .header-top-left div {
+        width: 50%;
     }
 
     .link-item img {

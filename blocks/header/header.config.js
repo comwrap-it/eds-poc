@@ -55,18 +55,18 @@ export const HEADER_CONFIG = {
     },
     {
       type: 'custom',
-      aria: 'Area riservata',
+      aria: 'AreaRiservata',
       imgSrc: '/content/dam/unipoleds/b_users.svg',
       imgAlt: 'Icona area riservata',
       href: '#',
-      text: 'Area riservata'
+      text: 'AreaRiservata'
     }
   ],
   hambUserArea: {
     href: '#',
     text: 'Area riservata',
     aria: 'Area riservata',
-    imgSrc: '/content/dam/unipoleds/b_users.svg',
+    imgSrc: '/content/dam/unipoleds/w_users.svg',
     imgAlt: 'Alt' //DA CAMBIARE
   },
   mobileMenuItemIcons: [

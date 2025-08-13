@@ -139,9 +139,7 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
 
   const mobileIcons = HEADER_CONFIG.mobileMenuItemIcons || [];
 
-  // Per ogni li della lista clonata
   clonedBottomList.querySelectorAll('li').forEach((li, index) => {
-    // Aggiungo icona specifica se presente
     if (index < mobileIcons.length && mobileIcons[index]?.src) {
       const iconConf = mobileIcons[index];
       const img = document.createElement('img');
@@ -173,11 +171,9 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   clonedBottomList.classList.remove('bottom-page-list');
   clonedBottomList.classList.add('mobile-menu-section');
 
-  // Rimuovi overlay clonati
   const possibleOverlay = clonedTopRight.querySelector('.popup-overlay');
   if (possibleOverlay) possibleOverlay.remove();
 
-  // Inizializza nuovo popup
   const clonedTrigger = clonedTopRight.querySelector('.popup-trigger');
   if (clonedTrigger) {
     const overlayId = `popup-dialog-mobile-${Math.random().toString(36).slice(2,6)}`;
@@ -185,7 +181,6 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
     clonedTopRight.appendChild(clonedOverlay);
   }
 
-  // Append ordine: titolo → header (link + X) → search → lista link → topRight
   mobileMenu.append(hiddenTitle, headerContainer, searchContainer, clonedBottomList, clonedTopRight);
 
   return mobileMenu;
@@ -258,12 +253,17 @@ async function buildHeader() {
 
   const left = document.createElement('div');
   left.classList.add('header-top-left');
+
   HEADER_CONFIG.leftLinks.forEach(l => {
+    const wrapper = document.createElement('div');
+
     const a = document.createElement('a');
     a.href = l.href;
     a.textContent = l.text;
     a.setAttribute('aria-label', l.aria);
-    left.appendChild(a);
+
+    wrapper.appendChild(a);
+    left.appendChild(wrapper);
   });
 
   const right = document.createElement('div');
@@ -326,14 +326,16 @@ async function buildHeader() {
     const ul = document.createElement('ul');
     ul.classList.add('bottom-page-list');
 
-    data.children.forEach((c, index) => {
-      const li = document.createElement('li');
 
-      const a = document.createElement('a');
-      a.href = c.path;
+  data.children.forEach((c, index) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = c.path;
 
-      // Se è il primo elemento aggiungi prima l'immagine
-      if (index === 0 && HEADER_CONFIG.firstListItemIcon?.src) {
+    if (index === 0) {
+      a.classList.add('first-headet-bottom-link');
+
+      if (HEADER_CONFIG.firstListItemIcon?.src) {
         const img = document.createElement('img');
         img.src = getDamImageUrl(HEADER_CONFIG.firstListItemIcon.src);
         img.alt = HEADER_CONFIG.firstListItemIcon.alt || '';
@@ -344,11 +346,17 @@ async function buildHeader() {
         a.appendChild(img);
       }
 
-      a.appendChild(document.createTextNode(c.title));
+      const span = document.createElement('span');
+      span.textContent = c.title;
+      a.appendChild(span);
 
-      li.appendChild(a);
-      ul.appendChild(li);
-    });
+    } else {
+      a.appendChild(document.createTextNode(c.title));
+    }
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
 
     leftContainer.appendChild(ul);
 
