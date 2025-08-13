@@ -75,36 +75,42 @@
           "value": "#"
         },
         {
-          "component": "multifield",
+          "component": "container",
           "name": "column1Links",
           "label": "Link Colonna 1",
+          "multi": true,
           "fields": [
             {
               "component": "text",
               "name": "text",
-              "label": "Testo Link"
+              "label": "Testo Link",
+              "valueType": "string"
             },
             {
               "component": "text",
               "name": "url",
-              "label": "URL Link"
+              "label": "URL Link",
+              "valueType": "string"
             }
           ]
         },
         {
-          "component": "multifield",
+          "component": "container",
           "name": "column2Links",
           "label": "Link Colonna 2",
+          "multi": true,
           "fields": [
             {
               "component": "text",
               "name": "text",
-              "label": "Testo Link"
+              "label": "Testo Link",
+              "valueType": "string"
             },
             {
               "component": "text",
               "name": "url",
-              "label": "URL Link"
+              "label": "URL Link",
+              "valueType": "string"
             }
           ]
         },
