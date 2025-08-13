@@ -1,0 +1,38 @@
+{
+  "definitions": [
+    {
+      "title": "Footer Link",
+      "id": "footer-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Footer Link",
+              "model": "footer-link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "text",
+          "name": "linkText",
+          "label": "Testo Link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "linkUrl",
+          "label": "URL Link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ]
+}
