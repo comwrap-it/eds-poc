@@ -284,7 +284,8 @@ body {
 	border: 0;
 }
 
-main > .section > div.unipol-footer-wrapper {
+main > .section > div.unipol-footer-wrapper,
+footer .footer > div  {
   margin-left: 0;
   margin-right: 0;
   padding-left: 0;
