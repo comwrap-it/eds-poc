@@ -34,6 +34,10 @@ export const HEADER_CONFIG = {
     height: 55,
     aria: 'Vai alla pagina Home'
   },
+  firstListItemIcon: {
+    src: '/content/dam/unipoleds/bicolor_unica.svg',
+    alt: 'Icona primo link'
+  },
   bottomRightButtons: [
     {
       type: 'search',

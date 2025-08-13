@@ -143,7 +143,17 @@ HEADER BOTTOM
 
 .header-bottom-icons {
     border-right: 1px solid #cccccc;
+    padding-right: 10px;
 }
+
+.search-btn {
+    margin-right: 10px;
+}
+
+.header-bottom-right .custom-bottom-btn span {
+    margin-left: 10px;
+}
+
 
 .header-bottom .bottom-page-list {
     display: flex;
@@ -174,6 +184,7 @@ HAMBURGER & MOBILE MENU
     cursor: pointer;
     color: #333;
     padding: 0;
+    margin-left: 20px;
 }
 
 .hamburger-btn:focus,
@@ -312,7 +323,7 @@ MOBILE SMALL
         width: 100%;
     }
 
-    .header-bottom a img {
+    .header-bottom-left a img {
         width: 112px;
         height: 32px;
     }
