@@ -230,31 +230,33 @@ async function buildHeader() {
     leftContainer.appendChild(imgLink);
   }
 
-  const ul = document.createElement('ul');
-  ul.classList.add('bottom-page-list');
+    const ul = document.createElement('ul');
+    ul.classList.add('bottom-page-list');
 
-  data.children.forEach((c, index) => {
-    const li = document.createElement('li');
+    data.children.forEach((c, index) => {
+      const li = document.createElement('li');
 
-    const a = document.createElement('a');
-    a.href = c.path;
-    a.textContent = c.title;
+      const a = document.createElement('a');
+      a.href = c.path;
 
-    if (index === 0 && HEADER_CONFIG.firstListItemIcon?.src) {
-      const img = document.createElement('img');
-      img.src = getDamImageUrl(HEADER_CONFIG.firstListItemIcon.src);
-      img.alt = HEADER_CONFIG.firstListItemIcon.alt || '';
-      img.width = 24;
-      img.height = 24;
-      img.loading = 'lazy';
-      a.appendChild(img);
-    }
+      // Se è il primo elemento aggiungi prima l'immagine
+      if (index === 0 && HEADER_CONFIG.firstListItemIcon?.src) {
+        const img = document.createElement('img');
+        img.src = getDamImageUrl(HEADER_CONFIG.firstListItemIcon.src);
+        img.alt = HEADER_CONFIG.firstListItemIcon.alt || '';
+        img.width = 24;
+        img.height = 24;
+        img.loading = 'lazy';
+        a.appendChild(img);
+      }
 
-    li.appendChild(a);
-    ul.appendChild(li);
-  });
+      a.appendChild(document.createTextNode(c.title));
 
-  leftContainer.appendChild(ul);
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    leftContainer.appendChild(ul);
 
   // Container 2: search + carrello + area riservata
   const rightContainer = document.createElement('div');
