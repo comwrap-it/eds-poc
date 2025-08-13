@@ -56,24 +56,5 @@
   {
     "id": "tpd-vantaggi",
     "components": []
-  },
-  {
-    "id": "unipol-footer",
-    "components": [
-      "footer-column-1",
-      "footer-column-2"
-    ]
-  },
-  {
-    "id": "footer-column-1",
-    "components": [
-      "footer-link"
-    ]
-  },
-  {
-    "id": "footer-column-2",
-    "components": [
-      "footer-link"
-    ]
   }
 ]
