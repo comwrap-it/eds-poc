@@ -43,7 +43,7 @@ function buildCard(item) {
         title,
         false,
         [{ width: 400 }, { width: 768 }, { width: 1200 }],
-        DEV_CONFIG
+        true
       );
       picture.className = 'plus-card-picture';
       

@@ -290,11 +290,10 @@ function getMetadata(name, doc = document) {
 
 /**
  * Returns a picture element with webp and fallbacks
- * @param {string} src The image URL or path
+ * @param {string} src The image URL
  * @param {string} [alt] The image alternative text
  * @param {boolean} [eager] Set loading attribute to eager
  * @param {Array} [breakpoints] Breakpoints and corresponding params (eg. width)
- * @param {boolean} [isLocalDevelopment] If true, prepends localhost:4502 to relative paths (default: false)
  * @returns {Element} The picture element
  */
 function createOptimizedPicture(
@@ -302,36 +301,22 @@ function createOptimizedPicture(
   alt = '',
   eager = false,
   breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
-  devConfig = null,
+  preserveDomain = false,
 ) {
-  // Check if we're in local development and have a valid config
-  const isLocalDevelopment = devConfig && devConfig.isLocalDevelopment;
-  const localDomain = devConfig && devConfig.domain ? devConfig.domain : 'http://localhost:4502';
-  
-  // Se siamo in sviluppo locale e src è un path relativo, aggiungi il dominio locale
-  let fullSrc = src;
-  if (isLocalDevelopment && !src.startsWith('http')) {
-    fullSrc = `${localDomain}${src.startsWith('/') ? src : '/' + src}`;
-  }
-  
-  const url = new URL(fullSrc, window.location.href);
+  const url = new URL(src, window.location.href);
   const picture = document.createElement('picture');
+  const { pathname } = url;
+  const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
   
-  // Se siamo in sviluppo locale e l'host è diverso, preserva l'URL completo
-  const shouldPreserveUrl = isLocalDevelopment && url.host !== window.location.host;
-  const basePath = shouldPreserveUrl ? url.origin + url.pathname : url.pathname;
-  const ext = url.pathname.substring(url.pathname.lastIndexOf('.') + 1);
+  // Determina se usare l'URL completo o solo il pathname
+  const basePath = preserveDomain ? url.href.split('?')[0] : pathname;
 
   // webp
   breakpoints.forEach((br) => {
     const source = document.createElement('source');
     if (br.media) source.setAttribute('media', br.media);
     source.setAttribute('type', 'image/webp');
-    // Se preserviamo l'URL assoluto, non aggiungiamo parametri di ottimizzazione
-    const srcset = shouldPreserveUrl 
-      ? basePath 
-      : `${basePath}?width=${br.width}&format=webply&optimize=medium`;
-    source.setAttribute('srcset', srcset);
+    source.setAttribute('srcset', `${basePath}?width=${br.width}&format=webply&optimize=medium`);
     picture.appendChild(source);
   });
 
@@ -340,22 +325,14 @@ function createOptimizedPicture(
     if (i < breakpoints.length - 1) {
       const source = document.createElement('source');
       if (br.media) source.setAttribute('media', br.media);
-      // Se preserviamo l'URL assoluto, non aggiungiamo parametri di ottimizzazione
-      const srcset = shouldPreserveUrl 
-        ? basePath 
-        : `${basePath}?width=${br.width}&format=${ext}&optimize=medium`;
-      source.setAttribute('srcset', srcset);
+      source.setAttribute('srcset', `${basePath}?width=${br.width}&format=${ext}&optimize=medium`);
       picture.appendChild(source);
     } else {
       const img = document.createElement('img');
       img.setAttribute('loading', eager ? 'eager' : 'lazy');
       img.setAttribute('alt', alt);
       picture.appendChild(img);
-      // Se preserviamo l'URL assoluto, non aggiungiamo parametri di ottimizzazione
-      const src = shouldPreserveUrl 
-        ? basePath 
-        : `${basePath}?width=${br.width}&format=${ext}&optimize=medium`;
-      img.setAttribute('src', src);
+      img.setAttribute('src', `${basePath}?width=${br.width}&format=${ext}&optimize=medium`);
     }
   });
 
