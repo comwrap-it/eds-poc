@@ -315,5 +315,8 @@ export default function decorate(block) {
   block.appendChild(mainSection);
   block.appendChild(bottomSection);
 
+  // Aggiungi questa chiamata per abilitare l'Universal Editor
+  moveInstrumentation(block, block);
+
   return block;
 }
