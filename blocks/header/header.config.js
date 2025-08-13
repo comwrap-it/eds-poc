@@ -61,5 +61,21 @@ export const HEADER_CONFIG = {
       href: '#',
       text: 'Area riservata'
     }
+  ],
+  hambUserArea: {
+    href: '#',
+    text: 'Area riservata',
+    aria: 'Area riservata',
+    imgSrc: '/content/dam/unipoleds/icona_speciale.svg', //DA CAMBIARE
+    imgAlt: 'alt' //DA CAMBIARE
+  },
+  // header.config.js
+  mobileMenuItemIcons: [
+    { src: '/content/dam/unipoleds/icon1.svg', alt: 'Icona item 1' },
+    { src: '/content/dam/unipoleds/icon2.svg', alt: 'Icona item 2' },
+    //{ src: '/content/dam/unipoleds/icon3.svg', alt: 'Icona item 3' },
+    //{ src: '/content/dam/unipoleds/icon1.svg', alt: 'Icona item 4' },
+    //{ src: '/content/dam/unipoleds/icon2.svg', alt: 'Icona item 5' },
+    //{ src: '/content/dam/unipoleds/icon3.svg', alt: 'Icona item 6' },
   ]
 };

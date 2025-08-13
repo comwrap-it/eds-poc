@@ -163,6 +163,11 @@ HEADER BOTTOM
     gap: 24px;
 }
 
+.header-bottom .bottom-page-list li  a {
+    display: flex;
+    align-items: center;
+}
+
 .header-bottom li a {
     text-decoration: none;
     color: #000;
@@ -197,7 +202,7 @@ HAMBURGER & MOBILE MENU
     position: absolute;
     top: 0;
     right: 0;
-    width: 80%;
+    width: 90%;
     height: fit-content;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     flex-direction: column;
@@ -311,6 +316,44 @@ TABLET & MOBILE
     .popup-content {
         align-items: start;
     }
+
+    .mobile-menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .mobile-menu-search {
+      padding: 12px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    /* icona dentro l'input, lato destro */
+    .search-wrapper .search-icon {
+      position: absolute;
+      right: 10px;            /* distanza dal bordo destro */
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      pointer-events: none;   /* non cattura i click */
+    }
+
+    /* lascia spazio a destra per l'icona */
+    .search-wrapper input[type="search"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 40px 8px 12px; /* 40px a destra per l’icona */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+
 }
 
 /* =========================
@@ -318,8 +361,8 @@ MOBILE SMALL
 ========================= */
 @media (max-width: 768px) {
     .header-bottom-cont {
-        padding: 12px;
-        height: 32px;
+        padding: 12px 16px;
+        height: 56px;
         width: 100%;
     }
 

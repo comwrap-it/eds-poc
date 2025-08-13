@@ -52,40 +52,125 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   mobileMenu.setAttribute('aria-labelledby', 'mobile-menu-title');
   mobileMenu.style.display = 'none';
 
-  // Titolo nascosto per aria-labelledby
+  // Titolo nascosto
   const hiddenTitle = document.createElement('h2');
   hiddenTitle.id = 'mobile-menu-title';
   hiddenTitle.textContent = 'Menu di navigazione';
   hiddenTitle.classList.add('sr-only');
+
+  // Contenitore per link + X
+  const headerContainer = document.createElement('div');
+  headerContainer.classList.add('mobile-menu-header');
+
+  // Link area riservata configurabile
+  if (HEADER_CONFIG.hambUserArea) {
+    const specialLinkEl = document.createElement('a');
+    specialLinkEl.href = HEADER_CONFIG.hambUserArea.href;
+    specialLinkEl.setAttribute('aria-label', HEADER_CONFIG.hambUserArea.aria);
+    specialLinkEl.classList.add('mobile-special-link');
+
+    const img = document.createElement('img');
+    img.src = getDamImageUrl(HEADER_CONFIG.hambUserArea.imgSrc);
+    img.alt = HEADER_CONFIG.hambUserArea.imgAlt || '';
+    img.width = 24;
+    img.height = 24;
+    img.loading = 'lazy';
+
+    const textNode = document.createTextNode(HEADER_CONFIG.hambUserArea.text);
+
+    specialLinkEl.append(img, textNode);
+
+    headerContainer.appendChild(specialLinkEl);
+  }
 
   // Pulsante di chiusura
   const closeBtn = document.createElement('button');
   closeBtn.classList.add('mobile-menu-close');
   closeBtn.setAttribute('aria-label', 'Chiudi menu di navigazione');
   closeBtn.innerHTML = '&times;';
-
   closeBtn.addEventListener('click', () => {
     mobileMenu.style.display = 'none';
     document.querySelector('.hamburger-btn')?.setAttribute('aria-expanded', 'false');
     document.querySelector('.hamburger-btn')?.focus();
   });
 
+  headerContainer.appendChild(closeBtn);
+
+  //Contenitore search
+  const searchContainer = document.createElement('div');
+  searchContainer.classList.add('mobile-menu-search');
+
+  // Recupera config pulsante "search"
+  const searchConfig = HEADER_CONFIG.bottomRightButtons?.find(btn => btn.type === 'search');
+
+  const searchLabel = document.createElement('label');
+  searchLabel.setAttribute('for', 'mobile-search-input');
+  searchLabel.textContent = 'Cerca nel sito:';
+  searchLabel.classList.add('sr-only');
+
+  // Contenitore input + icona
+  const searchWrapper = document.createElement('div');
+  searchWrapper.classList.add('search-wrapper');
+
+  if (searchConfig) {
+    const searchIcon = document.createElement('img');
+    searchIcon.src = getDamImageUrl(searchConfig.imgSrc);
+    searchIcon.alt = searchConfig.imgAlt || '';
+    searchIcon.width = 20;
+    searchIcon.height = 20;
+    searchIcon.loading = 'lazy';
+    searchIcon.classList.add('search-icon');
+    searchWrapper.appendChild(searchIcon);
+  }
+
+  const searchInput = document.createElement('input');
+  searchInput.type = 'search';
+  searchInput.id = 'mobile-search-input';
+  searchInput.name = 'search';
+  searchInput.placeholder = 'Cerca...';
+  searchInput.autocomplete = 'off';
+
+  searchWrapper.appendChild(searchInput);
+  searchContainer.append(searchLabel, searchWrapper);
+
   // Cloni i nodi
   const clonedTopRight = headerTopRight.cloneNode(true);
   const clonedBottomList = headerBottomList.cloneNode(true);
+
+  const mobileIcons = HEADER_CONFIG.mobileMenuItemIcons || [];
+
+  // Per ogni li della lista clonata
+  clonedBottomList.querySelectorAll('li').forEach((li, index) => {
+    if (index < mobileIcons.length && mobileIcons[index]?.src) {
+      const iconConf = mobileIcons[index];
+      const img = document.createElement('img');
+      img.src = getDamImageUrl(iconConf.src);
+      img.alt = iconConf.alt || '';
+      img.loading = 'lazy';
+      img.width = 24;
+      img.height = 24;
+      // Inserisco l’immagine prima del testo/link
+      const link = li.querySelector('a');
+      if (link) {
+        link.insertBefore(img, link.firstChild);
+      } else {
+        li.insertBefore(img, li.firstChild);
+      }
+    }
+  });
+
   clonedBottomList.classList.add('mobile-menu-list');
 
-  // Rimuovi classi desktop che nascondono elementi e aggiungi classi mobile
   clonedTopRight.classList.remove('header-top-right');
   clonedTopRight.classList.add('mobile-menu-section');
   clonedBottomList.classList.remove('bottom-page-list');
   clonedBottomList.classList.add('mobile-menu-section');
 
-  // RIMUOVI eventuali overlay clonati (se presenti)
+  // Rimuovi overlay clonati
   const possibleOverlay = clonedTopRight.querySelector('.popup-overlay');
   if (possibleOverlay) possibleOverlay.remove();
 
-  //INIZIALIZZA un nuovo popup
+  // Inizializza nuovo popup
   const clonedTrigger = clonedTopRight.querySelector('.popup-trigger');
   if (clonedTrigger) {
     const overlayId = `popup-dialog-mobile-${Math.random().toString(36).slice(2,6)}`;
@@ -93,8 +178,9 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
     clonedTopRight.appendChild(clonedOverlay);
   }
 
-  // Appendi tutto
-  mobileMenu.append(hiddenTitle, closeBtn, clonedBottomList, clonedTopRight);
+  // Append ordine: titolo → header (link + X) → search → lista link → topRight
+  mobileMenu.append(hiddenTitle, headerContainer, searchContainer, clonedBottomList, clonedTopRight);
+
   return mobileMenu;
 }
 
