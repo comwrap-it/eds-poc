@@ -5,7 +5,7 @@ export default function decorate(block) {
   const children = [...block.children];
   
   // Estrai i dati dai children del block (configurazione EDS)
-  const socialLabel = children[0]?.textContent?.trim() || 'Seguici su';
+  const socialLabel = children[0]?.textContent?.trim() || '';
   const facebookUrl = children[1]?.querySelector('a')?.href || '#';
   const instagramUrl = children[2]?.querySelector('a')?.href || '#';
   const linkedinUrl = children[3]?.querySelector('a')?.href || '#';
@@ -52,20 +52,6 @@ export default function decorate(block) {
       }
     }
     
-    return links;
-  }
-
-  // Funzione helper legacy per compatibilità (se necessario)
-  function extractLinksFromChild(child) {
-    if (!child) return [];
-    const links = [];
-    const linkElements = child.querySelectorAll('a');
-    linkElements.forEach(link => {
-      links.push({
-        text: link.textContent.trim(),
-        url: link.href
-      });
-    });
     return links;
   }
 
@@ -320,8 +306,4 @@ export default function decorate(block) {
   block.appendChild(mainSection);
   block.appendChild(bottomSection);
 
-  // Aggiungi questa chiamata per abilitare l'Universal Editor
-  moveInstrumentation(block, block);
-
-  return block;
 }
