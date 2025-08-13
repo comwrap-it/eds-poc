@@ -66,16 +66,15 @@ export const HEADER_CONFIG = {
     href: '#',
     text: 'Area riservata',
     aria: 'Area riservata',
-    imgSrc: '/content/dam/unipoleds/icona_speciale.svg', //DA CAMBIARE
-    imgAlt: 'alt' //DA CAMBIARE
+    imgSrc: '/content/dam/unipoleds/b_users.svg',
+    imgAlt: 'Alt' //DA CAMBIARE
   },
-  // header.config.js
   mobileMenuItemIcons: [
-    { src: '/content/dam/unipoleds/icon1.svg', alt: 'Icona item 1' },
-    { src: '/content/dam/unipoleds/icon2.svg', alt: 'Icona item 2' },
-    //{ src: '/content/dam/unipoleds/icon3.svg', alt: 'Icona item 3' },
-    //{ src: '/content/dam/unipoleds/icon1.svg', alt: 'Icona item 4' },
-    //{ src: '/content/dam/unipoleds/icon2.svg', alt: 'Icona item 5' },
-    //{ src: '/content/dam/unipoleds/icon3.svg', alt: 'Icona item 6' },
+    { src: '/content/dam/unipoleds/w_unica.svg', alt: 'Icona item 1' },
+    { src: '/content/dam/unipoleds/a_veicoli_mobilita.svg', alt: 'Icona item 2' },
+    { src: '/content/dam/unipoleds/a_casa_famiglia.svg', alt: 'Icona item 3' },
+    { src: '/content/dam/unipoleds/a_persona.svg', alt: 'Icona item 4' },
+    { src: '/content/dam/unipoleds/a_risparmio.svg', alt: 'Icona item 5' },
+    { src: '', alt: 'Icona item 6' },
   ]
 };

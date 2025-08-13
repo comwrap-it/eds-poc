@@ -333,26 +333,29 @@ TABLET & MOBILE
       align-items: center;
     }
 
+    .desktop-only-icon {
+        display: none;
+    }
+
     /* icona dentro l'input, lato destro */
     .search-wrapper .search-icon {
-      position: absolute;
-      right: 10px;            /* distanza dal bordo destro */
-      top: 50%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      pointer-events: none;   /* non cattura i click */
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
     }
 
     /* lascia spazio a destra per l'icona */
     .search-wrapper input[type="search"] {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 8px 40px 8px 12px; /* 40px a destra per l’icona */
-      border: 1px solid #ccc;
-      border-radius: 4px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 40px 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
     }
-
 
 }
 

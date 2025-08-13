@@ -141,6 +141,7 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
 
   // Per ogni li della lista clonata
   clonedBottomList.querySelectorAll('li').forEach((li, index) => {
+    // Aggiungo icona specifica se presente
     if (index < mobileIcons.length && mobileIcons[index]?.src) {
       const iconConf = mobileIcons[index];
       const img = document.createElement('img');
@@ -149,7 +150,6 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
       img.loading = 'lazy';
       img.width = 24;
       img.height = 24;
-      // Inserisco l’immagine prima del testo/link
       const link = li.querySelector('a');
       if (link) {
         link.insertBefore(img, link.firstChild);
@@ -157,7 +157,14 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
         li.insertBefore(img, li.firstChild);
       }
     }
+
+    const arrowSpan = document.createElement('span');
+    arrowSpan.textContent = '>';
+    arrowSpan.classList.add('mobile-menu-arrow');
+    const link = li.querySelector('a') || li;
+    link.appendChild(arrowSpan);
   });
+
 
   clonedBottomList.classList.add('mobile-menu-list');
 
@@ -332,6 +339,7 @@ async function buildHeader() {
         img.alt = HEADER_CONFIG.firstListItemIcon.alt || '';
         img.width = 24;
         img.height = 24;
+        img.classList.add('desktop-only-icon');
         img.loading = 'lazy';
         a.appendChild(img);
       }
