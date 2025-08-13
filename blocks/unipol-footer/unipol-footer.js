@@ -273,7 +273,7 @@ export default function decorate(block) {
   qrImg.setAttribute('data-aue-prop', 'qrCodeImage');
   qrImg.setAttribute('data-aue-model', 'unipol-footer');
 
-  const qrDiv.appendChild(qrImg);
+  qrDiv.appendChild(qrImg);
   
   const phoneImg = document.createElement('img');
   phoneImg.className = 'u-phone';
