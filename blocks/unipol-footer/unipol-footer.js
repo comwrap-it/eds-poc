@@ -1,7 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { getDamImageUrl } from '../../config/dev-config.js';
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
 
 export default function decorate(block) {
   const children = [...block.children];
@@ -45,11 +43,11 @@ export default function decorate(block) {
 
   // Crea la struttura del footer
   block.innerHTML = '';
-  block.className = 'footer block';
+  block.className = 'unipol-footer block';
   block.setAttribute('data-mfe-name', 'tpdFooter');
-  block.setAttribute('data-aue-label', 'Footer');
+  block.setAttribute('data-aue-label', 'Unipol Footer');
   block.setAttribute('data-aue-type', 'container');
-  block.setAttribute('data-aue-model', 'footer');
+  block.setAttribute('data-aue-model', 'unipol-footer');
 
   // Social strip
   const socialStrip = document.createElement('div');
@@ -293,22 +291,4 @@ export default function decorate(block) {
   moveInstrumentation(block);
 
   return block;
-}
-
-/**
- * loads and decorates the footer
- * @param {Element} block The footer block element
- */
-export default async function decorate(block) {
-  // load footer as fragment
-  const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
-
-  // decorate footer DOM
-  block.textContent = '';
-  const footer = document.createElement('div');
-  while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
-
-  block.append(footer);
 }
