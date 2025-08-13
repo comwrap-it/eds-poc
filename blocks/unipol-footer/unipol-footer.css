@@ -191,6 +191,28 @@ body {
 	font-weight: 800;
 }
 
+/* Nuovo wrapper a due colonne per la sezione app */
+.unipol-footer .u-app-section {
+	display: grid;
+	grid-template-columns: 1fr minmax(200px, 260px);
+	gap: 24px;
+	align-items: start;
+}
+
+.unipol-footer .u-image {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+@media (max-width: 980px) {
+	.unipol-footer .u-app-section {
+		grid-template-columns: 1fr;
+	}
+	.unipol-footer .u-image {
+		justify-content: flex-start;
+	}
+}
+
 .unipol-footer .u-stores {
 	display: flex;
 	gap: 12px;

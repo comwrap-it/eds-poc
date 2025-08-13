@@ -212,8 +212,12 @@ export default function decorate(block) {
   col2.appendChild(col2List);
   col2.appendChild(companyInfoDiv);
 
-  // App column
-  const appCol = document.createElement('aside');
+  // App section - Struttura a due colonne come nel design originale
+  const appSection = document.createElement('div');
+  appSection.className = 'u-app-section';
+  
+  // Prima colonna: Titolo, stores e QR code
+  const appCol = document.createElement('div');
   appCol.className = 'u-col u-app';
   appCol.setAttribute('aria-label', 'App Unipol');
   
@@ -261,6 +265,14 @@ export default function decorate(block) {
 
   qrDiv.appendChild(qrImg);
   
+  appCol.appendChild(appTitleEl);
+  appCol.appendChild(storesDiv);
+  appCol.appendChild(qrDiv);
+  
+  // Seconda colonna: Immagine del telefono
+  const imageCol = document.createElement('div');
+  imageCol.className = 'u-col u-image';
+  
   const phoneImg = document.createElement('img');
   phoneImg.className = 'u-phone';
   phoneImg.alt = 'Anteprima app';
@@ -270,14 +282,15 @@ export default function decorate(block) {
   phoneImg.setAttribute('data-aue-prop', 'phoneImage');
   phoneImg.setAttribute('data-aue-model', 'unipol-footer');
 
-  appCol.appendChild(appTitleEl);
-  appCol.appendChild(storesDiv);
-  appCol.appendChild(qrDiv);
-  appCol.appendChild(phoneImg);
+  imageCol.appendChild(phoneImg);
+  
+  // Assembla le due colonne dell'app
+  appSection.appendChild(appCol);
+  appSection.appendChild(imageCol);
 
   columnsContainer.appendChild(col1);
   columnsContainer.appendChild(col2);
-  columnsContainer.appendChild(appCol);
+  columnsContainer.appendChild(appSection);
   
   mainWrap.appendChild(columnsContainer);
   mainSection.appendChild(mainWrap);
