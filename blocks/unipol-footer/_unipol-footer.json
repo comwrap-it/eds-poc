@@ -82,13 +82,13 @@
           "fields": [
             {
               "component": "text",
-              "name": "text",
+              "name": "linkText",
               "label": "Testo Link",
               "valueType": "string"
             },
             {
               "component": "text",
-              "name": "url",
+              "name": "linkUrl",
               "label": "URL Link",
               "valueType": "string"
             }
@@ -102,13 +102,13 @@
           "fields": [
             {
               "component": "text",
-              "name": "text",
+              "name": "linkText",
               "label": "Testo Link",
               "valueType": "string"
             },
             {
               "component": "text",
-              "name": "url",
+              "name": "linkUrl",
               "label": "URL Link",
               "valueType": "string"
             }

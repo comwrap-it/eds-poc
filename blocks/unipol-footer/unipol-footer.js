@@ -38,17 +38,18 @@ export default function decorate(block) {
     for (let i = 0; i < containerItems.length; i++) {
       const item = containerItems[i];
       
-      // Cerca il testo e l'URL all'interno di ogni item del container
-      const textElement = item.querySelector('[data-aue-prop="text"], .text') || item.children[0];
-      const urlElement = item.querySelector('[data-aue-prop="url"], .url, a') || item.children[1];
+      // Cerca i nuovi nomi delle proprietà: linkText e linkUrl
+      const textElement =
+        item.querySelector('[data-aue-prop="linkText"], .linkText, .text') || item.children[0];
+      const urlElement =
+        item.querySelector('[data-aue-prop="linkUrl"], .linkUrl, a') || item.children[1];
       
-      if (textElement && urlElement) {
-        const text = textElement.textContent?.trim() || '';
-        const url = urlElement.href || urlElement.textContent?.trim() || '#';
-        
-        if (text) {
-          links.push({ text, url });
-        }
+      const text = textElement?.textContent?.trim() || '';
+      // linkUrl può essere su href o come testo (fallback)
+      const url = urlElement?.href || urlElement?.textContent?.trim() || '#';
+      
+      if (text) {
+        links.push({ text, url });
       }
     }
     
@@ -161,14 +162,28 @@ export default function decorate(block) {
   col1List.setAttribute('data-aue-label', 'Link Colonna 1');
   col1List.setAttribute('data-aue-type', 'container');
   col1List.setAttribute('data-aue-prop', 'column1Links');
-  
+
   column1Links.forEach((linkData, index) => {
     const li = document.createElement('li');
+    // segna l'item del container
+    li.setAttribute('data-aue-type', 'container-item');
+    li.setAttribute('data-aue-model', 'unipol-footer');
+
     const link = document.createElement('a');
     link.href = linkData.url;
-    link.textContent = linkData.text;
     link.setAttribute('data-aue-label', `Link ${index + 1} Colonna 1`);
+    // mappa l'URL sull'attributo href
     link.setAttribute('data-aue-type', 'text');
+    link.setAttribute('data-aue-prop', 'linkUrl');
+    link.setAttribute('data-aue-attr', 'href');
+
+    // testo del link esposto come proprietà distinta
+    const textSpan = document.createElement('span');
+    textSpan.textContent = linkData.text;
+    textSpan.setAttribute('data-aue-type', 'text');
+    textSpan.setAttribute('data-aue-prop', 'linkText');
+
+    link.appendChild(textSpan);
     li.appendChild(link);
     col1List.appendChild(li);
   });
@@ -188,14 +203,25 @@ export default function decorate(block) {
   col2List.setAttribute('data-aue-label', 'Link Colonna 2');
   col2List.setAttribute('data-aue-type', 'container');
   col2List.setAttribute('data-aue-prop', 'column2Links');
-  
+
   column2Links.forEach((linkData, index) => {
     const li = document.createElement('li');
+    li.setAttribute('data-aue-type', 'container-item');
+    li.setAttribute('data-aue-model', 'unipol-footer');
+
     const link = document.createElement('a');
     link.href = linkData.url;
-    link.textContent = linkData.text;
     link.setAttribute('data-aue-label', `Link ${index + 1} Colonna 2`);
     link.setAttribute('data-aue-type', 'text');
+    link.setAttribute('data-aue-prop', 'linkUrl');
+    link.setAttribute('data-aue-attr', 'href');
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = linkData.text;
+    textSpan.setAttribute('data-aue-type', 'text');
+    textSpan.setAttribute('data-aue-prop', 'linkText');
+
+    link.appendChild(textSpan);
     li.appendChild(link);
     col2List.appendChild(li);
   });
