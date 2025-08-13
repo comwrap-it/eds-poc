@@ -33,9 +33,6 @@
       "components": [
         {
           "...": "../blocks/*/_*.json#/definitions"
-        },
-        {
-          "...": "./_footer-link.json#/definitions"
         }
       ]
     }
