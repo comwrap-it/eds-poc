@@ -15,9 +15,9 @@ export default function decorate(block) {
   const ivassUrl = children[7]?.querySelector('a')?.href || '#';
   const paymentUrl = children[8]?.querySelector('a')?.href || '#';
   
-  // Estrai link delle colonne con la nuova struttura container
-  const column1Links = extractLinksFromContainer(children[9]);
-  const column2Links = extractLinksFromContainer(children[10]);
+  // Estrai le sezioni delle colonne (ora sono sezioni invece di multifield)
+  const column1Section = children[9]; // Prima sezione
+  const column2Section = children[10]; // Seconda sezione
   
   const companyInfo = children[11]?.innerHTML || '';
   const appTitle = children[12]?.innerHTML || 'Scarica o aggiorna l\'App<br>Unipol';
@@ -27,31 +27,25 @@ export default function decorate(block) {
   const phoneImage = children[16]?.querySelector('img')?.src || children[16]?.querySelector('a')?.href || '';
   const description = children[17]?.innerHTML || '';
 
-  // Funzione helper per estrarre link da un container multifield
-  function extractLinksFromContainer(containerChild) {
-    if (!containerChild) return [];
+  // Funzione helper per estrarre link da una sezione
+  function extractLinksFromSection(sectionElement) {
+    if (!sectionElement) return [];
     const links = [];
     
-    // Con la struttura container, ogni elemento del multifield è in un div separato
-    const containerItems = containerChild.children;
+    // Cerca tutti i sotto-componenti footer-link nella sezione
+    const linkElements = sectionElement.querySelectorAll('[data-aue-model="footer-link"]');
     
-    for (let i = 0; i < containerItems.length; i++) {
-      const item = containerItems[i];
-      
-      // Cerca i nuovi nomi delle proprietà: linkText e linkUrl
-      const textElement =
-        item.querySelector('[data-aue-prop="linkText"], .linkText, .text') || item.children[0];
-      const urlElement =
-        item.querySelector('[data-aue-prop="linkUrl"], .linkUrl, a') || item.children[1];
+    linkElements.forEach(linkElement => {
+      const textElement = linkElement.querySelector('[data-aue-prop="linkText"]');
+      const urlElement = linkElement.querySelector('[data-aue-prop="linkUrl"]');
       
       const text = textElement?.textContent?.trim() || '';
-      // linkUrl può essere su href o come testo (fallback)
       const url = urlElement?.href || urlElement?.textContent?.trim() || '#';
       
       if (text) {
         links.push({ text, url });
       }
-    }
+    });
     
     return links;
   }
@@ -63,6 +57,10 @@ export default function decorate(block) {
   block.setAttribute('data-aue-label', 'Unipol Footer');
   block.setAttribute('data-aue-type', 'container');
   block.setAttribute('data-aue-model', 'unipol-footer');
+
+  // Estrai i link dalle sezioni
+  const column1Links = extractLinksFromSection(column1Section);
+  const column2Links = extractLinksFromSection(column2Section);
 
   // Social strip
   const socialStrip = document.createElement('div');
