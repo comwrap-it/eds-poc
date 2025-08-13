@@ -1,6 +1,4 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
-import { getGraphQLEndpoint, getAuthHeader, DEV_CONFIG } from '../../config/dev-config.js';
+import { getGraphQLEndpoint, getAuthHeader, DEV_CONFIG, getDamImageUrl } from '../../config/dev-config.js';
 import { HEADER_CONFIG } from './header.config.js';
 import { initPopup } from './header.popup.js';
 
@@ -19,7 +17,8 @@ function createLinkItem(imgSrc, imgAlt, linkHref, linkText, ariaLabel) {
   container.classList.add('link-item');
 
   const img = document.createElement('img');
-  img.src = imgSrc;
+  // Applica getDamImageUrl per gestire immagini DAM
+  img.src = getDamImageUrl(imgSrc);
   img.alt = imgAlt;
   img.loading = 'lazy';
   img.width = 24;
@@ -185,7 +184,8 @@ async function buildHeader() {
   selectContainer.classList.add('popup-trigger-container');
 
   const logoImg = document.createElement('img');
-  logoImg.src = HEADER_CONFIG.popup.logo;
+  // Applica getDamImageUrl per il logo del popup
+  logoImg.src = getDamImageUrl(HEADER_CONFIG.popup.logo);
   logoImg.alt = 'Logo-UnipolSai';
   logoImg.loading = 'lazy';
   logoImg.width = 58;
@@ -219,7 +219,8 @@ async function buildHeader() {
     imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImage.aria);
 
     const imgEl = document.createElement('img');
-    imgEl.src = HEADER_CONFIG.bottomImage.src;
+    // Applica getDamImageUrl per l'immagine del bottom
+    imgEl.src = getDamImageUrl(HEADER_CONFIG.bottomImage.src);
     imgEl.alt = HEADER_CONFIG.bottomImage.alt;
     imgEl.width = HEADER_CONFIG.bottomImage.width || 24;
     imgEl.height = HEADER_CONFIG.bottomImage.height || 24;
@@ -259,7 +260,8 @@ async function buildHeader() {
       link.classList.add('custom-bottom-btn');
 
       const img = document.createElement('img');
-      img.src = btn.imgSrc;
+      // Applica getDamImageUrl per i bottoni custom
+      img.src = getDamImageUrl(btn.imgSrc);
       img.alt = btn.imgAlt;
       img.loading = 'lazy';
       img.width = 32;
@@ -279,7 +281,8 @@ async function buildHeader() {
       link.classList.add(`${btn.type}-btn`);
 
       const img = document.createElement('img');
-      img.src = btn.imgSrc;
+      // Applica getDamImageUrl per tutti i bottoni
+      img.src = getDamImageUrl(btn.imgSrc);
       img.alt = btn.imgAlt || '';
       img.loading = 'lazy';
       img.width = 40;

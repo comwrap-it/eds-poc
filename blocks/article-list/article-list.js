@@ -1,6 +1,6 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { createOptimizedPicture, readBlockConfig } from '../../scripts/aem.js';
-import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint } from '../../config/dev-config.js';
+import { DEV_CONFIG, getAuthHeader, getGraphQLEndpoint, getDamImageUrl } from '../../config/dev-config.js';
 
 function buildCard(item) {
   // Validazione sicura dei dati
@@ -29,6 +29,9 @@ function buildCard(item) {
   let imagePath = null;
   if (image && typeof image === 'object') {
     imagePath = image._path || image._publishUrl || image._authorUrl;
+    
+    // Applica la trasformazione DAM al path dell'immagine
+    imagePath = getDamImageUrl(imagePath);
   }
 
   // Crea immagine solo se esiste un percorso valido
@@ -43,9 +46,9 @@ function buildCard(item) {
         DEV_CONFIG
       );
       picture.className = 'plus-card-picture';
+      
     } catch (error) {
       console.warn('Failed to create optimized picture:', error);
-      // Continua senza immagine invece di fallire completamente
     }
   }
 
@@ -97,7 +100,8 @@ function createUIStructure(config, children) {
 
   const logo = document.createElement('img');
   logo.className = 'plus-logo';
-  logo.src = logoUrl;
+  // Applica la trasformazione DAM anche al logo
+  logo.src = getDamImageUrl(logoUrl);
   logo.alt = logoAlt;
   logo.title = logoAlt;
   logo.loading = 'lazy';
@@ -263,6 +267,6 @@ export default async function decorate(block) {
   // Aggiungi attributi di accessibilità
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Lista articoli Plus');
-
+  
   return block;
 }

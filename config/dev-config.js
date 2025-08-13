@@ -28,3 +28,42 @@ export function getGraphQLEndpoint(path) {
     
   return `${baseUrl}${path}`;
 }
+
+// Nuova funzione per gestire le immagini DAM
+export function getImageUrl(imagePath) {
+  // Se l'immagine inizia con /content/dam, usa sempre il cloudPublishDomain
+  if (imagePath && imagePath.startsWith('/content/dam')) {
+    return `${DEV_CONFIG.cloudPublishDomain}${imagePath}`;
+  }
+  
+  // Per altre immagini, usa il comportamento normale
+  return imagePath;
+}
+
+// Funzione helper per processare path di immagini singole
+export function getDamImageUrl(imagePath) {
+  if (!imagePath) return imagePath;
+  
+  // Se è già un URL completo che non contiene /content/dam, restituiscilo così com'è
+  if (imagePath.startsWith('http') && !imagePath.includes('/content/dam')) {
+    return imagePath;
+  }
+  
+  // Se è già un URL completo con il nostro cloudPublishDomain, evita duplicazioni
+  if (imagePath.startsWith(DEV_CONFIG.cloudPublishDomain)) {
+    return imagePath;
+  }
+  
+  // Se contiene /content/dam, processa l'URL
+  if (imagePath.includes('/content/dam')) {
+    const relativePath = imagePath.includes('http') 
+      ? new URL(imagePath).pathname 
+      : imagePath;
+    
+    if (relativePath.startsWith('/content/dam')) {
+      return `${DEV_CONFIG.cloudPublishDomain}${relativePath}`;
+    }
+  }
+  
+  return imagePath;
+}
