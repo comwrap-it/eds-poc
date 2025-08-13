@@ -15,9 +15,9 @@ export default function decorate(block) {
   const ivassUrl = children[7]?.querySelector('a')?.href || '#';
   const paymentUrl = children[8]?.querySelector('a')?.href || '#';
   
-  // Estrai link delle colonne (assumendo che siano in formato lista)
-  const column1Links = extractLinksFromChild(children[9]);
-  const column2Links = extractLinksFromChild(children[10]);
+  // Estrai link delle colonne con la nuova struttura container
+  const column1Links = extractLinksFromContainer(children[9]);
+  const column2Links = extractLinksFromContainer(children[10]);
   
   const companyInfo = children[11]?.innerHTML || '';
   const appTitle = children[12]?.innerHTML || 'Scarica o aggiorna l\'App<br>Unipol';
@@ -27,7 +27,35 @@ export default function decorate(block) {
   const phoneImage = children[16]?.querySelector('img')?.src || children[16]?.querySelector('a')?.href || '';
   const description = children[17]?.innerHTML || '';
 
-  // Funzione helper per estrarre link da un elemento
+  // Funzione helper per estrarre link da un container multifield
+  function extractLinksFromContainer(containerChild) {
+    if (!containerChild) return [];
+    const links = [];
+    
+    // Con la struttura container, ogni elemento del multifield è in un div separato
+    const containerItems = containerChild.children;
+    
+    for (let i = 0; i < containerItems.length; i++) {
+      const item = containerItems[i];
+      
+      // Cerca il testo e l'URL all'interno di ogni item del container
+      const textElement = item.querySelector('[data-aue-prop="text"], .text') || item.children[0];
+      const urlElement = item.querySelector('[data-aue-prop="url"], .url, a') || item.children[1];
+      
+      if (textElement && urlElement) {
+        const text = textElement.textContent?.trim() || '';
+        const url = urlElement.href || urlElement.textContent?.trim() || '#';
+        
+        if (text) {
+          links.push({ text, url });
+        }
+      }
+    }
+    
+    return links;
+  }
+
+  // Funzione helper legacy per compatibilità (se necessario)
   function extractLinksFromChild(child) {
     if (!child) return [];
     const links = [];
@@ -145,7 +173,7 @@ export default function decorate(block) {
   const col1List = document.createElement('ul');
   col1List.className = 'u-links';
   col1List.setAttribute('data-aue-label', 'Link Colonna 1');
-  col1List.setAttribute('data-aue-type', 'multifield');
+  col1List.setAttribute('data-aue-type', 'container');
   col1List.setAttribute('data-aue-prop', 'column1Links');
   
   column1Links.forEach((linkData, index) => {
@@ -172,7 +200,7 @@ export default function decorate(block) {
   const col2List = document.createElement('ul');
   col2List.className = 'u-links';
   col2List.setAttribute('data-aue-label', 'Link Colonna 2');
-  col2List.setAttribute('data-aue-type', 'multifield');
+  col2List.setAttribute('data-aue-type', 'container');
   col2List.setAttribute('data-aue-prop', 'column2Links');
   
   column2Links.forEach((linkData, index) => {
