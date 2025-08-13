@@ -920,13 +920,13 @@
         "value": "#"
       },
       {
-        "component": "aem-content",
+        "component": "reference",
         "name": "qrCodeImage",
         "label": "Immagine QR Code",
         "valueType": "string"
       },
       {
-        "component": "aem-content",
+        "component": "reference",
         "name": "phoneImage",
         "label": "Immagine Telefono",
         "valueType": "string"

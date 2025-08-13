@@ -220,7 +220,8 @@ export default function decorate(block) {
   companyInfoDiv.setAttribute('data-aue-label', 'Informazioni Societarie');
   companyInfoDiv.setAttribute('data-aue-type', 'richtext');
   companyInfoDiv.setAttribute('data-aue-prop', 'companyInfo');
-  
+  companyInfoDiv.setAttribute('data-aue-model', 'unipol-footer');
+
   col2.appendChild(col2Title);
   col2.appendChild(col2List);
   col2.appendChild(companyInfoDiv);
@@ -235,7 +236,8 @@ export default function decorate(block) {
   appTitleEl.setAttribute('data-aue-label', 'Titolo App');
   appTitleEl.setAttribute('data-aue-type', 'richtext');
   appTitleEl.setAttribute('data-aue-prop', 'appTitle');
-  
+  appTitleEl.setAttribute('data-aue-model', 'unipol-footer');
+
   const storesDiv = document.createElement('div');
   storesDiv.className = 'u-stores';
   
@@ -267,19 +269,21 @@ export default function decorate(block) {
   qrImg.alt = 'QR App Unipol';
   qrImg.src = qrCodeImage ? getDamImageUrl(qrCodeImage) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='96' height='96' fill='%23fff'/%3E%3Crect x='0' y='0' width='96' height='96' fill='none' stroke='%23c9d3dc'/%3E%3Ctext x='50%' y='52%' font-family='Arial' font-size='10' text-anchor='middle' fill='%2390a3b5'%3EQR%3C/text%3E%3C/svg%3E";
   qrImg.setAttribute('data-aue-label', 'Immagine QR Code');
-  qrImg.setAttribute('data-aue-type', 'media');
+  qrImg.setAttribute('data-aue-type', 'reference');
   qrImg.setAttribute('data-aue-prop', 'qrCodeImage');
-  
-  qrDiv.appendChild(qrImg);
+  qrImg.setAttribute('data-aue-model', 'unipol-footer');
+
+  const qrDiv.appendChild(qrImg);
   
   const phoneImg = document.createElement('img');
   phoneImg.className = 'u-phone';
   phoneImg.alt = 'Anteprima app';
   phoneImg.src = phoneImage ? getDamImageUrl(phoneImage) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='400'%3E%3Crect width='260' height='400' rx='22' ry='22' fill='%23f4f7fa' stroke='%23d8dee6'/%3E%3Ctext x='50%' y='50%' font-family='Arial' font-size='14' text-anchor='middle' fill='%2390a3b5'%3EPhone image%3C/text%3E%3C/svg%3E";
   phoneImg.setAttribute('data-aue-label', 'Immagine Telefono');
-  phoneImg.setAttribute('data-aue-type', 'media');
+  phoneImg.setAttribute('data-aue-type', 'reference');
   phoneImg.setAttribute('data-aue-prop', 'phoneImage');
-  
+  phoneImg.setAttribute('data-aue-model', 'unipol-footer');
+
   appCol.appendChild(appTitleEl);
   appCol.appendChild(storesDiv);
   appCol.appendChild(qrDiv);
@@ -305,7 +309,8 @@ export default function decorate(block) {
   descriptionP.setAttribute('data-aue-label', 'Descrizione Azienda');
   descriptionP.setAttribute('data-aue-type', 'richtext');
   descriptionP.setAttribute('data-aue-prop', 'description');
-  
+  descriptionP.setAttribute('data-aue-model', 'unipol-footer');
+
   bottomWrap.appendChild(descriptionP);
   bottomSection.appendChild(bottomWrap);
 
