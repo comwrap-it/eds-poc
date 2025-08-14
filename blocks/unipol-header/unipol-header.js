@@ -266,7 +266,6 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
 
 export default async function decorate(block) {
   const headerEl = document.querySelector('header.unipol-header-wrapper');
-  console.log(headerEl);
   if (!headerEl) return;
 
   const data = await fetchHeaderData();
