@@ -87,8 +87,18 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   const closeBtn = document.createElement('button');
   closeBtn.classList.add('mobile-menu-close');
   closeBtn.setAttribute('aria-label', 'Chiudi menu di navigazione');
-  closeBtn.innerHTML = '&times;';
+
+  const closeImg = document.createElement('img');
+  closeImg.src = getDamImageUrl(HEADER_CONFIG.closeIcon.imgSrc);
+  closeImg.alt = HEADER_CONFIG.closeIcon.alt;
+  closeImg.width = 24;
+  closeImg.height = 24;
+
+  closeBtn.appendChild(closeImg);
+
   closeBtn.addEventListener('click', () => {
+    const overlay = document.getElementById('mobile-menu-overlay');
+    if (overlay) overlay.remove();
     mobileMenu.style.display = 'none';
     document.querySelector('.hamburger-btn')?.setAttribute('aria-expanded', 'false');
     document.querySelector('.hamburger-btn')?.focus();
@@ -100,7 +110,6 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   const searchContainer = document.createElement('div');
   searchContainer.classList.add('mobile-menu-search');
 
-  // Recupera config pulsante "search"
   const searchConfig = HEADER_CONFIG.bottomRightButtons?.find(btn => btn.type === 'search');
 
   const searchLabel = document.createElement('label');
@@ -127,7 +136,7 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   searchInput.type = 'search';
   searchInput.id = 'mobile-search-input';
   searchInput.name = 'search';
-  searchInput.placeholder = 'Cerca...';
+  searchInput.placeholder = 'Cerca';
   searchInput.autocomplete = 'off';
 
   searchWrapper.appendChild(searchInput);
@@ -198,13 +207,28 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
   function openMenu() {
     hamburger.setAttribute('aria-expanded', 'true');
     mobileMenu.style.display = 'flex';
+
+    let overlay = document.createElement('div');
+    overlay.id = 'mobile-menu-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+    overlay.style.zIndex = 999;
+    document.body.appendChild(overlay);
+    mobileMenu.style.zIndex = 1000;
     const firstFocusable = mobileMenu.querySelector('a, button');
     firstFocusable?.focus();
+    overlay.addEventListener('click', closeMenu);
   }
 
   function closeMenu() {
     hamburger.setAttribute('aria-expanded', 'false');
     mobileMenu.style.display = 'none';
+    const overlay = document.getElementById('mobile-menu-overlay');
+    if (overlay) overlay.remove();
     hamburger.focus();
   }
 
@@ -254,13 +278,23 @@ async function buildHeader() {
   const left = document.createElement('div');
   left.classList.add('header-top-left');
 
-  HEADER_CONFIG.leftLinks.forEach(l => {
+  const path = window.location.pathname;
+
+  const isAziende = /^\/aziende(?:\/|$)/i.test(path);
+
+  const activeIndex = isAziende ? 1 : 0;
+
+  HEADER_CONFIG.leftLinks.forEach((l, index) => {
     const wrapper = document.createElement('div');
 
     const a = document.createElement('a');
     a.href = l.href;
     a.textContent = l.text;
     a.setAttribute('aria-label', l.aria);
+
+    if (index === activeIndex) {
+      wrapper.classList.add('active-top-link');
+    }
 
     wrapper.appendChild(a);
     left.appendChild(wrapper);
@@ -285,7 +319,17 @@ async function buildHeader() {
 
   const popupTrigger = document.createElement('button');
   popupTrigger.classList.add('popup-trigger');
-  popupTrigger.textContent = HEADER_CONFIG.popup.triggerText;
+
+  const parts = HEADER_CONFIG.popup.triggerText.split('⌵');
+  const labelText = parts[0].trim();
+
+  const textNode = document.createTextNode(labelText);
+
+  const arrowSpan = document.createElement('span');
+  arrowSpan.classList.add('popup-arrow');
+  arrowSpan.textContent = '⌵';
+
+  popupTrigger.append(textNode, arrowSpan);
 
   const popupOverlay = initPopup(HEADER_CONFIG.popup, popupTrigger);
 
@@ -358,7 +402,7 @@ async function buildHeader() {
     ul.appendChild(li);
   });
 
-    leftContainer.appendChild(ul);
+  leftContainer.appendChild(ul);
 
   // Container 2: search + carrello + area riservata
   const rightContainer = document.createElement('div');
@@ -447,4 +491,3 @@ async function buildHeader() {
 }
 
 buildHeader();
-

@@ -69,6 +69,10 @@ export const HEADER_CONFIG = {
     imgSrc: '/content/dam/unipoleds/w_users.svg',
     imgAlt: 'Alt' //DA CAMBIARE
   },
+  closeIcon: {
+    src: '/content/dam/unipoleds/w_close.svg',
+    alt: 'Chiudi menu'
+  },
   mobileMenuItemIcons: [
     { src: '/content/dam/unipoleds/w_unica.svg', alt: 'Icona item 1' },
     { src: '/content/dam/unipoleds/a_veicoli_mobilita.svg', alt: 'Icona item 2' },

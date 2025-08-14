@@ -54,6 +54,11 @@ HEADER TOP
     color: #193A56;
 }
 
+.header-top-left .active-top-link {
+    background: transparent;
+    border-top: 4px solid #337ab7;
+}
+
 /* =========================
 LINK ITEMS
 ========================= */
@@ -144,6 +149,7 @@ HEADER BOTTOM
     width: 100%;
     display: flex;
     align-items: center;
+    box-shadow: 0px 4px 8px -4px #1A1A1A33;
 }
 
 .header-bottom-cont {
@@ -242,13 +248,62 @@ HAMBURGER & MOBILE MENU
 
 .mobile-menu-list {
     list-style: none;
-    padding-bottom: 0;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.mobile-menu-list li{
+    padding: 21px 16px;
+    border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+.mobile-menu-list li a{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500px;
+}
+
+.mobile-menu-list li img{
+    margin-right: 10px;
+}
+
+ul.mobile-menu-list > li:first-child {
+    background-color: rgb(25, 58, 86);
+}
+
+ul.mobile-menu-list > li:first-child a {
+    color: white;
+}
+
+ul.mobile-menu-list > li:nth-child(2) a {
+  color: rgb(1, 105, 180);
+}
+
+ul.mobile-menu-list > li:nth-child(3) a {
+  color: rgb(233, 78, 16);
+}
+
+ul.mobile-menu-list > li:nth-child(4) a {
+  color: rgb(89, 166, 39);
+}
+
+ul.mobile-menu-list > li:nth-child(5) a {
+  color: rgb(81, 130, 154);
+}
+
+.mobile-menu-list li span{
+    margin-left: auto;
+    color: rgb(25, 58, 86);
+}
+ul.mobile-menu-list > li:first-child span {
+    font-size: 25px;
+    color: white;
 }
 
 .mobile-menu-close {
     background: none;
     border: none;
-    font-size: 2rem;
     cursor: pointer;
     color: #333;
     align-self: flex-end;
@@ -337,6 +392,41 @@ TABLET & MOBILE
         padding-top: 0;
     }
 
+    div.mobile-menu-section {
+        padding: 16px;
+        background-color: #f1f1f1;
+    }
+
+    div.mobile-menu-section .link-item{
+        margin-bottom: 16px;
+    }
+
+    div.mobile-menu-section a,
+    div.mobile-menu-section button {
+        font-size: 14px;
+        text-decoration: underline;
+        color: rgb(31, 91, 142);
+    }
+
+    .popup-trigger-container {
+        padding: 0;
+        width: 100%;
+    }
+
+    .popup-trigger-container .popup-trigger {
+        color: rgb(31, 91, 142);
+        text-decoration: none;
+        font-weight: normal;
+        width: 100%;
+        display: flex;
+        padding: 0;
+    }
+
+    .popup-trigger-container .popup-trigger span {
+        margin-left: auto;
+    }
+
+
     .popup-overlay {
         position: unset;
         background: unset;
@@ -345,12 +435,35 @@ TABLET & MOBILE
 
     .popup-content {
         align-items: start;
+        width: 100%;
     }
 
     .mobile-menu-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background-color: rgb(22, 72, 116);
+        padding: 0 10px;
+        font-size: 14px;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 12px 4px;
+    }
+
+    .mobile-menu-header a {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    .mobile-menu-header a,
+    .mobile-menu-header button {
+        color: white;
+    }
+
+    .mobile-menu-section .popup-content a,
+    .mobile-menu-section .popup-content button {
+        color: black;
+        text-decoration: none;
     }
 
     .mobile-menu-search {
@@ -367,7 +480,6 @@ TABLET & MOBILE
         display: none;
     }
 
-    /* icona dentro l'input, lato destro */
     .search-wrapper .search-icon {
         position: absolute;
         right: 10px;
@@ -378,13 +490,13 @@ TABLET & MOBILE
         pointer-events: none;
     }
 
-    /* lascia spazio a destra per l'icona */
     .search-wrapper input[type="search"] {
         width: 100%;
+        font-size: 14px;
         box-sizing: border-box;
-        padding: 8px 40px 8px 12px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        padding: 15px;
+        border: 1px solid rgb(204, 204, 204);
+        border-radius: 24px;
     }
 
 }
