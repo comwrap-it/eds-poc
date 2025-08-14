@@ -8,10 +8,10 @@ import { loadFragment } from '../fragment/fragment.js';
 export default async function decorate(block) {
   // load header as fragment
   const headerMeta = getMetadata('header');
-  const headerPath = headerMeta ? new URL(headerMeta, window.location).pathname : '/header';
+  const headerPath = headerMeta ? new URL(headerMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(headerPath);
 
-  // decorate footer DOM
+  // decorate header DOM
   block.textContent = '';
   const header = document.createElement('div');
   while (fragment.firstElementChild) header.append(fragment.firstElementChild);
