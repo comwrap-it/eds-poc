@@ -1,6 +1,6 @@
 import { getGraphQLEndpoint, getAuthHeader, DEV_CONFIG, getDamImageUrl } from '../../config/dev-config.js';
-import { HEADER_CONFIG } from './header.config.js';
-import { initPopup } from './header.popup.js';
+import { HEADER_CONFIG } from './unipol-header.config.js';
+import { initPopup } from './unipol-header.popup.js';
 
 async function fetchHeaderData() {
   const endpoint = getGraphQLEndpoint('/bin/pub/retrieveStructure.json?rootPath=/content/unipol/us/en');
@@ -89,7 +89,7 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   closeBtn.setAttribute('aria-label', 'Chiudi menu di navigazione');
 
   const closeImg = document.createElement('img');
-  closeImg.src = getDamImageUrl(HEADER_CONFIG.closeIcon.imgSrc);
+  closeImg.src = getDamImageUrl(HEADER_CONFIG.closeIcon.src);
   closeImg.alt = HEADER_CONFIG.closeIcon.alt;
   closeImg.width = 24;
   closeImg.height = 24;
@@ -284,7 +284,7 @@ async function buildHeader() {
 
   const activeIndex = isAziende ? 1 : 0;
 
-  HEADER_CONFIG.leftLinks.forEach((l, index) => {
+  HEADER_CONFIG.topLeftLinks.forEach((l, index) => {
     const wrapper = document.createElement('div');
 
     const a = document.createElement('a');
@@ -302,7 +302,7 @@ async function buildHeader() {
 
   const right = document.createElement('div');
   right.classList.add('header-top-right');
-  HEADER_CONFIG.rightLinks.forEach(l =>
+  HEADER_CONFIG.topRightLinks.forEach(l =>
     right.appendChild(createLinkItem(l.img, l.alt, l.href, l.text, l.aria))
   );
 
@@ -350,25 +350,25 @@ async function buildHeader() {
   const leftContainer = document.createElement('div');
   leftContainer.classList.add('header-bottom-left');
 
-  if (HEADER_CONFIG.bottomImage) {
+  if (HEADER_CONFIG.bottomImageLogo) {
     const imgLink = document.createElement('a');
-    imgLink.href = HEADER_CONFIG.bottomImage.href;
-    imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImage.aria);
+    imgLink.href = HEADER_CONFIG.bottomImageLogo.href;
+    imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImageLogo.aria);
 
     const imgEl = document.createElement('img');
     // Applica getDamImageUrl per l'immagine del bottom
-    imgEl.src = getDamImageUrl(HEADER_CONFIG.bottomImage.src);
-    imgEl.alt = HEADER_CONFIG.bottomImage.alt;
-    imgEl.width = HEADER_CONFIG.bottomImage.width || 24;
-    imgEl.height = HEADER_CONFIG.bottomImage.height || 24;
+    imgEl.src = getDamImageUrl(HEADER_CONFIG.bottomImageLogo.src);
+    imgEl.alt = HEADER_CONFIG.bottomImageLogo.alt;
+    imgEl.width = HEADER_CONFIG.bottomImageLogo.width || 24;
+    imgEl.height = HEADER_CONFIG.bottomImageLogo.height || 24;
     imgEl.loading = 'lazy';
 
     imgLink.appendChild(imgEl);
     leftContainer.appendChild(imgLink);
   }
 
-    const ul = document.createElement('ul');
-    ul.classList.add('bottom-page-list');
+  const ul = document.createElement('ul');
+  ul.classList.add('bottom-page-list');
 
 
   data.children.forEach((c, index) => {
@@ -473,7 +473,6 @@ async function buildHeader() {
   fragment.append(headerTop, headerBottom);
   headerEl.replaceChildren(fragment);
 
-  // Setup mobile menu solo sotto i 1024px
   if (window.innerWidth <= 1024) {
     setupMobileMenu(headerBottomCont, right, ul);
   }

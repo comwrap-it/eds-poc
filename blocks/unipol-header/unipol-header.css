@@ -292,11 +292,12 @@ ul.mobile-menu-list > li:nth-child(5) a {
   color: rgb(81, 130, 154);
 }
 
-.mobile-menu-list li span{
+.mobile-menu-list li span.mobile-menu-arrow{
     margin-left: auto;
     color: rgb(25, 58, 86);
 }
-ul.mobile-menu-list > li:first-child span {
+
+ul.mobile-menu-list > li:first-child span.mobile-menu-arrow {
     font-size: 25px;
     color: white;
 }

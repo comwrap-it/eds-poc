@@ -1,9 +1,9 @@
 export const HEADER_CONFIG = {
-  leftLinks: [
+  topLeftLinks: [
     { href: '#', text: 'PRIVATI', aria: 'Privati' },
     { href: '#', text: 'AZIENDE', aria: 'Aziende' }
   ],
-  rightLinks: [
+  topRightLinks: [
     {
       img: '/content/dam/unipoleds/b_trova_agenzia.svg',
       alt: 'Icona Trova Agenzia',
@@ -26,7 +26,7 @@ export const HEADER_CONFIG = {
     confirmText: 'Gruppo Unipol',
     confirmHref: '#'
   },
-  bottomImage: {
+  bottomImageLogo: {
     src: '/content/dam/unipoleds/logo_unipol.svg',
     alt: 'Home',
     href: '#',
@@ -67,7 +67,7 @@ export const HEADER_CONFIG = {
     text: 'Area riservata',
     aria: 'Area riservata',
     imgSrc: '/content/dam/unipoleds/w_users.svg',
-    imgAlt: 'Alt' //DA CAMBIARE
+    imgAlt: 'Area riservata'
   },
   closeIcon: {
     src: '/content/dam/unipoleds/w_close.svg',
