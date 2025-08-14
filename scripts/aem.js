@@ -658,7 +658,6 @@ function decorateBlocks(main) {
  */
 async function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
-  console.log(headerBlock);
   header.append(headerBlock);
   decorateBlock(headerBlock);
   return loadBlock(headerBlock);
