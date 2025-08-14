@@ -264,7 +264,7 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
   });
 }
 
-async function buildHeader() {
+export default async function decorate(block) {
   const headerEl = document.querySelector('header.header-wrapper');
   if (!headerEl) return;
 
@@ -488,5 +488,3 @@ async function buildHeader() {
     }
   });
 }
-
-buildHeader();

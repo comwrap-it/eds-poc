@@ -58,7 +58,8 @@
         "article-list",
         "carousel",
         "preventivatore",
-        "unipol-footer"
+        "unipol-footer",
+        "unipol-header"
       ]
     }
   ]
