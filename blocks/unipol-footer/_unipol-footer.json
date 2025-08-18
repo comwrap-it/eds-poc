@@ -24,7 +24,7 @@
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
               "name": "Footer Column 1",
-              "model": "footer-column-1"
+              "model": "footer-column-1-model"
             }
           }
         }
@@ -39,7 +39,7 @@
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
               "name": "Footer Column 2",
-              "model": "footer-column-2"
+              "model": "footer-column-2-model"
             }
           }
         }
@@ -149,11 +149,11 @@
       ]
     },
     {
-      "id": "footer-column-1",
+      "id": "footer-column-1-model",
       "fields": [
         {
           "component": "text",
-          "name": "name",
+          "name": "column1Name",
           "label": "Nome Sezione",
           "value": "Colonna 1",
           "description": "Il nome mostrato per questa sezione nell'albero dei contenuti"
@@ -161,11 +161,11 @@
       ]
     },
     {
-      "id": "footer-column-2",
+      "id": "footer-column-2-model",
       "fields": [
         {
           "component": "text",
-          "name": "name",
+          "name": "column2Name",
           "label": "Nome Sezione",
           "value": "Colonna 2",
           "description": "Il nome mostrato per questa sezione nell'albero dei contenuti"

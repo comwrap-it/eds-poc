@@ -316,7 +316,7 @@
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
                   "name": "Footer Column 1",
-                  "model": "footer-column-1"
+                  "model": "footer-column-1-model"
                 }
               }
             }
@@ -331,7 +331,7 @@
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
                   "name": "Footer Column 2",
-                  "model": "footer-column-2"
+                  "model": "footer-column-2-model"
                 }
               }
             }
