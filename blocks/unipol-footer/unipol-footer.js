@@ -4,281 +4,193 @@ import { getDamImageUrl } from '../../config/dev-config.js';
 export default function decorate(block) {
   const children = [...block.children];
   
-  // Estrai i dati dai children del block (configurazione EDS)
-  const socialLabel = children[0]?.textContent?.trim() || '';
-  const facebookUrl = children[1]?.querySelector('a')?.href || '#';
-  const instagramUrl = children[2]?.querySelector('a')?.href || '#';
-  const linkedinUrl = children[3]?.querySelector('a')?.href || '#';
-  const youtubeUrl = children[4]?.querySelector('a')?.href || '#';
-  const privacyUrl = children[5]?.querySelector('a')?.href || '#';
-  const cookieUrl = children[6]?.querySelector('a')?.href || '#';
-  const ivassUrl = children[7]?.querySelector('a')?.href || '#';
-  const paymentUrl = children[8]?.querySelector('a')?.href || '#';
+  // Estrai i dati dai children del block seguendo l'ordine del JSON
+  const description = children[0]?.textContent?.trim() || 'Unipol è un gruppo assicurativo, leader in Italia nei rami danni, in particolare nell\'RCAuto. Fortemente attivo anche nei rami Vita, occupa una posizione di assoluta preminenza nella graduatoria nazionale dei gruppi assicurativi per raccolta diretta, e serve oltre 16 milioni di clienti. La Compagnia opera attraverso la più grande rete agenziale d\'Italia, forte di circa 2.000 agenzie assicurative e oltre 5.200 subagenzie distribuite sul territorio nazionale.';
   
-  // Estrai le sezioni delle colonne (ora sono sezioni invece di multifield)
-  const column1Section = children[9]; // Prima sezione
-  const column2Section = children[10]; // Seconda sezione
+  // Social Configuration
+  const socialLabel = children[1]?.textContent?.trim() || 'Seguici su';
+  const facebookUrl = children[2]?.querySelector('a')?.href || 'https://www.facebook.com/UnipolAssicurazioni/?locale=it_IT';
+  const instagramUrl = children[3]?.querySelector('a')?.href || 'https://www.instagram.com/unipolcorporate/?hl=en';
+  const linkedinUrl = children[4]?.querySelector('a')?.href || 'https://it.linkedin.com/company/gruppo-unipol';
+  const youtubeUrl = children[5]?.querySelector('a')?.href || 'https://www.youtube.com/@UnipolAssicurazioni';
   
-  const companyInfo = children[11]?.innerHTML || '';
-  const appTitle = children[12]?.innerHTML || 'Scarica o aggiorna l\'App<br>Unipol';
-  const appStoreUrl = children[13]?.querySelector('a')?.href || '#';
-  const googlePlayUrl = children[14]?.querySelector('a')?.href || '#';
-  const qrCodeImage = children[15]?.querySelector('img')?.src || children[15]?.querySelector('a')?.href || '';
-  const phoneImage = children[16]?.querySelector('img')?.src || children[16]?.querySelector('a')?.href || '';
-  const description = children[17]?.innerHTML || '';
+  // Info Configuration
+  const privacyUrl = children[6]?.querySelector('a')?.href || '#';
+  const privacyLabel = children[7]?.textContent?.trim() || 'Privacy';
+  const cookieUrl = children[8]?.querySelector('a')?.href || '#';
+  const cookieLabel = children[9]?.textContent?.trim() || 'INFORMATIVA E GESTIONE COOKIE';
+  const ivassUrl = children[10]?.querySelector('a')?.href || '#';
+  const ivassLabel = children[11]?.textContent?.trim() || 'ACCESSO AREA RISERVATA IVASS 41/2018';
+  const paymentUrl = children[12]?.querySelector('a')?.href || '#';
+  const paymentLabel = children[13]?.textContent?.trim() || 'PAGAMENTO POLIZZE';
+  const companyInfo = children[14]?.innerHTML || '<p><strong>Unipol Assicurazioni S.p.A.</strong><br>Sede Legale: Via Stalingrado, 45 40128 Bologna<br>Telefono: +39 051 5076111 - Fax: +39 051 5076666 - Mail PEC: unipol@pec.unipol.it</p><p>Capitale sociale i.v. € 3.365.292.408,03 - Registro delle Imprese di Bologna C.F. 00284160371 - P.IVA 03740811207 - R.E.A. 160304</p><p>Società iscritta all\'Albo Imprese di Assicurazione e Riassicurazione Sez. I n. 1.00183. Capogruppo del Gruppo Assicurativo Unipol iscritto all\'Albo delle società capogruppo al n. 046.</p>';
+  
+  // App Configuration
+  const appTitle = children[15]?.innerHTML || 'Scarica o aggiorna l\'App<br>Unipol';
+  const appStoreUrl = children[16]?.querySelector('a')?.href || '#';
+  const googlePlayUrl = children[17]?.querySelector('a')?.href || '#';
+  const qrCodeImage = children[18]?.querySelector('img')?.src || children[18]?.querySelector('a')?.href || '';
+  const phoneImage = children[19]?.querySelector('img')?.src || children[19]?.querySelector('a')?.href || '';
 
-  // Crea la struttura del footer
+  // Crea la struttura del footer seguendo l'esempio HTML fornito
   block.innerHTML = '';
   block.className = 'unipol-footer block';
-  block.setAttribute('data-mfe-name', 'tpdFooter');
   block.setAttribute('data-aue-label', 'Unipol Footer');
   block.setAttribute('data-aue-type', 'container');
   block.setAttribute('data-aue-model', 'unipol-footer');
 
-  // Social strip
-  const socialStrip = document.createElement('div');
-  socialStrip.className = 'u-top';
-  socialStrip.setAttribute('role', 'region');
-  socialStrip.setAttribute('aria-label', 'Seguici');
+  // Sezione 1: Descrizione generale
+  const section1 = document.createElement('div');
+  const section1Content = document.createElement('div');
+  section1Content.textContent = description;
+  section1Content.setAttribute('data-aue-label', 'Descrizione Azienda');
+  section1Content.setAttribute('data-aue-type', 'richtext');
+  section1Content.setAttribute('data-aue-prop', 'generalConfiguration_description');
+  section1.appendChild(section1Content);
+
+  // Sezione 2: Social Media
+  const section2 = document.createElement('div');
+  const section2Content = document.createElement('div');
   
-  const socialWrap = document.createElement('div');
-  socialWrap.className = 'u-wrap';
-  
-  const socialLabelEl = document.createElement('span');
-  socialLabelEl.className = 'label';
-  socialLabelEl.textContent = socialLabel;
-  socialLabelEl.setAttribute('data-aue-label', 'Etichetta Social');
-  socialLabelEl.setAttribute('data-aue-type', 'text');
-  socialLabelEl.setAttribute('data-aue-prop', 'socialLabel');
-  
-  const socialNav = document.createElement('nav');
-  socialNav.className = 'u-social';
-  socialNav.setAttribute('aria-label', 'Social');
+  const socialLabelP = document.createElement('p');
+  socialLabelP.textContent = socialLabel + ':';
+  socialLabelP.setAttribute('data-aue-label', 'Label Social');
+  socialLabelP.setAttribute('data-aue-type', 'text');
+  socialLabelP.setAttribute('data-aue-prop', 'socialConfiguration_socialLabel');
+  section2Content.appendChild(socialLabelP);
   
   // Social links
   const socialLinks = [
-    { url: facebookUrl, label: 'Facebook', text: 'f', prop: 'facebookUrl' },
-    { url: instagramUrl, label: 'Instagram', text: 'ig', prop: 'instagramUrl' },
-    { url: linkedinUrl, label: 'LinkedIn', text: 'in', prop: 'linkedinUrl' },
-    { url: youtubeUrl, label: 'YouTube', text: '▶', prop: 'youtubeUrl' }
+    { url: facebookUrl, prop: 'socialConfiguration_facebookUrl', label: 'Facebook' },
+    { url: instagramUrl, prop: 'socialConfiguration_instagramUrl', label: 'Instagram' },
+    { url: linkedinUrl, prop: 'socialConfiguration_linkedinUrl', label: 'LinkedIn' },
+    { url: youtubeUrl, prop: 'socialConfiguration_youtubeUrl', label: 'YouTube' }
   ];
   
   socialLinks.forEach(social => {
-    if (!social.url) 
-      return;
+    const p = document.createElement('p');
     const link = document.createElement('a');
-    link.setAttribute('aria-label', social.label);
     link.href = social.url;
-    link.title = social.label;
-    link.textContent = social.text;
+    link.textContent = social.url;
     link.setAttribute('data-aue-label', `URL ${social.label}`);
     link.setAttribute('data-aue-type', 'text');
     link.setAttribute('data-aue-prop', social.prop);
-    socialNav.appendChild(link);
+    p.appendChild(link);
+    section2Content.appendChild(p);
   });
   
-  socialWrap.appendChild(socialLabelEl);
-  socialWrap.appendChild(socialNav);
-  socialStrip.appendChild(socialWrap);
+  section2.appendChild(section2Content);
 
+  // Sezione 3: Informazioni legali e utility
+  const section3 = document.createElement('div');
+  const section3Content = document.createElement('div');
+  
   // Utility links
-  const utilitySection = document.createElement('div');
-  utilitySection.className = 'u-utility';
-  utilitySection.setAttribute('role', 'navigation');
-  utilitySection.setAttribute('aria-label', 'Utility');
-  
-  const utilityWrap = document.createElement('div');
-  utilityWrap.className = 'u-wrap';
-  
-  const utilityGrid = document.createElement('div');
-  utilityGrid.className = 'grid';
-  
   const utilityLinks = [
-    { url: privacyUrl, text: 'PRIVACY', prop: 'privacyUrl' },
-    { url: cookieUrl, text: 'INFORMATIVA E GESTIONE COOKIE', prop: 'cookieUrl' },
-    { url: ivassUrl, text: 'ACCESSO AREA RISERVATA IVASS 41/2018', prop: 'ivassUrl' },
-    { url: paymentUrl, text: 'PAGAMENTO POLIZZE', prop: 'paymentUrl' }
+    { url: privacyUrl, label: privacyLabel, urlProp: 'infoConfiguration_privacyUrl', labelProp: 'infoConfiguration_privacyLabel' },
+    { url: cookieUrl, label: cookieLabel, urlProp: 'infoConfiguration_cookieUrl', labelProp: 'infoConfiguration_cookieLabel' },
+    { url: ivassUrl, label: ivassLabel, urlProp: 'infoConfiguration_ivassUrl', labelProp: 'infoConfiguration_ivassLabel' },
+    { url: paymentUrl, label: paymentLabel, urlProp: 'infoConfiguration_paymentUrl', labelProp: 'infoConfiguration_paymentLabel' }
   ];
   
   utilityLinks.forEach(util => {
+    const p = document.createElement('p');
     const link = document.createElement('a');
     link.href = util.url;
-    link.textContent = util.text;
-    link.setAttribute('data-aue-label', util.text);
+    link.textContent = util.label + '.';
+    link.setAttribute('data-aue-label', util.label);
     link.setAttribute('data-aue-type', 'text');
-    link.setAttribute('data-aue-prop', util.prop);
-    utilityGrid.appendChild(link);
+    link.setAttribute('data-aue-prop', util.urlProp);
+    p.appendChild(link);
+    section3Content.appendChild(p);
   });
   
-  utilityWrap.appendChild(utilityGrid);
-  utilitySection.appendChild(utilityWrap);
-
-  // Main content
-  const mainSection = document.createElement('div');
-  mainSection.className = 'u-main';
-  
-  const mainWrap = document.createElement('div');
-  mainWrap.className = 'u-wrap';
-  
-  const columnsContainer = document.createElement('div');
-  columnsContainer.className = 'u-columns';
-
-  // Column 1 - Ora è una sezione che contiene componenti di testo
-  const col1 = document.createElement('section');
-  col1.className = 'u-col';
-  col1.setAttribute('data-aue-label', 'Colonna 1');
-  col1.setAttribute('data-aue-type', 'container');
-  col1.setAttribute('data-aue-model', 'footer-column-1');
-  col1.setAttribute('data-aue-filter', 'footer-column-1');
-  
-  const col1Title = document.createElement('h3');
-  col1Title.innerHTML = ' ';
-  
-  // Aggiungi i contenuti della sezione 1 se presenti
-  if (column1Section) {
-    // Invece di clonare l'intero nodo, trasferisci i suoi figli
-    while (column1Section.firstChild) {
-      col1.appendChild(column1Section.firstChild);
-    }
-  }
-  
-  col1.prepend(col1Title);
-
-  // Column 2 - Ora è una sezione che contiene componenti di testo
-  const col2 = document.createElement('section');
-  col2.className = 'u-col';
-  col2.setAttribute('data-aue-label', 'Colonna 2');
-  col2.setAttribute('data-aue-type', 'container');
-  col2.setAttribute('data-aue-model', 'footer-column-2');
-  
-  const col2Title = document.createElement('h3');
-  col2Title.innerHTML = ' ';
-  
-  // Aggiungi i contenuti della sezione 2 se presenti
-  if (column2Section) {
-    // Invece di clonare l'intero nodo, trasferisci i suoi figli
-    while (column2Section.firstChild) {
-      col2.appendChild(column2Section.firstChild);
-    }
-  }
-  
-  col2.prepend(col2Title);
-  
+  // Company info
   const companyInfoDiv = document.createElement('div');
-  companyInfoDiv.className = 'u-datisocietari';
   companyInfoDiv.innerHTML = companyInfo;
   companyInfoDiv.setAttribute('data-aue-label', 'Informazioni Societarie');
   companyInfoDiv.setAttribute('data-aue-type', 'richtext');
-  companyInfoDiv.setAttribute('data-aue-prop', 'companyInfo');
-  companyInfoDiv.setAttribute('data-aue-model', 'unipol-footer');
-
-  col2.appendChild(companyInfoDiv);
-
-  // App section - Struttura a due colonne come nel design originale
-  const appSection = document.createElement('div');
-  appSection.className = 'u-app-section';
+  companyInfoDiv.setAttribute('data-aue-prop', 'infoConfiguration_companyInfo');
+  section3Content.appendChild(companyInfoDiv);
   
-  // Prima colonna: Titolo, stores e QR code
-  const appCol = document.createElement('div');
-  appCol.className = 'u-col u-app';
-  appCol.setAttribute('aria-label', 'App Unipol');
-  
-  const appTitleEl = document.createElement('h3');
-  appTitleEl.innerHTML = appTitle;
-  appTitleEl.setAttribute('data-aue-label', 'Titolo App');
-  appTitleEl.setAttribute('data-aue-type', 'richtext');
-  appTitleEl.setAttribute('data-aue-prop', 'appTitle');
-  appTitleEl.setAttribute('data-aue-model', 'unipol-footer');
+  section3.appendChild(section3Content);
 
-  const storesDiv = document.createElement('div');
-  storesDiv.className = 'u-stores';
+  // Sezione 4: App
+  const section4 = document.createElement('div');
+  const section4Content = document.createElement('div');
   
+  const appTitleP = document.createElement('p');
+  appTitleP.innerHTML = appTitle + '.';
+  appTitleP.setAttribute('data-aue-label', 'Titolo App');
+  appTitleP.setAttribute('data-aue-type', 'richtext');
+  appTitleP.setAttribute('data-aue-prop', 'appConfiguration_appTitle');
+  section4Content.appendChild(appTitleP);
+  
+  // App Store links
+  const appStoreP = document.createElement('p');
   const appStoreLink = document.createElement('a');
-  appStoreLink.className = 'u-store';
   appStoreLink.href = appStoreUrl;
-  appStoreLink.setAttribute('aria-label', 'App Store iOS');
   appStoreLink.textContent = 'App Store';
   appStoreLink.setAttribute('data-aue-label', 'URL App Store');
   appStoreLink.setAttribute('data-aue-type', 'text');
-  appStoreLink.setAttribute('data-aue-prop', 'appStoreUrl');
+  appStoreLink.setAttribute('data-aue-prop', 'appConfiguration_appStoreUrl');
+  appStoreP.appendChild(appStoreLink);
+  section4Content.appendChild(appStoreP);
   
+  const googlePlayP = document.createElement('p');
   const googlePlayLink = document.createElement('a');
-  googlePlayLink.className = 'u-store';
   googlePlayLink.href = googlePlayUrl;
-  googlePlayLink.setAttribute('aria-label', 'Google Play');
   googlePlayLink.textContent = 'Google Play';
   googlePlayLink.setAttribute('data-aue-label', 'URL Google Play');
   googlePlayLink.setAttribute('data-aue-type', 'text');
-  googlePlayLink.setAttribute('data-aue-prop', 'googlePlayUrl');
+  googlePlayLink.setAttribute('data-aue-prop', 'appConfiguration_googlePlayUrl');
+  googlePlayP.appendChild(googlePlayLink);
+  section4Content.appendChild(googlePlayP);
   
-  storesDiv.appendChild(appStoreLink);
-  storesDiv.appendChild(googlePlayLink);
+  // QR Code
+  const qrP = document.createElement('p');
+  if (qrCodeImage) {
+    const qrImg = document.createElement('img');
+    qrImg.src = getDamImageUrl(qrCodeImage);
+    qrImg.alt = 'QR Code App Unipol';
+    qrImg.setAttribute('data-aue-label', 'Immagine QR Code');
+    qrImg.setAttribute('data-aue-type', 'reference');
+    qrImg.setAttribute('data-aue-prop', 'appConfiguration_qrCodeImage');
+    qrP.appendChild(qrImg);
+  } else {
+    qrP.textContent = 'Immagine QR Code';
+    qrP.setAttribute('data-aue-label', 'Immagine QR Code');
+    qrP.setAttribute('data-aue-type', 'reference');
+    qrP.setAttribute('data-aue-prop', 'appConfiguration_qrCodeImage');
+  }
+  section4Content.appendChild(qrP);
   
-  const qrDiv = document.createElement('div');
-  qrDiv.className = 'u-qr';
+  // Phone Image
+  const phoneP = document.createElement('p');
+  if (phoneImage) {
+    const phoneImg = document.createElement('img');
+    phoneImg.src = getDamImageUrl(phoneImage);
+    phoneImg.alt = 'Anteprima App';
+    phoneImg.setAttribute('data-aue-label', 'Immagine Telefono');
+    phoneImg.setAttribute('data-aue-type', 'reference');
+    phoneImg.setAttribute('data-aue-prop', 'appConfiguration_phoneImage');
+    phoneP.appendChild(phoneImg);
+  } else {
+    phoneP.textContent = 'Immagine Telefono';
+    phoneP.setAttribute('data-aue-label', 'Immagine Telefono');
+    phoneP.setAttribute('data-aue-type', 'reference');
+    phoneP.setAttribute('data-aue-prop', 'appConfiguration_phoneImage');
+  }
+  section4Content.appendChild(phoneP);
   
-  const qrImg = document.createElement('img');
-  qrImg.alt = 'QR App Unipol';
-  qrImg.src = qrCodeImage ? getDamImageUrl(qrCodeImage) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='96' height='96' fill='%23fff'/%3E%3Crect x='0' y='0' width='96' height='96' fill='none' stroke='%23c9d3dc'/%3E%3Ctext x='50%' y='52%' font-family='Arial' font-size='10' text-anchor='middle' fill='%2390a3b5'%3EQR%3C/text%3E%3C/svg%3E";
-  qrImg.setAttribute('data-aue-label', 'Immagine QR Code');
-  qrImg.setAttribute('data-aue-type', 'reference');
-  qrImg.setAttribute('data-aue-prop', 'qrCodeImage');
-  qrImg.setAttribute('data-aue-model', 'unipol-footer');
+  section4.appendChild(section4Content);
 
-  qrDiv.appendChild(qrImg);
-  
-  appCol.appendChild(appTitleEl);
-  appCol.appendChild(storesDiv);
-  appCol.appendChild(qrDiv);
-  
-  // Seconda colonna: Immagine del telefono
-  const imageCol = document.createElement('div');
-  imageCol.className = 'u-col u-image';
-  
-  const phoneImg = document.createElement('img');
-  phoneImg.className = 'u-phone';
-  phoneImg.alt = 'Anteprima app';
-  phoneImg.src = phoneImage ? getDamImageUrl(phoneImage) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='400'%3E%3Crect width='260' height='400' rx='22' ry='22' fill='%23f4f7fa' stroke='%23d8dee6'/%3E%3Ctext x='50%' y='50%' font-family='Arial' font-size='14' text-anchor='middle' fill='%2390a3b5'%3EPhone image%3C/text%3E%3C/svg%3E";
-  phoneImg.setAttribute('data-aue-label', 'Immagine Telefono');
-  phoneImg.setAttribute('data-aue-type', 'reference');
-  phoneImg.setAttribute('data-aue-prop', 'phoneImage');
-  phoneImg.setAttribute('data-aue-model', 'unipol-footer');
+  // Assembla tutte le sezioni
+  block.appendChild(section1);
+  block.appendChild(section2);
+  block.appendChild(section3);
+  block.appendChild(section4);
 
-  imageCol.appendChild(phoneImg);
-  
-  // Assembla le due colonne dell'app
-  appSection.appendChild(appCol);
-  appSection.appendChild(imageCol);
-
-  columnsContainer.appendChild(col1);
-  columnsContainer.appendChild(col2);
-  columnsContainer.appendChild(appSection);
-  
-  mainWrap.appendChild(columnsContainer);
-  mainSection.appendChild(mainWrap);
-
-  // Bottom description
-  const bottomSection = document.createElement('div');
-  bottomSection.className = 'u-bottom';
-  
-  const bottomWrap = document.createElement('div');
-  bottomWrap.className = 'u-wrap';
-  
-  const descriptionP = document.createElement('p');
-  descriptionP.className = 'u-desc';
-  descriptionP.innerHTML = description;
-  descriptionP.setAttribute('data-aue-label', 'Descrizione Azienda');
-  descriptionP.setAttribute('data-aue-type', 'richtext');
-  descriptionP.setAttribute('data-aue-prop', 'description');
-  descriptionP.setAttribute('data-aue-model', 'unipol-footer');
-
-  bottomWrap.appendChild(descriptionP);
-  bottomSection.appendChild(bottomWrap);
-
-  // Assembla tutto
-  block.appendChild(socialStrip);
-  block.appendChild(utilitySection);
-  block.appendChild(mainSection);
-  block.appendChild(bottomSection);
-
+  // Move instrumentation for AEM compatibility
+  moveInstrumentation(block);
 }
