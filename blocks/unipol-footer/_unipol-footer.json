@@ -14,36 +14,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Footer Column 1",
-      "id": "footer-column-1",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/section/v1/section",
-            "template": {
-              "name": "Footer Column 1",
-              "model": "footer-column-1-model"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer Column 2",
-      "id": "footer-column-2",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/section/v1/section",
-            "template": {
-              "name": "Footer Column 2",
-              "model": "footer-column-2-model"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -191,53 +161,7 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "footer-column-1-model",
-      "fields": [
-        {
-          "component": "text",
-          "name": "columnTitle",
-          "label": "Titolo Colonna",
-          "value": "Colonna 1"
-        }
-      ]
-    },
-    {
-      "id": "footer-column-2-model",
-      "fields": [
-        {
-          "component": "text",
-          "name": "columnTitle",
-          "label": "Titolo Colonna",
-          "value": "Colonna 2"
-        }
-      ]
     }
   ],
-  "filters": [
-    {
-      "id": "unipol-footer",
-      "components": [
-        "footer-column-1",
-        "footer-column-2"
-      ]
-    },
-    {
-      "id": "footer-column-1",
-      "components": [
-        "text",
-        "footer-link",
-        "button"
-      ]
-    },
-    {
-      "id": "footer-column-2",
-      "components": [
-        "text",
-        "footer-link",
-        "button"
-      ]
-    }
-  ]
+  "filters": []
 }

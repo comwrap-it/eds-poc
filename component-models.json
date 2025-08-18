@@ -944,28 +944,6 @@
     ]
   },
   {
-    "id": "footer-column-1-model",
-    "fields": [
-      {
-        "component": "text",
-        "name": "columnTitle",
-        "label": "Titolo Colonna",
-        "value": "Colonna 1"
-      }
-    ]
-  },
-  {
-    "id": "footer-column-2-model",
-    "fields": [
-      {
-        "component": "text",
-        "name": "columnTitle",
-        "label": "Titolo Colonna",
-        "value": "Colonna 2"
-      }
-    ]
-  },
-  {
     "id": "unipol-header",
     "fields": []
   },
