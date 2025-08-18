@@ -40,6 +40,12 @@
     ]
   },
   {
+    "id": "colonna",
+    "components": [
+      "column-item"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -57,5 +63,11 @@
   {
     "id": "tpd-vantaggi",
     "components": []
+  },
+  {
+    "id": "unipol-footer",
+    "components": [
+      "column"
+    ]
   }
 ]

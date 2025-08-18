@@ -499,6 +499,46 @@
     ]
   },
   {
+    "id": "colonna",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo Colonna",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "column-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Etichetta",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "link",
+        "label": "Link",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "sublabel",
+        "label": "Sotto-etichetta (opzionale)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "sublink",
+        "label": "Sotto-link (opzionale)",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {

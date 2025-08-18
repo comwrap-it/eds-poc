@@ -163,5 +163,10 @@
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "unipol-footer",
+      "components": ["column"]
+    }
+  ]
 }
