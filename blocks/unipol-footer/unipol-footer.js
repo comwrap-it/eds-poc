@@ -131,12 +131,8 @@ export default function decorate(block) {
   // Column 1 - Ora è una sezione che contiene componenti di testo
   const col1 = document.createElement('section');
   col1.className = 'u-col';
-  col1.setAttribute('data-aue-label', 'Colonna 1');
-  col1.setAttribute('data-aue-type', 'container');
-  col1.setAttribute('data-aue-model', 'footer-column-1');
-  col1.setAttribute('data-aue-filter', 'footer-column-1');
   
-  const col1Title = document.createElement('h3');
+  const col1Title = document.createElement('div');
   col1Title.innerHTML = ' ';
   
   // Aggiungi i contenuti della sezione 1 se presenti
@@ -152,11 +148,8 @@ export default function decorate(block) {
   // Column 2 - Ora è una sezione che contiene componenti di testo
   const col2 = document.createElement('section');
   col2.className = 'u-col';
-  col2.setAttribute('data-aue-label', 'Colonna 2');
-  col2.setAttribute('data-aue-type', 'container');
-  col2.setAttribute('data-aue-model', 'footer-column-2');
   
-  const col2Title = document.createElement('h3');
+  const col2Title = document.createElement('div');
   col2Title.innerHTML = ' ';
   
   // Aggiungi i contenuti della sezione 2 se presenti
