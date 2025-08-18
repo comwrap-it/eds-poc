@@ -150,11 +150,25 @@
     },
     {
       "id": "footer-column-1-model",
-      "fields": []
+      "fields": [
+        {
+          "component": "text",
+          "name": "columnTitle",
+          "label": "Titolo Colonna",
+          "value": "Colonna 1"
+        }
+      ]
     },
     {
       "id": "footer-column-2-model",
-      "fields": []
+      "fields": [
+        {
+          "component": "text",
+          "name": "columnTitle",
+          "label": "Titolo Colonna",
+          "value": "Colonna 2"
+        }
+      ]
     }
   ],
   "filters": [
@@ -168,13 +182,17 @@
     {
       "id": "footer-column-1",
       "components": [
-        "text"
+        "text",
+        "footer-link",
+        "button"
       ]
     },
     {
       "id": "footer-column-2",
       "components": [
-        "text"
+        "text",
+        "footer-link",
+        "button"
       ]
     }
   ]

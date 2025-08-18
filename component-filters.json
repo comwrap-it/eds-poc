@@ -68,13 +68,17 @@
   {
     "id": "footer-column-1",
     "components": [
-      "text"
+      "text",
+      "footer-link",
+      "button"
     ]
   },
   {
     "id": "footer-column-2",
     "components": [
-      "text"
+      "text",
+      "footer-link",
+      "button"
     ]
   }
 ]

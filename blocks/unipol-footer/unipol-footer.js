@@ -127,6 +127,7 @@ export default function decorate(block) {
   col1.setAttribute('data-aue-label', 'Colonna 1');
   col1.setAttribute('data-aue-type', 'container');
   col1.setAttribute('data-aue-model', 'footer-column-1');
+  col1.setAttribute('data-aue-filter', 'footer-column-1');
   
   const col1Title = document.createElement('h3');
   col1Title.innerHTML = ' ';
