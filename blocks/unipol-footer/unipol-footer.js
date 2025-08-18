@@ -265,7 +265,7 @@ export default function decorate(block) {
   const bottomWrap = document.createElement('div');
   bottomWrap.className = 'u-wrap';
   
-  const descriptionP = document.createElement('p');
+  const descriptionP = document.createElement('div');
   descriptionP.className = 'u-desc';
   descriptionP.innerHTML = footerDesc;
   descriptionP.setAttribute('data-aue-label', 'Descrizione Azienda');
