@@ -17,13 +17,13 @@ export default function decorate(block) {
 
   // Privacy Configuration
   const privacyUrl = children[3]?.querySelectorAll('a')[0]?.href || '#';
-  const privacyLabel = children[3]?.querySelectorAll('p')[0]?.textContent || '';
+  const privacyLabel = children[3]?.querySelectorAll('p')[1]?.textContent || '';
   const cookieUrl = children[3]?.querySelectorAll('a')[1]?.href || '#';
-  const cookieLabel = children[3]?.querySelectorAll('p')[1]?.textContent || '';
+  const cookieLabel = children[3]?.querySelectorAll('p')[3]?.textContent || '';
   const ivassUrl = children[3]?.querySelectorAll('a')[2]?.href || '#';
-  const ivassLabel = children[3]?.querySelectorAll('p')[2]?.textContent || '';
+  const ivassLabel = children[3]?.querySelectorAll('p')[5]?.textContent || '';
   const paymentUrl = children[3]?.querySelectorAll('a')[3]?.href || '#';
-  const paymentLabel = children[3]?.querySelectorAll('p')[4]?.textContent || '';
+  const paymentLabel = children[3]?.querySelectorAll('p')[7]?.textContent || '';
   
   // App Configuration
   const appTitle = children[4]?.querySelectorAll('p')[0]?.innerHTML || 'Scarica o aggiorna l\'App<br>Unipol';
