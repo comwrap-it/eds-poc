@@ -819,31 +819,31 @@
       },
       {
         "component": "text",
-        "name": "social_socialLabel",
+        "name": "socialLabel",
         "label": "Label Social",
         "value": "Seguici su"
       },
       {
         "component": "text",
-        "name": "social_facebookUrl",
+        "name": "facebookUrl",
         "label": "URL Facebook",
         "value": "#"
       },
       {
         "component": "text",
-        "name": "social_instagramUrl",
+        "name": "instagramUrl",
         "label": "URL Instagram",
         "value": "#"
       },
       {
         "component": "text",
-        "name": "social_linkedinUrl",
+        "name": "linkedinUrl",
         "label": "URL LinkedIn",
         "value": "#"
       },
       {
         "component": "text",
-        "name": "social_youtubeUrl",
+        "name": "youtubeUrl",
         "label": "URL YouTube",
         "value": "#"
       },
@@ -854,49 +854,49 @@
       },
       {
         "component": "text",
-        "name": "info_privacyUrl",
+        "name": "privacyUrl",
         "label": "URL Privacy",
         "value": "#"
       },
       {
         "component": "text",
-        "name": "info_privacyLabel",
+        "name": "privacyLabel",
         "label": "Label Privacy",
         "value": "Privacy"
       },
       {
         "component": "text",
-        "name": "info_cookieUrl",
+        "name": "cookieUrl",
         "label": "URL Cookie",
         "value": "#"
       },
       {
         "component": "text",
-        "name": "info_cookieLabel",
+        "name": "cookieLabel",
         "label": "Label Cookie",
         "value": "INFORMATIVA E GESTIONE COOKIE"
       },
       {
         "component": "text",
-        "name": "info_ivassUrl",
+        "name": "ivassUrl",
         "label": "URL IVASS",
         "value": "#"
       },
       {
         "component": "text",
-        "name": "info_ivassLabel",
+        "name": "ivassLabel",
         "label": "Label IVASS",
         "value": "ACCESSO AREA RISERVATA IVASS 41/2018"
       },
       {
         "component": "text",
-        "name": "info_paymentUrl",
+        "name": "paymentUrl",
         "label": "URL Pagamento Polizze",
         "value": "#"
       },
       {
         "component": "text",
-        "name": "info_paymentLabel",
+        "name": "paymentLabel",
         "label": "Label Pagamento Polizze",
         "value": "PAGAMENTO POLIZZE"
       },
@@ -913,31 +913,31 @@
       },
       {
         "component": "text",
-        "name": "app_appTitle",
+        "name": "appTitle",
         "label": "Titolo Sezione App",
         "value": "Scarica o aggiorna l'App<br>Unipol"
       },
       {
         "component": "text",
-        "name": "app_appStoreUrl",
+        "name": "appStoreUrl",
         "label": "URL App Store",
         "value": "#"
       },
       {
         "component": "text",
-        "name": "app_googlePlayUrl",
+        "name": "googlePlayUrl",
         "label": "URL Google Play",
         "value": "#"
       },
       {
         "component": "aem-content",
-        "name": "app_qrCodeImage",
+        "name": "qrCodeImage",
         "label": "Immagine QR Code",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "app_phoneImage",
+        "name": "phoneImage",
         "label": "Immagine Telefono",
         "valueType": "string"
       }
