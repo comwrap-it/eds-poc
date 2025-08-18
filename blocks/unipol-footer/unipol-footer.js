@@ -64,6 +64,8 @@ export default function decorate(block) {
   ];
   
   socialLinks.forEach(social => {
+    if (!social.url) 
+      return;
     const link = document.createElement('a');
     link.setAttribute('aria-label', social.label);
     link.href = social.url;

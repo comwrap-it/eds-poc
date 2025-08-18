@@ -51,9 +51,25 @@
       "id": "unipol-footer",
       "fields": [
         {
+          "component": "tab",
+          "label": "General Configuration",
+          "name": "appConfiguration"
+        },
+        {
+          "component": "richtext",
+          "name": "description",
+          "label": "Disclaimer Legale",
+          "value": "Unipol è un gruppo assicurativo, leader in Italia nei rami danni, in particolare nell'RCAuto. Fortemente attivo anche nei rami Vita, occupa una posizione di assoluta preminenza nella graduatoria nazionale dei gruppi assicurativi per raccolta diretta, e serve oltre 16 milioni di clienti. La Compagnia opera attraverso la più grande rete agenziale d'Italia, forte di circa 2.000 agenzie assicurative e oltre 5.200 subagenzie distribuite sul territorio nazionale."
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Social",
+          "name": "socialConfiguration"
+        },
+        {
           "component": "text",
           "name": "socialLabel",
-          "label": "Etichetta Social",
+          "label": "Label Social",
           "value": "Seguici su"
         },
         {
@@ -81,10 +97,21 @@
           "value": "#"
         },
         {
+          "component": "tab",
+          "label": "Configurazione Informative",
+          "name": "infoConfiguration"
+        },
+        {
           "component": "text",
           "name": "privacyUrl",
           "label": "URL Privacy",
           "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "privacyLabel",
+          "label": "Label Privacy",
+          "value": "Privacy"
         },
         {
           "component": "text",
@@ -94,9 +121,21 @@
         },
         {
           "component": "text",
+          "name": "cookieLabel",
+          "label": "Label Cookie",
+          "value": "INFORMATIVA E GESTIONE COOKIE"
+        },
+        {
+          "component": "text",
           "name": "ivassUrl",
           "label": "URL IVASS",
           "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "ivassLabel",
+          "label": "Label IVASS",
+          "value": "ACCESSO AREA RISERVATA IVASS 41/2018"
         },
         {
           "component": "text",
@@ -105,15 +144,26 @@
           "value": "#"
         },
         {
+          "component": "text",
+          "name": "paymentLabel",
+          "label": "Label Pagamento Polizze",
+          "value": "PAGAMENTO POLIZZE"
+        },
+        {
           "component": "richtext",
           "name": "companyInfo",
           "label": "Informazioni Societarie",
           "value": "<p><strong>Unipol Assicurazioni S.p.A.</strong><br>Sede Legale: Via Stalingrado, 45 40128 Bologna<br>Telefono: +39 051 5076111 - Fax: +39 051 5076666 - Mail PEC: unipol@pec.unipol.it</p><p>Capitale sociale i.v. € 3.365.292.408,03 - Registro delle Imprese di Bologna C.F. 00284160371 - P.IVA 03740811207 - R.E.A. 160304</p><p>Società iscritta all'Albo Imprese di Assicurazione e Riassicurazione Sez. I n. 1.00183. Capogruppo del Gruppo Assicurativo Unipol iscritto all'Albo delle società capogruppo al n. 046.</p>"
         },
         {
+          "component": "tab",
+          "label": "APP Configuration",
+          "name": "appConfiguration"
+        },
+        {
           "component": "text",
           "name": "appTitle",
-          "label": "Titolo App",
+          "label": "Titolo Sezione App",
           "value": "Scarica o aggiorna l'App<br>Unipol"
         },
         {
@@ -139,12 +189,6 @@
           "name": "phoneImage",
           "label": "Immagine Telefono",
           "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "name": "description",
-          "label": "Descrizione Azienda",
-          "value": "Unipol è un gruppo assicurativo, leader in Italia nei rami danni, in particolare nell'RCAuto. Fortemente attivo anche nei rami Vita, occupa una posizione di assoluta preminenza nella graduatoria nazionale dei gruppi assicurativi per raccolta diretta, e serve oltre 16 milioni di clienti. La Compagnia opera attraverso la più grande rete agenziale d'Italia, forte di circa 2.000 agenzie assicurative e oltre 5.200 subagenzie distribuite sul territorio nazionale."
         }
       ]
     },
