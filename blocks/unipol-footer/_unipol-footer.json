@@ -166,7 +166,7 @@
   "filters": [
     {
       "id": "unipol-footer",
-      "components": ["column"]
+      "components": ["colonna"]
     }
   ]
 }
