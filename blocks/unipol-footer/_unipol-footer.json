@@ -23,11 +23,11 @@
         {
           "component": "tab",
           "label": "General Configuration",
-          "name": "appConfiguration"
+          "name": "generalConfiguration"
         },
         {
           "component": "richtext",
-          "name": "description",
+          "name": "generalConfiguration_description",
           "label": "Disclaimer Legale",
           "value": "Unipol è un gruppo assicurativo, leader in Italia nei rami danni, in particolare nell'RCAuto. Fortemente attivo anche nei rami Vita, occupa una posizione di assoluta preminenza nella graduatoria nazionale dei gruppi assicurativi per raccolta diretta, e serve oltre 16 milioni di clienti. La Compagnia opera attraverso la più grande rete agenziale d'Italia, forte di circa 2.000 agenzie assicurative e oltre 5.200 subagenzie distribuite sul territorio nazionale."
         },
@@ -38,31 +38,31 @@
         },
         {
           "component": "text",
-          "name": "socialLabel",
+          "name": "socialConfiguration_socialLabel",
           "label": "Label Social",
           "value": "Seguici su"
         },
         {
           "component": "text",
-          "name": "facebookUrl",
+          "name": "socialConfiguration_facebookUrl",
           "label": "URL Facebook",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "instagramUrl",
+          "name": "socialConfiguration_instagramUrl",
           "label": "URL Instagram",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "linkedinUrl",
+          "name": "socialConfiguration_linkedinUrl",
           "label": "URL LinkedIn",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "youtubeUrl",
+          "name": "socialConfiguration_youtubeUrl",
           "label": "URL YouTube",
           "value": "#"
         },
@@ -73,55 +73,55 @@
         },
         {
           "component": "text",
-          "name": "privacyUrl",
+          "name": "infoConfiguration_privacyUrl",
           "label": "URL Privacy",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "privacyLabel",
+          "name": "infoConfiguration_privacyLabel",
           "label": "Label Privacy",
           "value": "Privacy"
         },
         {
           "component": "text",
-          "name": "cookieUrl",
+          "name": "infoConfiguration_cookieUrl",
           "label": "URL Cookie",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "cookieLabel",
+          "name": "infoConfiguration_cookieLabel",
           "label": "Label Cookie",
           "value": "INFORMATIVA E GESTIONE COOKIE"
         },
         {
           "component": "text",
-          "name": "ivassUrl",
+          "name": "infoConfiguration_ivassUrl",
           "label": "URL IVASS",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "ivassLabel",
+          "name": "infoConfiguration_ivassLabel",
           "label": "Label IVASS",
           "value": "ACCESSO AREA RISERVATA IVASS 41/2018"
         },
         {
           "component": "text",
-          "name": "paymentUrl",
+          "name": "infoConfiguration_paymentUrl",
           "label": "URL Pagamento Polizze",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "paymentLabel",
+          "name": "infoConfiguration_paymentLabel",
           "label": "Label Pagamento Polizze",
           "value": "PAGAMENTO POLIZZE"
         },
         {
           "component": "richtext",
-          "name": "companyInfo",
+          "name": "infoConfiguration_companyInfo",
           "label": "Informazioni Societarie",
           "value": "<p><strong>Unipol Assicurazioni S.p.A.</strong><br>Sede Legale: Via Stalingrado, 45 40128 Bologna<br>Telefono: +39 051 5076111 - Fax: +39 051 5076666 - Mail PEC: unipol@pec.unipol.it</p><p>Capitale sociale i.v. € 3.365.292.408,03 - Registro delle Imprese di Bologna C.F. 00284160371 - P.IVA 03740811207 - R.E.A. 160304</p><p>Società iscritta all'Albo Imprese di Assicurazione e Riassicurazione Sez. I n. 1.00183. Capogruppo del Gruppo Assicurativo Unipol iscritto all'Albo delle società capogruppo al n. 046.</p>"
         },
@@ -132,31 +132,31 @@
         },
         {
           "component": "text",
-          "name": "appTitle",
+          "name": "appConfiguration_appTitle",
           "label": "Titolo Sezione App",
           "value": "Scarica o aggiorna l'App<br>Unipol"
         },
         {
           "component": "text",
-          "name": "appStoreUrl",
+          "name": "appConfiguration_appStoreUrl",
           "label": "URL App Store",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "googlePlayUrl",
+          "name": "appConfiguration_googlePlayUrl",
           "label": "URL Google Play",
           "value": "#"
         },
         {
           "component": "aem-content",
-          "name": "qrCodeImage",
+          "name": "appConfiguration_qrCodeImage",
           "label": "Immagine QR Code",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "phoneImage",
+          "name": "appConfiguration_phoneImage",
           "label": "Immagine Telefono",
           "valueType": "string"
         }
