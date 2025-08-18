@@ -68,31 +68,31 @@
         },
         {
           "component": "text",
-          "name": "socialLabel",
+          "name": "social_socialLabel",
           "label": "Label Social",
           "value": "Seguici su"
         },
         {
           "component": "text",
-          "name": "facebookUrl",
+          "name": "social_facebookUrl",
           "label": "URL Facebook",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "instagramUrl",
+          "name": "social_instagramUrl",
           "label": "URL Instagram",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "linkedinUrl",
+          "name": "social_linkedinUrl",
           "label": "URL LinkedIn",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "youtubeUrl",
+          "name": "social_youtubeUrl",
           "label": "URL YouTube",
           "value": "#"
         },
@@ -103,49 +103,49 @@
         },
         {
           "component": "text",
-          "name": "privacyUrl",
+          "name": "info_privacyUrl",
           "label": "URL Privacy",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "privacyLabel",
+          "name": "info_privacyLabel",
           "label": "Label Privacy",
           "value": "Privacy"
         },
         {
           "component": "text",
-          "name": "cookieUrl",
+          "name": "info_cookieUrl",
           "label": "URL Cookie",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "cookieLabel",
+          "name": "info_cookieLabel",
           "label": "Label Cookie",
           "value": "INFORMATIVA E GESTIONE COOKIE"
         },
         {
           "component": "text",
-          "name": "ivassUrl",
+          "name": "info_ivassUrl",
           "label": "URL IVASS",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "ivassLabel",
+          "name": "info_ivassLabel",
           "label": "Label IVASS",
           "value": "ACCESSO AREA RISERVATA IVASS 41/2018"
         },
         {
           "component": "text",
-          "name": "paymentUrl",
+          "name": "info_paymentUrl",
           "label": "URL Pagamento Polizze",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "paymentLabel",
+          "name": "info_paymentLabel",
           "label": "Label Pagamento Polizze",
           "value": "PAGAMENTO POLIZZE"
         },
@@ -162,31 +162,31 @@
         },
         {
           "component": "text",
-          "name": "appTitle",
+          "name": "app_appTitle",
           "label": "Titolo Sezione App",
           "value": "Scarica o aggiorna l'App<br>Unipol"
         },
         {
           "component": "text",
-          "name": "appStoreUrl",
+          "name": "app_appStoreUrl",
           "label": "URL App Store",
           "value": "#"
         },
         {
           "component": "text",
-          "name": "googlePlayUrl",
+          "name": "app_googlePlayUrl",
           "label": "URL Google Play",
           "value": "#"
         },
         {
           "component": "aem-content",
-          "name": "qrCodeImage",
+          "name": "app_qrCodeImage",
           "label": "Immagine QR Code",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "phoneImage",
+          "name": "app_phoneImage",
           "label": "Immagine Telefono",
           "valueType": "string"
         }
