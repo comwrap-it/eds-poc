@@ -499,46 +499,6 @@
     ]
   },
   {
-    "id": "colonna",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Titolo Colonna",
-        "value": ""
-      }
-    ]
-  },
-  {
-    "id": "column-item",
-    "fields": [
-      {
-        "component": "text",
-        "name": "label",
-        "label": "Etichetta",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "link",
-        "label": "Link",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "sublabel",
-        "label": "Sotto-etichetta (opzionale)",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "sublink",
-        "label": "Sotto-link (opzionale)",
-        "value": ""
-      }
-    ]
-  },
-  {
     "id": "columns",
     "fields": [
       {
@@ -849,14 +809,12 @@
       {
         "component": "richtext",
         "name": "generalConfiguration_description",
-        "label": "Disclaimer Legale",
-        "value": ""
+        "label": "Disclaimer Legale"
       },
       {
         "component": "richtext",
         "name": "generalInfo_companyInfo",
-        "label": "Informazioni Societarie",
-        "value": ""
+        "label": "Informazioni Societarie"
       },
       {
         "component": "tab",
@@ -866,32 +824,27 @@
       {
         "component": "text",
         "name": "socialConfiguration_socialLabel",
-        "label": "Label Social",
-        "value": "Seguici su"
+        "label": "Label Social"
       },
       {
         "component": "text",
         "name": "socialConfiguration_facebookUrl",
-        "label": "URL Facebook",
-        "value": "#"
+        "label": "URL Facebook"
       },
       {
         "component": "text",
         "name": "socialConfiguration_instagramUrl",
-        "label": "URL Instagram",
-        "value": "#"
+        "label": "URL Instagram"
       },
       {
         "component": "text",
         "name": "socialConfiguration_linkedinUrl",
-        "label": "URL LinkedIn",
-        "value": "#"
+        "label": "URL LinkedIn"
       },
       {
         "component": "text",
         "name": "socialConfiguration_youtubeUrl",
-        "label": "URL YouTube",
-        "value": "#"
+        "label": "URL YouTube"
       },
       {
         "component": "tab",
@@ -901,50 +854,42 @@
       {
         "component": "text",
         "name": "infoConfiguration_privacyUrl",
-        "label": "URL Privacy",
-        "value": "#"
+        "label": "URL Privacy"
       },
       {
         "component": "text",
         "name": "infoConfiguration_privacyLabel",
-        "label": "Label Privacy",
-        "value": "Privacy"
+        "label": "Label Privacy"
       },
       {
         "component": "text",
         "name": "infoConfiguration_cookieUrl",
-        "label": "URL Cookie",
-        "value": "#"
+        "label": "URL Cookie"
       },
       {
         "component": "text",
         "name": "infoConfiguration_cookieLabel",
-        "label": "Label Cookie",
-        "value": "INFORMATIVA E GESTIONE COOKIE"
+        "label": "Label Cookie"
       },
       {
         "component": "text",
         "name": "infoConfiguration_ivassUrl",
-        "label": "URL IVASS",
-        "value": "#"
+        "label": "URL IVASS"
       },
       {
         "component": "text",
         "name": "infoConfiguration_ivassLabel",
-        "label": "Label IVASS",
-        "value": "ACCESSO AREA RISERVATA IVASS 41/2018"
+        "label": "Label IVASS"
       },
       {
         "component": "text",
         "name": "infoConfiguration_paymentUrl",
-        "label": "URL Pagamento Polizze",
-        "value": "#"
+        "label": "URL Pagamento Polizze"
       },
       {
         "component": "text",
         "name": "infoConfiguration_paymentLabel",
-        "label": "Label Pagamento Polizze",
-        "value": "PAGAMENTO POLIZZE"
+        "label": "Label Pagamento Polizze"
       },
       {
         "component": "tab",
@@ -954,20 +899,17 @@
       {
         "component": "text",
         "name": "appConfiguration_appTitle",
-        "label": "Titolo Sezione App",
-        "value": "Scarica o aggiorna l'App<br>Unipol"
+        "label": "Titolo Sezione App"
       },
       {
         "component": "text",
         "name": "appConfiguration_appStoreUrl",
-        "label": "URL App Store",
-        "value": "#"
+        "label": "URL App Store"
       },
       {
         "component": "text",
         "name": "appConfiguration_googlePlayUrl",
-        "label": "URL Google Play",
-        "value": "#"
+        "label": "URL Google Play"
       },
       {
         "component": "aem-content",

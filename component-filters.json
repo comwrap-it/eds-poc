@@ -40,12 +40,6 @@
     ]
   },
   {
-    "id": "colonna",
-    "components": [
-      "column-item"
-    ]
-  },
-  {
     "id": "columns",
     "components": [
       "column"
@@ -67,7 +61,7 @@
   {
     "id": "unipol-footer",
     "components": [
-      "colonna"
+      "columns"
     ]
   }
 ]
