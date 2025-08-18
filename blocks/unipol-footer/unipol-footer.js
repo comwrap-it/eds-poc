@@ -15,9 +15,9 @@ export default function decorate(block) {
   const ivassUrl = children[7]?.querySelector('a')?.href || '#';
   const paymentUrl = children[8]?.querySelector('a')?.href || '#';
   
-  // Estrai link delle colonne con la nuova struttura container
-  const column1Links = extractLinksFromContainer(children[9]);
-  const column2Links = extractLinksFromContainer(children[10]);
+  // Estrai le sezioni delle colonne (ora sono sezioni invece di multifield)
+  const column1Section = children[9]; // Prima sezione
+  const column2Section = children[10]; // Seconda sezione
   
   const companyInfo = children[11]?.innerHTML || '';
   const appTitle = children[12]?.innerHTML || 'Scarica o aggiorna l\'App<br>Unipol';
@@ -26,35 +26,6 @@ export default function decorate(block) {
   const qrCodeImage = children[15]?.querySelector('img')?.src || children[15]?.querySelector('a')?.href || '';
   const phoneImage = children[16]?.querySelector('img')?.src || children[16]?.querySelector('a')?.href || '';
   const description = children[17]?.innerHTML || '';
-
-  // Funzione helper per estrarre link da un container multifield
-  function extractLinksFromContainer(containerChild) {
-    if (!containerChild) return [];
-    const links = [];
-    
-    // Con la struttura container, ogni elemento del multifield è in un div separato
-    const containerItems = containerChild.children;
-    
-    for (let i = 0; i < containerItems.length; i++) {
-      const item = containerItems[i];
-      
-      // Cerca i nuovi nomi delle proprietà: linkText e linkUrl
-      const textElement =
-        item.querySelector('[data-aue-prop="linkText"], .linkText, .text') || item.children[0];
-      const urlElement =
-        item.querySelector('[data-aue-prop="linkUrl"], .linkUrl, a') || item.children[1];
-      
-      const text = textElement?.textContent?.trim() || '';
-      // linkUrl può essere su href o come testo (fallback)
-      const url = urlElement?.href || urlElement?.textContent?.trim() || '#';
-      
-      if (text) {
-        links.push({ text, url });
-      }
-    }
-    
-    return links;
-  }
 
   // Crea la struttura del footer
   block.innerHTML = '';
@@ -150,81 +121,39 @@ export default function decorate(block) {
   const columnsContainer = document.createElement('div');
   columnsContainer.className = 'u-columns';
 
-  // Column 1
+  // Column 1 - Ora è una sezione che contiene componenti di testo
   const col1 = document.createElement('section');
   col1.className = 'u-col';
+  col1.setAttribute('data-aue-label', 'Colonna 1');
+  col1.setAttribute('data-aue-type', 'section');
+  col1.setAttribute('data-aue-model', 'footer-column-1');
   
   const col1Title = document.createElement('h3');
   col1Title.innerHTML = ' ';
   
-  const col1List = document.createElement('ul');
-  col1List.className = 'u-links';
-  col1List.setAttribute('data-aue-label', 'Link Colonna 1');
-  col1List.setAttribute('data-aue-type', 'container');
-  col1List.setAttribute('data-aue-prop', 'column1Links');
-
-  column1Links.forEach((linkData, index) => {
-    const li = document.createElement('li');
-    // segna l'item del container
-    li.setAttribute('data-aue-type', 'container-item');
-    li.setAttribute('data-aue-model', 'unipol-footer');
-
-    const link = document.createElement('a');
-    link.href = linkData.url;
-    link.setAttribute('data-aue-label', `Link ${index + 1} Colonna 1`);
-    // mappa l'URL sull'attributo href
-    link.setAttribute('data-aue-type', 'text');
-    link.setAttribute('data-aue-prop', 'linkUrl');
-    link.setAttribute('data-aue-attr', 'href');
-
-    // testo del link esposto come proprietà distinta
-    const textSpan = document.createElement('span');
-    textSpan.textContent = linkData.text;
-    textSpan.setAttribute('data-aue-type', 'text');
-    textSpan.setAttribute('data-aue-prop', 'linkText');
-
-    link.appendChild(textSpan);
-    li.appendChild(link);
-    col1List.appendChild(li);
-  });
+  // Aggiungi i contenuti della sezione 1 se presenti
+  if (column1Section) {
+    col1.appendChild(column1Section.cloneNode(true));
+  }
   
-  col1.appendChild(col1Title);
-  col1.appendChild(col1List);
+  col1.prepend(col1Title);
 
-  // Column 2
+  // Column 2 - Ora è una sezione che contiene componenti di testo
   const col2 = document.createElement('section');
   col2.className = 'u-col';
+  col2.setAttribute('data-aue-label', 'Colonna 2');
+  col2.setAttribute('data-aue-type', 'section');
+  col2.setAttribute('data-aue-model', 'footer-column-2');
   
   const col2Title = document.createElement('h3');
   col2Title.innerHTML = ' ';
   
-  const col2List = document.createElement('ul');
-  col2List.className = 'u-links';
-  col2List.setAttribute('data-aue-label', 'Link Colonna 2');
-  col2List.setAttribute('data-aue-type', 'container');
-  col2List.setAttribute('data-aue-prop', 'column2Links');
-
-  column2Links.forEach((linkData, index) => {
-    const li = document.createElement('li');
-    li.setAttribute('data-aue-type', 'container-item');
-    li.setAttribute('data-aue-model', 'unipol-footer');
-
-    const link = document.createElement('a');
-    link.href = linkData.url;
-    link.setAttribute('data-aue-label', `Link ${index + 1} Colonna 2`);
-    link.setAttribute('data-aue-type', 'text');
-    link.setAttribute('data-aue-prop', 'linkUrl');
-    link.setAttribute('data-aue-attr', 'href');
-
-    const textSpan = document.createElement('span');
-    textSpan.textContent = linkData.text;
-    textSpan.setAttribute('data-aue-type', 'text');
-    textSpan.setAttribute('data-aue-prop', 'linkText');
-
-    link.appendChild(textSpan);
-    li.appendChild(link);
-    col2List.appendChild(li);
-  });
+  // Aggiungi i contenuti della sezione 2 se presenti
+  if (column2Section) {
+    col2.appendChild(column2Section.cloneNode(true));
+  }
+  
+  col2.prepend(col2Title);
   
   const companyInfoDiv = document.createElement('div');
   companyInfoDiv.className = 'u-datisocietari';
@@ -234,8 +163,6 @@ export default function decorate(block) {
   companyInfoDiv.setAttribute('data-aue-prop', 'companyInfo');
   companyInfoDiv.setAttribute('data-aue-model', 'unipol-footer');
 
-  col2.appendChild(col2Title);
-  col2.appendChild(col2List);
   col2.appendChild(companyInfoDiv);
 
   // App section - Struttura a due colonne come nel design originale

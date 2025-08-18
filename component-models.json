@@ -856,46 +856,6 @@
         "value": "#"
       },
       {
-        "component": "container",
-        "name": "column1Links",
-        "label": "Link Colonna 1",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkText",
-            "label": "Testo Link",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "linkUrl",
-            "label": "URL Link",
-            "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "column2Links",
-        "label": "Link Colonna 2",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkText",
-            "label": "Testo Link",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "linkUrl",
-            "label": "URL Link",
-            "valueType": "string"
-          }
-        ]
-      },
-      {
         "component": "richtext",
         "name": "companyInfo",
         "label": "Informazioni Societarie",
@@ -936,6 +896,30 @@
         "name": "description",
         "label": "Descrizione Azienda",
         "value": "Unipol è un gruppo assicurativo, leader in Italia nei rami danni, in particolare nell'RCAuto. Fortemente attivo anche nei rami Vita, occupa una posizione di assoluta preminenza nella graduatoria nazionale dei gruppi assicurativi per raccolta diretta, e serve oltre 16 milioni di clienti. La Compagnia opera attraverso la più grande rete agenziale d'Italia, forte di circa 2.000 agenzie assicurative e oltre 5.200 subagenzie distribuite sul territorio nazionale."
+      }
+    ]
+  },
+  {
+    "id": "footer-column-1",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Nome Sezione",
+        "value": "Colonna 1",
+        "description": "Il nome mostrato per questa sezione nell'albero dei contenuti"
+      }
+    ]
+  },
+  {
+    "id": "footer-column-2",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Nome Sezione",
+        "value": "Colonna 2",
+        "description": "Il nome mostrato per questa sezione nell'albero dei contenuti"
       }
     ]
   },
