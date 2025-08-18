@@ -128,7 +128,9 @@ export default function decorate(block) {
   const columnsContainer = document.createElement('div');
   columnsContainer.className = 'u-columns';
   columnsContainer.setAttribute('data-aue-filter', 'columns');
-
+  columnsContainer.setAttribute('data-aue-type', 'container');
+  columnsContainer.setAttribute('data-aue-label', 'Colonne Footer');
+  
   // Column 1 - Ora è una sezione che contiene componenti di testo
   const col1 = document.createElement('section');
   col1.className = 'u-col';
