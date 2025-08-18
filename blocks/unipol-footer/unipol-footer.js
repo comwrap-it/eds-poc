@@ -5,8 +5,8 @@ export default function decorate(block) {
   const children = [...block.children];
 
   //General Configuration
-  const footerDesc = children[0]?.querySelectorAll('div > div')[0].textContent || '';
-  const companyInfo = children[1]?.querySelectorAll('div > div')[0].textContent || '';
+  const footerDesc = children[0]?.querySelectorAll('div > div')[0].innerHTML || '';
+  const companyInfo = children[1]?.querySelectorAll('div > div')[0].innerHTML || '';
   
   // Social configuration
   const socialLabel = children[2]?.querySelectorAll('p')[0]?.textContent || '';
@@ -26,7 +26,7 @@ export default function decorate(block) {
   const paymentLabel = children[3]?.querySelectorAll('p')[4]?.textContent || '';
   
   // App Configuration
-  const appTitle = children[4]?.querySelectorAll('p')[0]?.textContent || 'Scarica o aggiorna l\'App<br>Unipol';
+  const appTitle = children[4]?.querySelectorAll('p')[0]?.innerHTML || 'Scarica o aggiorna l\'App<br>Unipol';
   const appStoreUrl = children[4]?.querySelectorAll('a')[0]?.href || '#';
   const googlePlayUrl = children[4]?.querySelectorAll('a')[1]?.href || '#';
   const qrCodeImage = children[4]?.querySelectorAll('a')[2]?.href || '';
@@ -54,7 +54,7 @@ export default function decorate(block) {
   socialLabelEl.textContent = socialLabel;
   socialLabelEl.setAttribute('data-aue-label', 'Etichetta Social');
   socialLabelEl.setAttribute('data-aue-type', 'text');
-  socialLabelEl.setAttribute('data-aue-prop', 'socialLabel');
+  socialLabelEl.setAttribute('data-aue-prop', 'socialConfiguration_socialLabel');
   
   const socialNav = document.createElement('nav');
   socialNav.className = 'u-social';
@@ -62,10 +62,10 @@ export default function decorate(block) {
   
   // Social links
   const socialLinks = [
-    { url: facebookUrl, label: 'Facebook', text: 'f', prop: 'facebookUrl' },
-    { url: instagramUrl, label: 'Instagram', text: 'ig', prop: 'instagramUrl' },
-    { url: linkedinUrl, label: 'LinkedIn', text: 'in', prop: 'linkedinUrl' },
-    { url: youtubeUrl, label: 'YouTube', text: '▶', prop: 'youtubeUrl' }
+    { url: facebookUrl, label: 'Facebook', text: 'f', prop: 'socialConfiguration_facebookUrl' },
+    { url: instagramUrl, label: 'Instagram', text: 'ig', prop: 'socialConfiguration_instagramUrl' },
+    { url: linkedinUrl, label: 'LinkedIn', text: 'in', prop: 'socialConfiguration_linkedinUrl' },
+    { url: youtubeUrl, label: 'YouTube', text: '▶', prop: 'socialConfiguration_youtubeUrl' }
   ];
   
   socialLinks.forEach(social => {
@@ -174,8 +174,7 @@ export default function decorate(block) {
   companyInfoDiv.innerHTML = companyInfo;
   companyInfoDiv.setAttribute('data-aue-label', 'Informazioni Societarie');
   companyInfoDiv.setAttribute('data-aue-type', 'richtext');
-  companyInfoDiv.setAttribute('data-aue-prop', 'companyInfo');
-  companyInfoDiv.setAttribute('data-aue-model', 'unipol-footer');
+  companyInfoDiv.setAttribute('data-aue-prop', 'generalInfo_companyInfo');
 
   col2.appendChild(companyInfoDiv);
 
@@ -192,8 +191,7 @@ export default function decorate(block) {
   appTitleEl.innerHTML = appTitle;
   appTitleEl.setAttribute('data-aue-label', 'Titolo App');
   appTitleEl.setAttribute('data-aue-type', 'richtext');
-  appTitleEl.setAttribute('data-aue-prop', 'appTitle');
-  appTitleEl.setAttribute('data-aue-model', 'unipol-footer');
+  appTitleEl.setAttribute('data-aue-prop', 'appConfiguration_appTitle');
 
   const storesDiv = document.createElement('div');
   storesDiv.className = 'u-stores';
@@ -205,7 +203,7 @@ export default function decorate(block) {
   appStoreLink.textContent = 'App Store';
   appStoreLink.setAttribute('data-aue-label', 'URL App Store');
   appStoreLink.setAttribute('data-aue-type', 'text');
-  appStoreLink.setAttribute('data-aue-prop', 'appStoreUrl');
+  appStoreLink.setAttribute('data-aue-prop', 'appConfiguration_appStoreUrl');
   
   const googlePlayLink = document.createElement('a');
   googlePlayLink.className = 'u-store';
@@ -214,7 +212,7 @@ export default function decorate(block) {
   googlePlayLink.textContent = 'Google Play';
   googlePlayLink.setAttribute('data-aue-label', 'URL Google Play');
   googlePlayLink.setAttribute('data-aue-type', 'text');
-  googlePlayLink.setAttribute('data-aue-prop', 'googlePlayUrl');
+  googlePlayLink.setAttribute('data-aue-prop', 'appConfiguration_googlePlayUrl');
   
   storesDiv.appendChild(appStoreLink);
   storesDiv.appendChild(googlePlayLink);
@@ -227,8 +225,7 @@ export default function decorate(block) {
   qrImg.src = qrCodeImage ? getDamImageUrl(qrCodeImage) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='96' height='96' fill='%23fff'/%3E%3Crect x='0' y='0' width='96' height='96' fill='none' stroke='%23c9d3dc'/%3E%3Ctext x='50%' y='52%' font-family='Arial' font-size='10' text-anchor='middle' fill='%2390a3b5'%3EQR%3C/text%3E%3C/svg%3E";
   qrImg.setAttribute('data-aue-label', 'Immagine QR Code');
   qrImg.setAttribute('data-aue-type', 'reference');
-  qrImg.setAttribute('data-aue-prop', 'qrCodeImage');
-  qrImg.setAttribute('data-aue-model', 'unipol-footer');
+  qrImg.setAttribute('data-aue-prop', 'appConfiguration_qrCodeImage');
 
   qrDiv.appendChild(qrImg);
   
@@ -246,8 +243,7 @@ export default function decorate(block) {
   phoneImg.src = phoneImage ? getDamImageUrl(phoneImage) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='400'%3E%3Crect width='260' height='400' rx='22' ry='22' fill='%23f4f7fa' stroke='%23d8dee6'/%3E%3Ctext x='50%' y='50%' font-family='Arial' font-size='14' text-anchor='middle' fill='%2390a3b5'%3EPhone image%3C/text%3E%3C/svg%3E";
   phoneImg.setAttribute('data-aue-label', 'Immagine Telefono');
   phoneImg.setAttribute('data-aue-type', 'reference');
-  phoneImg.setAttribute('data-aue-prop', 'phoneImage');
-  phoneImg.setAttribute('data-aue-model', 'unipol-footer');
+  phoneImg.setAttribute('data-aue-prop', 'appConfiguration_phoneImage');
 
   imageCol.appendChild(phoneImg);
   
@@ -271,11 +267,10 @@ export default function decorate(block) {
   
   const descriptionP = document.createElement('p');
   descriptionP.className = 'u-desc';
-  descriptionP.innerHTML = description;
+  descriptionP.innerHTML = footerDesc;
   descriptionP.setAttribute('data-aue-label', 'Descrizione Azienda');
   descriptionP.setAttribute('data-aue-type', 'richtext');
-  descriptionP.setAttribute('data-aue-prop', 'description');
-  descriptionP.setAttribute('data-aue-model', 'unipol-footer');
+  descriptionP.setAttribute('data-aue-prop', 'generalConfiguration_description');
 
   bottomWrap.appendChild(descriptionP);
   bottomSection.appendChild(bottomWrap);
