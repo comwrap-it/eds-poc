@@ -133,7 +133,10 @@ export default function decorate(block) {
   
   // Aggiungi i contenuti della sezione 1 se presenti
   if (column1Section) {
-    col1.appendChild(column1Section.cloneNode(true));
+    // Invece di clonare l'intero nodo, trasferisci i suoi figli
+    while (column1Section.firstChild) {
+      col1.appendChild(column1Section.firstChild);
+    }
   }
   
   col1.prepend(col1Title);
@@ -150,7 +153,10 @@ export default function decorate(block) {
   
   // Aggiungi i contenuti della sezione 2 se presenti
   if (column2Section) {
-    col2.appendChild(column2Section.cloneNode(true));
+    // Invece di clonare l'intero nodo, trasferisci i suoi figli
+    while (column2Section.firstChild) {
+      col2.appendChild(column2Section.firstChild);
+    }
   }
   
   col2.prepend(col2Title);
