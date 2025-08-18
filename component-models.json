@@ -901,27 +901,11 @@
   },
   {
     "id": "footer-column-1-model",
-    "fields": [
-      {
-        "component": "text",
-        "name": "column1Name",
-        "label": "Nome Sezione",
-        "value": "Colonna 1",
-        "description": "Il nome mostrato per questa sezione nell'albero dei contenuti"
-      }
-    ]
+    "fields": []
   },
   {
     "id": "footer-column-2-model",
-    "fields": [
-      {
-        "component": "text",
-        "name": "column2Name",
-        "label": "Nome Sezione",
-        "value": "Colonna 2",
-        "description": "Il nome mostrato per questa sezione nell'albero dei contenuti"
-      }
-    ]
+    "fields": []
   },
   {
     "id": "unipol-header",
