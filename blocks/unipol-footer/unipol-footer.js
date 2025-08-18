@@ -125,7 +125,7 @@ export default function decorate(block) {
   const col1 = document.createElement('section');
   col1.className = 'u-col';
   col1.setAttribute('data-aue-label', 'Colonna 1');
-  col1.setAttribute('data-aue-type', 'section');
+  col1.setAttribute('data-aue-type', 'container');
   col1.setAttribute('data-aue-model', 'footer-column-1');
   
   const col1Title = document.createElement('h3');
@@ -145,7 +145,7 @@ export default function decorate(block) {
   const col2 = document.createElement('section');
   col2.className = 'u-col';
   col2.setAttribute('data-aue-label', 'Colonna 2');
-  col2.setAttribute('data-aue-type', 'section');
+  col2.setAttribute('data-aue-type', 'container');
   col2.setAttribute('data-aue-model', 'footer-column-2');
   
   const col2Title = document.createElement('h3');
