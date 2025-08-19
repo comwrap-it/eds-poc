@@ -153,15 +153,92 @@ body {
 	text-transform: none;
 }
 
+/* Stili per i link delle colonne */
 .unipol-footer .u-links {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	columns: 1;
+  margin-bottom: 1rem;
 }
 
-.unipol-footer .u-links li {
-	margin: 2px 0;
+.unipol-footer .u-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.unipol-footer .u-links > ul > li {
+  margin-bottom: 0.5rem;
+}
+
+.unipol-footer .u-links > ul > li > a {
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
+}
+
+.unipol-footer .u-links > ul > li > a:hover {
+  color: #0066cc;
+}
+
+/* Link innestati - Desktop */
+@media (min-width: 768px) {
+  .unipol-footer .u-links ul ul {
+    margin-left: 1rem;
+    margin-top: 0.25rem;
+  }
+  
+  .unipol-footer .u-links ul ul li a {
+    font-weight: 400;
+    color: #666;
+    font-size: 0.9em;
+    padding: 0.25rem 0;
+  }
+  
+  .unipol-footer .u-links ul ul li a:hover {
+    color: #0066cc;
+  }
+}
+
+/* Link innestati - Mobile (Accordion) */
+@media (max-width: 767px) {
+  .unipol-footer .u-links > ul > li {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .unipol-footer .u-links > ul > li > a {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .unipol-footer .u-links > ul > li:has(ul) > a::after {
+    content: '+';
+    position: absolute;
+    right: 0;
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+  }
+  
+  .unipol-footer .u-links > ul > li.expanded > a::after {
+    transform: rotate(45deg);
+  }
+  
+  .unipol-footer .u-links ul ul {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .unipol-footer .u-links > ul > li.expanded ul {
+    max-height: 200px;
+  }
+  
+  .unipol-footer .u-links ul ul li a {
+    font-weight: 400;
+    color: #666;
+    font-size: 0.9em;
+    padding: 0.5rem 1rem;
+    border-left: 2px solid #eee;
+  }
 }
 
 .unipol-footer .u-links a {
