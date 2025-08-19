@@ -134,36 +134,10 @@ export default function decorate(block) {
   // Column 1 - Ora è una sezione che contiene componenti di testo
   const col1 = document.createElement('section');
   col1.className = 'u-col';
-  
-  const col1Title = document.createElement('div');
-  col1Title.innerHTML = ' ';
-  
-  // Aggiungi i contenuti della sezione 1 se presenti
-  //if (column1Section) {
-    // Invece di clonare l'intero nodo, trasferisci i suoi figli
-    //while (column1Section.firstChild) {
-      //col1.appendChild(column1Section.firstChild);
-    //}
-  //}
-  
-  col1.prepend(col1Title);
 
   // Column 2 - Ora è una sezione che contiene componenti di testo
   const col2 = document.createElement('section');
   col2.className = 'u-col';
-  
-  const col2Title = document.createElement('div');
-  col2Title.innerHTML = ' ';
-  
-  // Aggiungi i contenuti della sezione 2 se presenti
-  //if (column2Section) {
-    // Invece di clonare l'intero nodo, trasferisci i suoi figli
-    //while (column2Section.firstChild) {
-      //col2.appendChild(column2Section.firstChild);
-    //}
-  //}
-  
-  col2.prepend(col2Title);
   
   const companyInfoDiv = document.createElement('div');
   companyInfoDiv.className = 'u-datisocietari';

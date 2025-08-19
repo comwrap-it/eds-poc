@@ -165,37 +165,37 @@ body {
 }
 
 .unipol-footer .u-links > ul > li {
-  margin-bottom: 0.5rem;
+  margin-top: 10px;
 }
 
 .unipol-footer .u-links > ul > li > a {
   font-weight: 600;
-  color: #333;
+  font-size: 16px;
+  color: #0f3250;
   text-decoration: none;
   display: block;
-  padding: 0.5rem 0;
 }
 
 .unipol-footer .u-links > ul > li > a:hover {
-  color: #0066cc;
+  color: #23527c;
+  text-decoration: none;
 }
 
 /* Link innestati - Desktop */
 @media (min-width: 768px) {
-  .unipol-footer .u-links ul ul {
-    margin-left: 1rem;
-    margin-top: 0.25rem;
-  }
   
   .unipol-footer .u-links ul ul li a {
-    font-weight: 400;
-    color: #666;
-    font-size: 0.9em;
+    font-weight: 600;
+    color: #5393bc;
+    font-size: 16px;
+	text-decoration: none;
+	line-height: 10px;
     padding: 0.25rem 0;
   }
   
   .unipol-footer .u-links ul ul li a:hover {
     color: #0066cc;
+	text-decoration: none;
   }
 }
 
@@ -340,6 +340,11 @@ body {
 	color: var(--muted);
 	font-size: 13px;
 	line-height: 1.5;
+}
+
+.unipol-footer .u-datisocietari a{
+	color: var(--muted);
+	text-decoration: underline;
 }
 
 /* ===== BOTTOM STRIP: descrizione ===== */
