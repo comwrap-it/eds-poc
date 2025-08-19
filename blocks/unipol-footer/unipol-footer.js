@@ -131,6 +131,14 @@ export default function decorate(block) {
   columnsContainer.setAttribute('data-aue-type', 'container');
   columnsContainer.setAttribute('data-aue-label', 'Colonne Footer');
   
+  // Nuovo contenitore per colonne + dati societari
+  const leftContainer = document.createElement('div');
+  leftContainer.className = 'u-left-container';
+  
+  // Contenitore per le due colonne affiancate
+  const columnsWrapper = document.createElement('div');
+  columnsWrapper.className = 'u-columns-wrapper';
+  
   // Column 1 - Ora è una sezione che contiene componenti di testo
   const col1 = document.createElement('section');
   col1.className = 'u-col';
@@ -139,6 +147,11 @@ export default function decorate(block) {
   const col2 = document.createElement('section');
   col2.className = 'u-col';
   
+  // Aggiungi le colonne al wrapper
+  columnsWrapper.appendChild(col1);
+  columnsWrapper.appendChild(col2);
+  
+  // Dati societari - ora vanno sotto le colonne
   const companyInfoDiv = document.createElement('div');
   companyInfoDiv.className = 'u-datisocietari';
   companyInfoDiv.innerHTML = companyInfo;
@@ -146,7 +159,9 @@ export default function decorate(block) {
   companyInfoDiv.setAttribute('data-aue-type', 'richtext');
   companyInfoDiv.setAttribute('data-aue-prop', 'generalInfo_companyInfo');
 
-  col2.appendChild(companyInfoDiv);
+  // Assembla il contenitore sinistro
+  leftContainer.appendChild(columnsWrapper);
+  leftContainer.appendChild(companyInfoDiv);
 
   // App section - Struttura a due colonne come nel design originale
   const appSection = document.createElement('div');
@@ -221,8 +236,7 @@ export default function decorate(block) {
   appSection.appendChild(appCol);
   appSection.appendChild(imageCol);
 
-  columnsContainer.appendChild(col1);
-  columnsContainer.appendChild(col2);
+  columnsContainer.appendChild(leftContainer);
   columnsContainer.appendChild(appSection);
   
   mainWrap.appendChild(columnsContainer);
