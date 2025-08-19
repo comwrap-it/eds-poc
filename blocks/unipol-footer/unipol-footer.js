@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { getDamImageUrl } from '../../config/dev-config.js';
 
 export default function decorate(block) {
@@ -29,8 +30,8 @@ export default function decorate(block) {
   const appTitle = children[4]?.querySelectorAll('p')[0]?.innerHTML || 'Scarica o aggiorna l\'App<br>Unipol';
   const appStoreUrl = children[4]?.querySelectorAll('a')[0]?.href || '#';
   const googlePlayUrl = children[4]?.querySelectorAll('a')[1]?.href || '#';
-  const qrCodeImage = children[4]?.querySelectorAll('a')[2]?.href || '';
-  const phoneImage = children[4]?.querySelectorAll('a')[3]?.href || '';
+  const qrCodeImage = children[4]?.querySelectorAll('picture')[0];
+  const phoneImage = children[4]?.querySelectorAll('picture')[1];
 
   // Crea la struttura del footer
   block.innerHTML = '';
@@ -172,10 +173,10 @@ export default function decorate(block) {
   appCol.className = 'u-col u-app';
   appCol.setAttribute('aria-label', 'App Unipol');
   
-  const appTitleEl = document.createElement('h3');
+  const appTitleEl = document.createElement('span');
   appTitleEl.innerHTML = appTitle;
   appTitleEl.setAttribute('data-aue-label', 'Titolo App');
-  appTitleEl.setAttribute('data-aue-type', 'richtext');
+  appTitleEl.setAttribute('data-aue-type', 'text');
   appTitleEl.setAttribute('data-aue-prop', 'appConfiguration_appTitle');
 
   const storesDiv = document.createElement('div');
@@ -201,36 +202,29 @@ export default function decorate(block) {
   
   storesDiv.appendChild(appStoreLink);
   storesDiv.appendChild(googlePlayLink);
-  
   const qrDiv = document.createElement('div');
   qrDiv.className = 'u-qr';
-  
-  const qrImg = document.createElement('img');
-  qrImg.alt = 'QR App Unipol';
-  qrImg.src = qrCodeImage ? getDamImageUrl(qrCodeImage) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='96' height='96' fill='%23fff'/%3E%3Crect x='0' y='0' width='96' height='96' fill='none' stroke='%23c9d3dc'/%3E%3Ctext x='50%' y='52%' font-family='Arial' font-size='10' text-anchor='middle' fill='%2390a3b5'%3EQR%3C/text%3E%3C/svg%3E";
-  qrImg.setAttribute('data-aue-label', 'Immagine QR Code');
-  qrImg.setAttribute('data-aue-type', 'reference');
-  qrImg.setAttribute('data-aue-prop', 'appConfiguration_qrCodeImage');
-
-  qrDiv.appendChild(qrImg);
+  if (qrCodeImage) {
+    const qrCodeImagePic = qrCodeImage.querySelector('img');
+    const qrCodeImageOptimizedPic = createOptimizedPicture(qrCodeImagePic.src, qrCodeImagePic.alt, false);
+    moveInstrumentation(qrCodeImagePic, qrCodeImageOptimizedPic.querySelector('img'));
+    qrDiv.appendChild(qrCodeImageOptimizedPic);
+  }
   
   appCol.appendChild(appTitleEl);
   appCol.appendChild(storesDiv);
   appCol.appendChild(qrDiv);
   
-  // Seconda colonna: Immagine del telefono
   const imageCol = document.createElement('div');
   imageCol.className = 'u-col u-image';
-  
-  const phoneImg = document.createElement('img');
-  phoneImg.className = 'u-phone';
-  phoneImg.alt = 'Anteprima app';
-  phoneImg.src = phoneImage ? getDamImageUrl(phoneImage) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='400'%3E%3Crect width='260' height='400' rx='22' ry='22' fill='%23f4f7fa' stroke='%23d8dee6'/%3E%3Ctext x='50%' y='50%' font-family='Arial' font-size='14' text-anchor='middle' fill='%2390a3b5'%3EPhone image%3C/text%3E%3C/svg%3E";
-  phoneImg.setAttribute('data-aue-label', 'Immagine Telefono');
-  phoneImg.setAttribute('data-aue-type', 'reference');
-  phoneImg.setAttribute('data-aue-prop', 'appConfiguration_phoneImage');
-
-  imageCol.appendChild(phoneImg);
+  // Seconda colonna: Immagine del telefono
+  if(phoneImage) {
+  const phoneImg = phoneImage.querySelector('img');
+  const phoneImgOptimizedPic = createOptimizedPicture(phoneImg.src, phoneImg.alt, false);
+  moveInstrumentation(phoneImg, phoneImgOptimizedPic.querySelector('img'));
+  phoneImgOptimizedPic.className = 'u-phone';
+  imageCol.appendChild(phoneImgOptimizedPic);
+  }
   
   // Assembla le due colonne dell'app
   appSection.appendChild(appCol);
