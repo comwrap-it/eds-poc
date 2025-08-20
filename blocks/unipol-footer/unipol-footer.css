@@ -261,18 +261,29 @@ body {
   .unipol-footer .u-links > ul > li > a {
     position: relative;
     cursor: pointer;
+    display: block;
+    padding-right: 40px; /* Spazio per il pulsante + */
   }
   
   .unipol-footer .u-links > ul > li:has(ul) > a::after {
     content: '+';
     position: absolute;
-    right: 0;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 1.2em;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
   }
   
   .unipol-footer .u-links > ul > li.expanded > a::after {
-    transform: rotate(45deg);
+    content: '-';
+    transform: translateY(-50%);
   }
   
   .unipol-footer .u-links ul ul {
@@ -288,9 +299,7 @@ body {
   .unipol-footer .u-links ul ul li a {
     font-weight: 400;
     color: #666;
-    font-size: 0.9em;
-    padding: 0.5rem 1rem;
-    border-left: 2px solid #eee;
+    font-size: 16px;
   }
 }
 
@@ -304,7 +313,7 @@ body {
 .unipol-footer .u-links a:hover,
 .unipol-footer .u-links a:focus-visible {
 	color: var(--link-hover);
-	text-decoration: underline;
+	text-decoration: none;
 	outline: none;
 }
 
@@ -347,7 +356,7 @@ body {
 @media (max-width: 767px) {
 	.unipol-footer .u-app-section {
 		grid-template-columns: 1fr auto;
-		gap: 16px;
+		gap: 0px;
 		align-items: flex-start;
 	}
 	
@@ -387,7 +396,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	padding: 8px 10px;
-	min-width: 140px;
+	width: 140px;
 	min-height: 44px;
 	border: 1px solid #d1d7dd;
 	border-radius: 6px;

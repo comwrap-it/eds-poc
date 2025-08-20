@@ -10,7 +10,7 @@ export function initFooterAccordion() {
   footerLinks.forEach(li => {
     const nestedUl = li.querySelector('ul');
     if (nestedUl) {
-      const mainLink = li.querySelector('> a');
+      const mainLink = li.querySelector('a');
       if (mainLink) {
         mainLink.addEventListener('click', (e) => {
           e.preventDefault();
