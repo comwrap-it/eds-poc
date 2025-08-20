@@ -46,7 +46,9 @@
           "name": "image",
           "label": "Immagine",
           "multi": false,
-          "rootPath": "/content/dam/eds-poc"
+          "validation": {
+            "rootPath": "/content/dam/eds-poc"
+          }
         },
         {
           "component": "text",
