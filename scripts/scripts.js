@@ -11,8 +11,8 @@ import {
   loadSections,
   loadCSS,
 } from './aem.js';
-
 import { initFooterAccordion } from './columns-footer.js';
+
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -148,7 +148,9 @@ async function loadPage() {
 
 // Inizializza l'accordion del footer dopo il caricamento del DOM
 window.addEventListener('DOMContentLoaded', () => {
-  initFooterAccordion();
+  setTimeout(() => {
+    initFooterAccordion();
+    }, 1000);
 });
 
 loadPage();

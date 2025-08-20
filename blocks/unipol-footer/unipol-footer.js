@@ -1,6 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { getDamImageUrl } from '../../config/dev-config.js';
 
 export default function decorate(block) {
   const children = [...block.children];
