@@ -45,7 +45,8 @@
           "valueType": "string",
           "name": "image",
           "label": "Immagine",
-          "multi": false
+          "multi": false,
+          "rootPath": "/content/dam/eds-poc"
         },
         {
           "component": "text",
