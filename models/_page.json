@@ -21,6 +21,12 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
+        },
+        {
+          "component": "boolean",
+          "valueType": "boolean",
+          "name": "includeInMenu",
+          "label": "Include in Menu"
         }
       ]
     }
