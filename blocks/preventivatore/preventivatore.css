@@ -1,9 +1,16 @@
 /* Skeleton Loader Styles */
+.preventivatore-wrapper{
+    background-color: silver;
+}
+main > .section > div.preventivatore-wrapper{
+    margin-bottom: 20px;
+}
 .preventivatore-skeleton {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .skeleton-container {
