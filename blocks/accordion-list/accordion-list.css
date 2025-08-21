@@ -143,6 +143,7 @@ details[open] .accordion-summary::after {
   color: #193a56;
   font-weight: bold;
   font-size: 30px;
+  padding-top: 30px;
   line-height: 37.5px;
   margin: 0;
 }

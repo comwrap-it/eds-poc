@@ -44,11 +44,13 @@ main > .section > div.text-image-wrapper {
 .text-image .text-content p,
 .text-image .text-content {
   color: rgb(25, 58, 86);
+  font-size: 18px;
 }
 
 @media (max-width: 768px) {
   .text-image {
     flex-direction: column;
+    height: 100%;
   }
   .text-image .text-content,
   .text-image .image-content {
