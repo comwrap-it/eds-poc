@@ -28,7 +28,7 @@ function buildCard(item) {
   // Gestione sicura dell'immagine con fallback
   let imagePath = null;
   if (image && typeof image === 'object') {
-    imagePath = image._dynamicUrl || image._path || image._publishUrl || image._authorUrl;
+    imagePath = image._dynamicUrlimage || image._path || image._publishUrl;
     
     // Applica la trasformazione DAM al path dell'immagine
     imagePath = getDamImageUrl(imagePath);
