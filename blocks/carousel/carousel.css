@@ -1,3 +1,7 @@
+main .section.light, main .section.highlight.carousel-container{
+  padding-top: 0px;
+}
+
 .section .carousel-wrapper {
   max-width: unset;
   padding: 0;
