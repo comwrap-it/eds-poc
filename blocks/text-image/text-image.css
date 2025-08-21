@@ -8,6 +8,7 @@ main > .section > div.text-image-wrapper {
 .text-image {
   display: flex;
   flex-direction: row;
+  height: 392px;
   align-items: stretch;
   gap: 0;
   padding: 0;
