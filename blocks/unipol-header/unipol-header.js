@@ -3,7 +3,7 @@ import { HEADER_CONFIG } from './unipol-header.config.js';
 import { initPopup } from './unipol-header.popup.js';
 
 async function fetchHeaderData() {
-  const endpoint = getGraphQLEndpoint('/bin/pub/retrieveStructure.json?rootPath=/content/unipol/us/en');
+  const endpoint = getGraphQLEndpoint('/bin/pub/retrieveStructure.json?rootPath=/content/eds-poc/index');
   const headers = { 'Content-Type': 'application/json' };
   if (DEV_CONFIG.isLocalDevelopment) headers['Authorization'] = getAuthHeader();
 
@@ -374,7 +374,7 @@ export default async function decorate(block) {
   data.children.forEach((c, index) => {
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.href = c.path;
+    a.href = c.path.replace('/content/eds-poc', '');
 
     if (index === 0) {
       a.classList.add('first-headet-bottom-link');
