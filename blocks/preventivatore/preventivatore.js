@@ -92,7 +92,7 @@ export default async function decorate(block) {
   
   // Crea un container per React
   const reactContainer = document.createElement('div');
-  reactContainer.id = 'preventivatore-react-root';
+  reactContainer.id = 'root';
   reactContainer.style.display = 'none'; // Nascosto inizialmente
   block.appendChild(reactContainer);
   
@@ -124,51 +124,11 @@ export default async function decorate(block) {
   
   try {
     // Carica React e ReactDOM da CDN
-    await loadScript('https://unpkg.com/react@18/umd/react.production.min.js');
-    await loadScript('https://unpkg.com/react-dom@18/umd/react-dom.production.min.js');
-    
-    // Carica il tuo componente React buildato
-    await loadScript('/dist/preventivatore-react.bundle.js');
-    
+    await loadScript('/static/js/main.828a3cf1.js');
     // Carica CSS se necessario
-    await loadCSS('/blocks/preventivatore/preventivatore-react.css');
-    
+    await loadCSS('/static/css/main.4efb37a3.css');
     console.log('Script e CSS caricati');
     
-    // Estrai i dati dal blocco EDS se necessario
-    const blockData = {
-      // Estrai dati dal DOM del blocco se necessario
-    };
-    
-    // Renderizza il componente React
-    if (window.preventivatoreReactComponent && window.React && window.ReactDOM) {
-      const { createElement } = window.React;
-      const { render } = window.ReactDOM;
-      
-      console.log('Rendering componente React...');
-      
-      render(
-        createElement(window.preventivatoreReactComponent, { 
-          data: blockData,
-          onReady: () => {
-            // Callback alternativo nel caso l'evento non funzioni
-            console.log('Callback onReady chiamato');
-            hideSkeletonHandler({ type: 'callback' });
-          }
-        }),
-        reactContainer
-      );
-    } else {
-      console.error('Componente React non trovato:', {
-        preventivatoreReactComponent: !!window.preventivatoreReactComponent,
-        React: !!window.React,
-        ReactDOM: !!window.ReactDOM
-      });
-      
-      // Nascondi lo skeleton anche in caso di errore
-      clearTimeout(fallbackTimeout);
-      hideSkeletonHandler({ type: 'error' });
-    }
   } catch (error) {
     console.error('Errore nel caricamento del componente React:', error);
     
