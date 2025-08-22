@@ -124,7 +124,7 @@ export default async function decorate(block) {
   
   try {
     // Carica React e ReactDOM da CDN
-    await loadScript('/static/js/main.828a3cf1.js');
+    await loadScript('/static/js/main.bc1853d5.js');
     // Carica CSS se necessario
     await loadCSS('/static/css/main.4efb37a3.css');
     console.log('Script e CSS caricati');
