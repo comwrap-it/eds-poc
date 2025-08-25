@@ -1,216 +1,150 @@
-export default function decorate(block) {
-    const children = [...block.children];
-    const slides = children.filter((child) => child.tagName !== 'BUTTON');
-    block.querySelectorAll('img').forEach((img) => {
-        img.setAttribute('loading', 'lazy');
+import { fetchPlaceholders } from '../../scripts/placeholders.js';
+
+function updateActiveSlide(slide) {
+  const block = slide.closest('.carousel');
+  const slideIndex = parseInt(slide.dataset.slideIndex, 10);
+  block.dataset.activeSlide = slideIndex;
+
+  const slides = block.querySelectorAll('.carousel-slide');
+
+  slides.forEach((aSlide, idx) => {
+    aSlide.setAttribute('aria-hidden', idx !== slideIndex);
+    aSlide.querySelectorAll('a').forEach((link) => {
+      if (idx !== slideIndex) {
+        link.setAttribute('tabindex', '-1');
+      } else {
+        link.removeAttribute('tabindex');
+      }
     });
-    let currentSlide = 0;
-    let dotsWrapper;
-    let autoSlideTimer;
-    const autoPlayInterval = 5000;
+  });
 
-    slides.forEach((slide) => {
-        const slideChildren = [...slide.children];
-        const boxAlign = slideChildren[1]?.textContent.trim();
-        const iconPath = slideChildren[2]?.textContent.trim();
-        const iconPathTag = slideChildren[2];
-        const mainTitle = slideChildren[3];
-        const secondaryBlock = slideChildren[4];
-        const ctaLinkBlock = slideChildren[5];
-        const ctaLabelBlock = slideChildren[6];
-        const textColor = slideChildren[7]?.textContent.trim() || '#000000';
-        const backgroundColor = slideChildren[8]?.textContent.trim() || '#ffffff';
-
-
-        const hasMainTitle = mainTitle?.textContent.trim().length > 0;
-        const hasSecondaryContent = secondaryBlock?.textContent.trim().length > 0;
-
-        const shouldHideSliderBox = (
-            (!hasMainTitle && !hasSecondaryContent) ||
-            boxAlign === 'slider-box-d-none'
-        );
-
-        if (shouldHideSliderBox) {
-            [...slide.children].forEach((child, index) => {
-                if (index > 0) child.remove();
-            });
-            return;
-        }
-
-        const applyClassesAndStyles = () => {
-          const applyClassToAllElements = (container, selector, className) => {
-            container?.querySelectorAll(selector).forEach((el) => {
-              el.classList.add(className);
-            });
-          };
-
-          applyClassToAllElements(mainTitle, '*', 'custom-title-small');
-          applyClassToAllElements(secondaryBlock, 'h1, h2, h3, h4, h5, h6', 'custom-title-large');
-
-          if (textColor) {
-            [mainTitle, secondaryBlock, iconPathTag].forEach((block) => {
-              block?.querySelectorAll('*').forEach((el) => {
-                el.style.color = textColor;
-              });
-            });
-          }
-        };
-
-        applyClassesAndStyles();
-
-        if (textColor) {
-            [mainTitle, secondaryBlock].forEach((block) => {
-                block?.querySelectorAll('*').forEach((el) => {
-                    el.style.color = textColor;
-                });
-            });
-        }
-
-        const ctaAnchor = ctaLinkBlock?.querySelector('a');
-        ctaLinkBlock.classList.add("slider-box-cta-cont");
-        if (ctaAnchor && ctaLabelBlock?.textContent.trim()) {
-            ctaAnchor.textContent = ctaLabelBlock.textContent.trim();
-        }
-
-        [slideChildren[1], slideChildren[6], slideChildren[7], slideChildren[8]].forEach((slide) => {
-            if (slide?.remove) slide.remove();
-        });
-
-        const sliderBox = document.createElement('div');
-        sliderBox.className = 'slider-box';
-        if (boxAlign) sliderBox.classList.add(boxAlign);
-        if (backgroundColor) sliderBox.style.backgroundColor = backgroundColor;
-
-        const sliderBoxInner = document.createElement('div');
-
-        if (iconPath && slideChildren[2] && slideChildren[3]) {
-          const iconTitleCont = document.createElement('div');
-          iconTitleCont.className = 'iconTitle-cont';
-
-          iconTitleCont.appendChild(slideChildren[2]);
-          iconTitleCont.appendChild(slideChildren[3]);
-
-          sliderBoxInner.appendChild(iconTitleCont);
-        } else {
-          if (slideChildren[3]) sliderBoxInner.appendChild(slideChildren[3]);
-        }
-
-        if (slideChildren[4]) sliderBoxInner.appendChild(slideChildren[4]);
-        if (slideChildren[5]) sliderBoxInner.appendChild(slideChildren[5]);
-
-        sliderBox.appendChild(sliderBoxInner);
-
-        slide.insertBefore(sliderBox, slide.children[1]);
-    });
-
-    // ACCESSIBILITÀ
-    block.setAttribute('role', 'region');
-    block.setAttribute('aria-label', 'Carosello');
-
-    const srStatus = document.createElement('div');
-    srStatus.setAttribute('id', 'carousel-status');
-    srStatus.setAttribute('aria-live', 'polite');
-    srStatus.setAttribute('aria-atomic', 'true');
-    srStatus.className = 'visually-hidden';
-    block.appendChild(srStatus);
-
-    const updateSlides = (newIndex) => {
-        slides.forEach((slide, index) => {
-            const isActive = index === newIndex;
-            slide.classList.toggle('slider-active', isActive);
-            slide.style.display = isActive ? 'block' : 'none';
-            slide.setAttribute('role', 'group');
-            slide.setAttribute('aria-label', `Slide ${index + 1} di ${slides.length}`);
-            slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
-        });
-
-        if (dotsWrapper) {
-            const dots = dotsWrapper.querySelectorAll('.slider-dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === newIndex);
-            });
-        }
-
-        srStatus.textContent = `Slide ${newIndex + 1} di ${slides.length}`;
-        currentSlide = newIndex;
-    };
-
-    const startAutoSlide = () => {
-        autoSlideTimer = setInterval(() => {
-            const newIndex = (currentSlide + 1) % slides.length;
-            updateSlides(newIndex);
-        }, autoPlayInterval);
-    };
-
-    const resetAutoSlideTimer = () => {
-        clearInterval(autoSlideTimer);
-        startAutoSlide();
-    };
-
-    // INIZIALIZZA SLIDES
-    slides.forEach((slide, index) => {
-        slide.classList.add('slider-class');
-        slide.classList.toggle('slider-active', index === 0);
-        slide.style.display = index === 0 ? 'block' : 'none';
-        slide.setAttribute('role', 'group');
-        slide.setAttribute('aria-label', `Slide ${index + 1} di ${slides.length}`);
-    });
-
-    const prevBtn = document.createElement('button');
-    prevBtn.className = 'slider-prev';
-    prevBtn.setAttribute('aria-label', 'Prev Button');
-    prevBtn.innerHTML = '←';
-    prevBtn.addEventListener('click', () => {
-        const newIndex = (currentSlide - 1 + slides.length) % slides.length;
-        updateSlides(newIndex);
-        resetAutoSlideTimer();
-    });
-
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'slider-next';
-    nextBtn.setAttribute('aria-label', 'Next Button');
-    nextBtn.innerHTML = '→';
-    nextBtn.addEventListener('click', () => {
-        const newIndex = (currentSlide + 1) % slides.length;
-        updateSlides(newIndex);
-        resetAutoSlideTimer();
-    });
-
-    if (slides.length > 1) {
-        block.append(prevBtn, nextBtn);
-
-        dotsWrapper = document.createElement('div');
-        dotsWrapper.className = 'slider-dots';
-
-        slides.forEach((_, index) => {
-            const dot = document.createElement('button');
-            dot.className = 'slider-dot';
-            dot.setAttribute('aria-label', `Vai alla slide ${index + 1}`);
-            if (index === 0) dot.classList.add('active');
-
-            dot.addEventListener('click', () => {
-                updateSlides(index);
-                resetAutoSlideTimer();
-            });
-
-            dotsWrapper.appendChild(dot);
-        });
-
-        block.appendChild(dotsWrapper);
-        startAutoSlide();
+  const indicators = block.querySelectorAll('.carousel-slide-indicator');
+  indicators.forEach((indicator, idx) => {
+    if (idx !== slideIndex) {
+      indicator.querySelector('button').removeAttribute('disabled');
+    } else {
+      indicator.querySelector('button').setAttribute('disabled', 'true');
     }
+  });
+}
 
-    const wrapper = block.closest('.carousel-wrapper');
-    if (wrapper) {
-        wrapper.addEventListener('click', (e) => {
-            if (e.target.closest('a, button')) return;
+function showSlide(block, slideIndex = 0) {
+  const slides = block.querySelectorAll('.carousel-slide');
+  let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
+  if (slideIndex >= slides.length) realSlideIndex = 0;
+  const activeSlide = slides[realSlideIndex];
 
-            const activeSlide = slides[currentSlide];
-            const cta = activeSlide.querySelector('.button-container a.button, .slider-box .slider-box-cta-cont a');
+  activeSlide.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
+  block.querySelector('.carousel-slides').scrollTo({
+    top: 0,
+    left: activeSlide.offsetLeft,
+    behavior: 'smooth',
+  });
+}
 
-            if (cta) {
-                cta.click();
-            }
-        });
+function bindEvents(block) {
+  const slideIndicators = block.querySelector('.carousel-slide-indicators');
+  if (!slideIndicators) return;
+
+  slideIndicators.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const slideIndicator = e.currentTarget.parentElement;
+      showSlide(block, parseInt(slideIndicator.dataset.targetSlide, 10));
+    });
+  });
+
+  block.querySelector('.slide-prev').addEventListener('click', () => {
+    showSlide(block, parseInt(block.dataset.activeSlide, 10) - 1);
+  });
+  block.querySelector('.slide-next').addEventListener('click', () => {
+    showSlide(block, parseInt(block.dataset.activeSlide, 10) + 1);
+  });
+
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) updateActiveSlide(entry.target);
+    });
+  }, { threshold: 0.5 });
+  block.querySelectorAll('.carousel-slide').forEach((slide) => {
+    slideObserver.observe(slide);
+  });
+}
+
+function createSlide(row, slideIndex, carouselId) {
+  const slide = document.createElement('li');
+  slide.dataset.slideIndex = slideIndex;
+  slide.setAttribute('id', `carousel-${carouselId}-slide-${slideIndex}`);
+  slide.classList.add('carousel-slide');
+
+  row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
+    column.classList.add(`carousel-slide-${colIdx === 0 ? 'image' : 'content'}`);
+    slide.append(column);
+  });
+
+  const labeledBy = slide.querySelector('h1, h2, h3, h4, h5, h6');
+  if (labeledBy) {
+    slide.setAttribute('aria-labelledby', labeledBy.getAttribute('id'));
+  }
+
+  return slide;
+}
+
+let carouselId = 0;
+export default async function decorate(block) {
+  carouselId += 1;
+  block.setAttribute('id', `carousel-${carouselId}`);
+  const rows = block.querySelectorAll(':scope > div');
+  const isSingleSlide = rows.length < 2;
+
+  const placeholders = await fetchPlaceholders();
+
+  block.setAttribute('role', 'region');
+  block.setAttribute('aria-roledescription', placeholders.carousel || 'Carousel');
+
+  const container = document.createElement('div');
+  container.classList.add('carousel-slides-container');
+
+  const slidesWrapper = document.createElement('ul');
+  slidesWrapper.classList.add('carousel-slides');
+  block.prepend(slidesWrapper);
+
+  let slideIndicators;
+  if (!isSingleSlide) {
+    const slideIndicatorsNav = document.createElement('nav');
+    slideIndicatorsNav.setAttribute('aria-label', placeholders.carouselSlideControls || 'Carousel Slide Controls');
+    slideIndicators = document.createElement('ol');
+    slideIndicators.classList.add('carousel-slide-indicators');
+    slideIndicatorsNav.append(slideIndicators);
+    block.append(slideIndicatorsNav);
+
+    const slideNavButtons = document.createElement('div');
+    slideNavButtons.classList.add('carousel-navigation-buttons');
+    slideNavButtons.innerHTML = `
+      <button type="button" class= "slide-prev" aria-label="${placeholders.previousSlide || 'Previous Slide'}"></button>
+      <button type="button" class="slide-next" aria-label="${placeholders.nextSlide || 'Next Slide'}"></button>
+    `;
+
+    container.append(slideNavButtons);
+  }
+
+  rows.forEach((row, idx) => {
+    const slide = createSlide(row, idx, carouselId);
+    slidesWrapper.append(slide);
+
+    if (slideIndicators) {
+      const indicator = document.createElement('li');
+      indicator.classList.add('carousel-slide-indicator');
+      indicator.dataset.targetSlide = idx;
+      indicator.innerHTML = `<button type="button" aria-label="${placeholders.showSlide || 'Show Slide'} ${idx + 1} ${placeholders.of || 'of'} ${rows.length}"></button>`;
+      slideIndicators.append(indicator);
     }
+    row.remove();
+  });
+
+  container.append(slidesWrapper);
+  block.prepend(container);
+
+  if (!isSingleSlide) {
+    bindEvents(block);
+  }
 }
