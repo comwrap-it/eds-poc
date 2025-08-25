@@ -42,12 +42,10 @@ function createHamburger() {
   return btn;
 }
 
-// ✅ Funzione per creare placeholder della lista
 function createPlaceholderList() {
   const ul = document.createElement('ul');
   ul.classList.add('bottom-page-list', 'loading-placeholder');
   
-  // Crea 4-5 placeholder items per evitare layout shift
   for (let i = 0; i < 5; i++) {
     const li = document.createElement('li');
     const placeholder = document.createElement('div');
@@ -67,9 +65,7 @@ function createPlaceholderList() {
   return ul;
 }
 
-// ✅ Funzione per popolare la lista con dati reali
 function populateNavigationList(ul, data) {
-  // Rimuovi placeholder
   ul.innerHTML = '';
   ul.classList.remove('loading-placeholder');
   
@@ -113,17 +109,14 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   mobileMenu.setAttribute('aria-labelledby', 'mobile-menu-title');
   mobileMenu.style.display = 'none';
 
-  // Titolo nascosto
   const hiddenTitle = document.createElement('h2');
   hiddenTitle.id = 'mobile-menu-title';
   hiddenTitle.textContent = 'Menu di navigazione';
   hiddenTitle.classList.add('sr-only');
 
-  // Contenitore per link + X
   const headerContainer = document.createElement('div');
   headerContainer.classList.add('mobile-menu-header');
 
-  // Link area riservata configurabile
   if (HEADER_CONFIG.hambUserArea) {
     const specialLinkEl = document.createElement('a');
     specialLinkEl.href = HEADER_CONFIG.hambUserArea.href;
@@ -138,13 +131,10 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
     img.loading = 'lazy';
 
     const textNode = document.createTextNode(HEADER_CONFIG.hambUserArea.text);
-
     specialLinkEl.append(img, textNode);
-
     headerContainer.appendChild(specialLinkEl);
   }
 
-  // Pulsante di chiusura
   const closeBtn = document.createElement('button');
   closeBtn.classList.add('mobile-menu-close');
   closeBtn.setAttribute('aria-label', 'Chiudi menu di navigazione');
@@ -167,7 +157,6 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
 
   headerContainer.appendChild(closeBtn);
 
-  //Contenitore search
   const searchContainer = document.createElement('div');
   searchContainer.classList.add('mobile-menu-search');
 
@@ -178,7 +167,6 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   searchLabel.textContent = 'Cerca nel sito:';
   searchLabel.classList.add('sr-only');
 
-  // Contenitore input + icona
   const searchWrapper = document.createElement('div');
   searchWrapper.classList.add('search-wrapper');
 
@@ -199,12 +187,10 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   searchInput.name = 'search';
   searchInput.placeholder = 'Cerca';
   searchInput.autocomplete = 'off';
-  // ✅ Aggiungi attributi ARIA per accessibilità
   searchInput.setAttribute('aria-label', 'Campo di ricerca del sito');
   searchInput.setAttribute('aria-describedby', 'search-description');
   searchInput.setAttribute('role', 'searchbox');
   
-  // ✅ Aggiungi descrizione nascosta per screen reader
   const searchDescription = document.createElement('span');
   searchDescription.id = 'search-description';
   searchDescription.textContent = 'Inserisci i termini di ricerca e premi invio';
@@ -213,7 +199,6 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   searchWrapper.appendChild(searchInput);
   searchContainer.append(searchLabel, searchDescription, searchWrapper);
 
-  // Cloni i nodi
   const clonedTopRight = headerTopRight.cloneNode(true);
   const clonedBottomList = headerBottomList.cloneNode(true);
 
@@ -243,9 +228,7 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
     link.appendChild(arrowSpan);
   });
 
-
   clonedBottomList.classList.add('mobile-menu-list');
-
   clonedTopRight.classList.remove('header-top-right');
   clonedTopRight.classList.add('mobile-menu-section');
   clonedBottomList.classList.remove('bottom-page-list');
@@ -262,7 +245,6 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   }
 
   mobileMenu.append(hiddenTitle, headerContainer, searchContainer, clonedBottomList, clonedTopRight);
-
   return mobileMenu;
 }
 
@@ -272,7 +254,6 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
 
   const wrapper = headerBottomCont.querySelector('.header-bottom-right-wrapper');
   wrapper.appendChild(hamburger);
-
   headerBottomCont.appendChild(mobileMenu);
 
   function openMenu() {
@@ -336,10 +317,11 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
 }
 
 export default async function decorate(block) {
-  const headerEl = document.querySelector('header.header-wrapper');
-  if (!headerEl) return;
-
-  // ✅ CREA IMMEDIATAMENTE LA STRUTTURA SENZA ATTENDERE I DATI
+  // ✅ PULISCI IL BLOCK E IMPOSTA LA CLASSE
+  block.innerHTML = '';
+  block.className = 'unipol-header block';
+  
+  // ✅ CREA LA STRUTTURA DELL'HEADER NEL BLOCK
   
   // === HEADER TOP ===
   const headerTop = document.createElement('div');
@@ -493,19 +475,28 @@ export default async function decorate(block) {
   headerBottomCont.append(leftContainer, rightHamburgerWrapper);
   headerBottom.appendChild(headerBottomCont);
 
-  // ✅ RENDERIZZA IMMEDIATAMENTE LA STRUTTURA
-  const fragment = document.createDocumentFragment();
-  fragment.append(headerTop, headerBottom);
-  headerEl.replaceChildren(fragment);
+  // ✅ AGGIUNGI TUTTO AL BLOCK INVECE CHE ALL'HEADER ESISTENTE
+  block.append(headerTop, headerBottom);
+
+  // ✅ SOSTITUISCI IL CONTENUTO DELL'HEADER ESISTENTE CON IL BLOCK
+  const headerEl = document.querySelector('header.header-wrapper');
+  if (headerEl) {
+    // Preserva eventuali attributi dell'header esistente
+    const existingClasses = headerEl.className;
+    headerEl.innerHTML = '';
+    headerEl.appendChild(block);
+    // Mantieni le classi esistenti se necessario
+    if (existingClasses && !existingClasses.includes('header-wrapper')) {
+      headerEl.className = `${existingClasses} header-wrapper`;
+    }
+  }
 
   // ✅ CARICA I DATI IN BACKGROUND E AGGIORNA QUANDO DISPONIBILI
   fetchHeaderData()
     .then(data => {
       if (data?.children) {
-        // Popola la lista di navigazione con i dati reali
         populateNavigationList(ul, data);
         
-        // Setup mobile menu con i dati reali
         if (window.innerWidth <= 1024) {
           setupMobileMenu(headerBottomCont, right, ul);
         }
@@ -513,7 +504,6 @@ export default async function decorate(block) {
     })
     .catch(error => {
       console.error('Errore nel caricamento dati header:', error);
-      // In caso di errore, rimuovi i placeholder e mostra un fallback
       ul.innerHTML = '';
       ul.classList.remove('loading-placeholder');
       
