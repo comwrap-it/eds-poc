@@ -526,3 +526,35 @@ MOBILE SMALL
         height: 32px;
     }
 }
+
+/* ✅ Stili per placeholder di caricamento */
+@keyframes loading {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.bottom-page-list.loading-placeholder {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.bottom-page-list.loading-placeholder li {
+  list-style: none;
+}
+
+.nav-placeholder {
+  height: 20px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* Riduci animazione per utenti con preferenze di movimento ridotto */
+@media (prefers-reduced-motion: reduce) {
+  .nav-placeholder {
+    animation: none;
+    background: #f0f0f0;
+  }
+}

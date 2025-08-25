@@ -17,7 +17,6 @@ function createLinkItem(imgSrc, imgAlt, linkHref, linkText, ariaLabel) {
   container.classList.add('link-item');
 
   const img = document.createElement('img');
-  // Applica getDamImageUrl per gestire immagini DAM
   img.src = getDamImageUrl(imgSrc);
   img.alt = imgAlt;
   img.loading = 'lazy';
@@ -41,6 +40,68 @@ function createHamburger() {
   btn.setAttribute('aria-controls', 'mobile-menu');
   btn.innerHTML = '&#9776;';
   return btn;
+}
+
+// ✅ Funzione per creare placeholder della lista
+function createPlaceholderList() {
+  const ul = document.createElement('ul');
+  ul.classList.add('bottom-page-list', 'loading-placeholder');
+  
+  // Crea 4-5 placeholder items per evitare layout shift
+  for (let i = 0; i < 5; i++) {
+    const li = document.createElement('li');
+    const placeholder = document.createElement('div');
+    placeholder.classList.add('nav-placeholder');
+    placeholder.style.cssText = `
+      height: 20px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      border-radius: 4px;
+      width: ${60 + Math.random() * 40}px;
+    `;
+    li.appendChild(placeholder);
+    ul.appendChild(li);
+  }
+  
+  return ul;
+}
+
+// ✅ Funzione per popolare la lista con dati reali
+function populateNavigationList(ul, data) {
+  // Rimuovi placeholder
+  ul.innerHTML = '';
+  ul.classList.remove('loading-placeholder');
+  
+  data.children.forEach((c, index) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = c.path.replace('/content/eds-poc', '');
+
+    if (index === 0) {
+      a.classList.add('first-headet-bottom-link');
+
+      if (HEADER_CONFIG.firstListItemIcon?.src) {
+        const img = document.createElement('img');
+        img.src = getDamImageUrl(HEADER_CONFIG.firstListItemIcon.src);
+        img.alt = HEADER_CONFIG.firstListItemIcon.alt || '';
+        img.width = 24;
+        img.height = 24;
+        img.classList.add('desktop-only-icon');
+        img.loading = 'lazy';
+        a.appendChild(img);
+      }
+
+      const span = document.createElement('span');
+      span.textContent = c.title;
+      a.appendChild(span);
+    } else {
+      a.appendChild(document.createTextNode(c.title));
+    }
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
 }
 
 function buildMobileMenu(headerTopRight, headerBottomList) {
@@ -278,9 +339,8 @@ export default async function decorate(block) {
   const headerEl = document.querySelector('header.header-wrapper');
   if (!headerEl) return;
 
-  const data = await fetchHeaderData();
-  if (!data?.children) return;
-
+  // ✅ CREA IMMEDIATAMENTE LA STRUTTURA SENZA ATTENDERE I DATI
+  
   // === HEADER TOP ===
   const headerTop = document.createElement('div');
   headerTop.classList.add('header-top');
@@ -289,14 +349,11 @@ export default async function decorate(block) {
   left.classList.add('header-top-left');
 
   const path = window.location.pathname;
-
   const isAziende = /^\/aziende(?:\/|$)/i.test(path);
-
   const activeIndex = isAziende ? 1 : 0;
 
   HEADER_CONFIG.topLeftLinks.forEach((l, index) => {
     const wrapper = document.createElement('div');
-
     const a = document.createElement('a');
     a.href = l.href;
     a.textContent = l.text;
@@ -321,7 +378,6 @@ export default async function decorate(block) {
   selectContainer.classList.add('popup-trigger-container');
 
   const logoImg = document.createElement('img');
-  // Applica getDamImageUrl per il logo del popup
   logoImg.src = getDamImageUrl(HEADER_CONFIG.popup.logo);
   logoImg.alt = 'Logo-UnipolSai';
   logoImg.loading = 'lazy';
@@ -329,36 +385,29 @@ export default async function decorate(block) {
 
   const popupTrigger = document.createElement('button');
   popupTrigger.classList.add('popup-trigger');
-
   popupTrigger.setAttribute('aria-label', 'Apri menu selezione sito Gruppo Unipol');
   
   const parts = HEADER_CONFIG.popup.triggerText.split('⌵');
   const labelText = parts[0].trim();
-
   const textNode = document.createTextNode(labelText);
-
   const arrowSpan = document.createElement('span');
   arrowSpan.classList.add('popup-arrow');
   arrowSpan.textContent = '⌵';
-
   popupTrigger.append(textNode, arrowSpan);
 
   const popupOverlay = initPopup(HEADER_CONFIG.popup, popupTrigger);
-
   selectContainer.append(logoImg, popupTrigger, popupOverlay);
   right.appendChild(selectContainer);
-
   headerTop.append(left, right);
 
   // === HEADER BOTTOM ===
   const headerBottom = document.createElement('div');
   headerBottom.classList.add('header-bottom');
 
-  // container interno principale
   const headerBottomCont = document.createElement('div');
   headerBottomCont.classList.add('header-bottom-cont');
 
-  // Container 1: logo + lista
+  // Container 1: logo + lista PLACEHOLDER
   const leftContainer = document.createElement('div');
   leftContainer.classList.add('header-bottom-left');
 
@@ -368,7 +417,6 @@ export default async function decorate(block) {
     imgLink.setAttribute('aria-label', HEADER_CONFIG.bottomImageLogo.aria);
 
     const imgEl = document.createElement('img');
-    // Applica getDamImageUrl per l'immagine del bottom
     imgEl.src = getDamImageUrl(HEADER_CONFIG.bottomImageLogo.src);
     imgEl.alt = HEADER_CONFIG.bottomImageLogo.alt;
     imgEl.width = HEADER_CONFIG.bottomImageLogo.width || 24;
@@ -379,41 +427,8 @@ export default async function decorate(block) {
     leftContainer.appendChild(imgLink);
   }
 
-  const ul = document.createElement('ul');
-  ul.classList.add('bottom-page-list');
-
-
-  data.children.forEach((c, index) => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = c.path.replace('/content/eds-poc', '');
-
-    if (index === 0) {
-      a.classList.add('first-headet-bottom-link');
-
-      if (HEADER_CONFIG.firstListItemIcon?.src) {
-        const img = document.createElement('img');
-        img.src = getDamImageUrl(HEADER_CONFIG.firstListItemIcon.src);
-        img.alt = HEADER_CONFIG.firstListItemIcon.alt || '';
-        img.width = 24;
-        img.height = 24;
-        img.classList.add('desktop-only-icon');
-        img.loading = 'lazy';
-        a.appendChild(img);
-      }
-
-      const span = document.createElement('span');
-      span.textContent = c.title;
-      a.appendChild(span);
-
-    } else {
-      a.appendChild(document.createTextNode(c.title));
-    }
-
-    li.appendChild(a);
-    ul.appendChild(li);
-  });
-
+  // ✅ CREA PLACEHOLDER INVECE DI ATTENDERE I DATI
+  const ul = createPlaceholderList();
   leftContainer.appendChild(ul);
 
   // Container 2: search + carrello + area riservata
@@ -432,7 +447,6 @@ export default async function decorate(block) {
       link.classList.add('custom-bottom-btn');
 
       const img = document.createElement('img');
-      // Applica getDamImageUrl per i bottoni custom
       img.src = getDamImageUrl(btn.imgSrc);
       img.alt = btn.imgAlt;
       img.loading = 'lazy';
@@ -453,7 +467,6 @@ export default async function decorate(block) {
       link.classList.add(`${btn.type}-btn`);
 
       const img = document.createElement('img');
-      // Applica getDamImageUrl per tutti i bottoni
       img.src = getDamImageUrl(btn.imgSrc);
       img.alt = btn.imgAlt || '';
       img.loading = 'lazy';
@@ -473,7 +486,6 @@ export default async function decorate(block) {
     rightContainer.appendChild(customButton);
   }
 
-  // === WRAPPER per .header-bottom-right + hamburger
   const rightHamburgerWrapper = document.createElement('div');
   rightHamburgerWrapper.classList.add('header-bottom-right-wrapper');
   rightHamburgerWrapper.appendChild(rightContainer);
@@ -481,14 +493,39 @@ export default async function decorate(block) {
   headerBottomCont.append(leftContainer, rightHamburgerWrapper);
   headerBottom.appendChild(headerBottomCont);
 
+  // ✅ RENDERIZZA IMMEDIATAMENTE LA STRUTTURA
   const fragment = document.createDocumentFragment();
   fragment.append(headerTop, headerBottom);
   headerEl.replaceChildren(fragment);
 
-  if (window.innerWidth <= 1024) {
-    setupMobileMenu(headerBottomCont, right, ul);
-  }
+  // ✅ CARICA I DATI IN BACKGROUND E AGGIORNA QUANDO DISPONIBILI
+  fetchHeaderData()
+    .then(data => {
+      if (data?.children) {
+        // Popola la lista di navigazione con i dati reali
+        populateNavigationList(ul, data);
+        
+        // Setup mobile menu con i dati reali
+        if (window.innerWidth <= 1024) {
+          setupMobileMenu(headerBottomCont, right, ul);
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Errore nel caricamento dati header:', error);
+      // In caso di errore, rimuovi i placeholder e mostra un fallback
+      ul.innerHTML = '';
+      ul.classList.remove('loading-placeholder');
+      
+      const errorLi = document.createElement('li');
+      const errorLink = document.createElement('a');
+      errorLink.href = '/';
+      errorLink.textContent = 'Home';
+      errorLi.appendChild(errorLink);
+      ul.appendChild(errorLi);
+    });
 
+  // Setup responsive behavior
   window.addEventListener('resize', () => {
     if (window.innerWidth <= 1024 && !document.querySelector('.hamburger-btn')) {
       setupMobileMenu(headerBottomCont, right, ul);
