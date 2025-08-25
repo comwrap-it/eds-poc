@@ -47,3 +47,6 @@ npm run lint
 ## Additional Docs
 1. [Field Types](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/implementing/developing/universal-editor/field-types)
 
+## More API 
+[APIs for status/cache/etc..] (https://www.aem.live/docs/admin.html#tag/status)
+[Example to check the status of a branch](https://admin.hlx.page/status/comwrap-it/eds-poc/prod)
