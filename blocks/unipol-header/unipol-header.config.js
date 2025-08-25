@@ -1,7 +1,7 @@
 export const HEADER_CONFIG = {
   topLeftLinks: [
-    { href: '#', text: 'PRIVATI', aria: 'Privati' },
-    { href: '#', text: 'AZIENDE', aria: 'Aziende' }
+    { href: '#', text: 'PRIVATI' },
+    { href: '#', text: 'AZIENDE' }
   ],
   topRightLinks: [
     {
@@ -24,7 +24,9 @@ export const HEADER_CONFIG = {
     triggerText: 'Unipol Sito Cliente ⌵',
     cancelText: 'Unipol Sito Cliente',
     confirmText: 'Gruppo Unipol',
-    confirmHref: '#'
+    confirmHref: '#',
+    // ✅ Aggiungi aria-label per il popup
+    ariaLabel: 'Menu di selezione sito Gruppo Unipol'
   },
   bottomImageLogo: {
     src: '/content/dam/unipoleds/logo_unipol.svg',

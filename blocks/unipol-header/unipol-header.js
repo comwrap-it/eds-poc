@@ -138,9 +138,19 @@ function buildMobileMenu(headerTopRight, headerBottomList) {
   searchInput.name = 'search';
   searchInput.placeholder = 'Cerca';
   searchInput.autocomplete = 'off';
-
+  // ✅ Aggiungi attributi ARIA per accessibilità
+  searchInput.setAttribute('aria-label', 'Campo di ricerca del sito');
+  searchInput.setAttribute('aria-describedby', 'search-description');
+  searchInput.setAttribute('role', 'searchbox');
+  
+  // ✅ Aggiungi descrizione nascosta per screen reader
+  const searchDescription = document.createElement('span');
+  searchDescription.id = 'search-description';
+  searchDescription.textContent = 'Inserisci i termini di ricerca e premi invio';
+  searchDescription.classList.add('sr-only');
+  
   searchWrapper.appendChild(searchInput);
-  searchContainer.append(searchLabel, searchWrapper);
+  searchContainer.append(searchLabel, searchDescription, searchWrapper);
 
   // Cloni i nodi
   const clonedTopRight = headerTopRight.cloneNode(true);
@@ -320,6 +330,8 @@ export default async function decorate(block) {
   const popupTrigger = document.createElement('button');
   popupTrigger.classList.add('popup-trigger');
 
+  popupTrigger.setAttribute('aria-label', 'Apri menu selezione sito Gruppo Unipol');
+  
   const parts = HEADER_CONFIG.popup.triggerText.split('⌵');
   const labelText = parts[0].trim();
 

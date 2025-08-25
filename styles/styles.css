@@ -16,7 +16,7 @@
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --text-color: #131313;
-  --link-color: #3b63fb;
+  --link-color: #337ab7;
   --link-hover-color: #1d3ecf;
 
   /* fonts */
@@ -160,6 +160,11 @@ a:any-link {
   color: var(--link-color);
   text-decoration: none;
   overflow-wrap: break-word;
+}
+
+.section strong {
+  font-family: "Unipol";
+  font-weight: 600;
 }
 
 a:hover {
