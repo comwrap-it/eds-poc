@@ -23,10 +23,9 @@ export default function decorate(block) {
         const hasMainTitle = mainTitle?.textContent.trim().length > 0;
         const hasSecondaryContent = secondaryBlock?.textContent.trim().length > 0;
 
-        const currentImage = slide.querySelector('picture');
+        const currentImage = slide.querySelector('picture img');
         if (currentImage && imgWrapper) {
-            const optimizedPic = createOptimizedPicture(imgWrapper.src, imgWrapper.alt, false);
-            optimizedPic.classList.add("optimized");
+            const optimizedPic = createOptimizedPicture(currentImage.src, currentImage.alt, false);
             currentImage.replaceWith(optimizedPic);
         }
 
