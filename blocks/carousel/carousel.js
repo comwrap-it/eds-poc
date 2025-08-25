@@ -1,9 +1,8 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+
 export default function decorate(block) {
     const children = [...block.children];
     const slides = children.filter((child) => child.tagName !== 'BUTTON');
-    block.querySelectorAll('img').forEach((img) => {
-        img.setAttribute('loading', 'lazy');
-    });
     let currentSlide = 0;
     let dotsWrapper;
     let autoSlideTimer;
@@ -11,6 +10,7 @@ export default function decorate(block) {
 
     slides.forEach((slide) => {
         const slideChildren = [...slide.children];
+        const imgWrapper = slideChildren[0];
         const boxAlign = slideChildren[1]?.textContent.trim();
         const iconPath = slideChildren[2]?.textContent.trim();
         const iconPathTag = slideChildren[2];
@@ -20,10 +20,15 @@ export default function decorate(block) {
         const ctaLabelBlock = slideChildren[6];
         const textColor = slideChildren[7]?.textContent.trim() || '#000000';
         const backgroundColor = slideChildren[8]?.textContent.trim() || '#ffffff';
-
-
         const hasMainTitle = mainTitle?.textContent.trim().length > 0;
         const hasSecondaryContent = secondaryBlock?.textContent.trim().length > 0;
+
+        const currentImage = slide.querySelector('picture');
+        if (currentImage && imgWrapper) {
+            const optimizedPic = createOptimizedPicture(imgWrapper.src, imgWrapper.alt, false);
+            optimizedPic.classList.add("optimized");
+            currentImage.replaceWith(optimizedPic);
+        }
 
         const shouldHideSliderBox = (
             (!hasMainTitle && !hasSecondaryContent) ||
