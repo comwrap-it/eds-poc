@@ -116,12 +116,6 @@ export default async function decorate(block) {
   window.addEventListener('preventivatoreComponentReady', hideSkeletonHandler);
   console.log('Event listener registrato per preventivatoreComponentReady');
   
-  // Timeout di sicurezza per nascondere lo skeleton dopo 10 secondi
-  const fallbackTimeout = setTimeout(() => {
-    console.log('Timeout di sicurezza: nascondo lo skeleton dopo 10 secondi');
-    hideSkeletonHandler({ type: 'fallback' });
-  }, 10000);
-  
   try {
     // Carica React e ReactDOM da CDN
     await loadScript('/static/js/main.bc1853d5.js');
@@ -136,4 +130,41 @@ export default async function decorate(block) {
     clearTimeout(fallbackTimeout);
     hideSkeletonHandler({ type: 'error' });
   }
+  
+  // Caricamento asincrono e non bloccante
+  const loadReactAsync = async () => {
+    try {
+      // Preload delle risorse
+      const linkPreload = document.createElement('link');
+      linkPreload.rel = 'preload';
+      linkPreload.href = '/static/js/main.bc1853d5.js';
+      linkPreload.as = 'script';
+      document.head.appendChild(linkPreload);
+      
+      // Caricamento con requestIdleCallback per non bloccare il main thread
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(async () => {
+          await loadScript('/static/js/main.bc1853d5.js');
+          await loadCSS('/static/css/main.4efb37a3.css');
+        });
+      } else {
+        // Fallback per browser che non supportano requestIdleCallback
+        setTimeout(async () => {
+          await loadScript('/static/js/main.bc1853d5.js');
+          await loadCSS('/static/css/main.4efb37a3.css');
+        }, 100);
+      }
+    } catch (error) {
+      console.error('Errore nel caricamento:', error);
+      hideSkeletonHandler({ type: 'error' });
+    }
+  };
+  
+  // Avvia il caricamento in background
+  loadReactAsync();
+  
+  // Ridurre il timeout di fallback
+  const fallbackTimeout = setTimeout(() => {
+    hideSkeletonHandler({ type: 'fallback' });
+  }, 5000); // Ridotto da 10 a 5 secondi
 }
