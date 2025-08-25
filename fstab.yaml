@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p42403-e1313110.adobeaemcloud.com/bin/franklin.delivery/comwrap-it/eds-poc/main"
+    url: "https://author-p42403-e1313110.adobeaemcloud.com/bin/franklin.delivery/comwrap-it/eds-poc/prod"
     type: "markup"
     suffix: ".html"
