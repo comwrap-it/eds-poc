@@ -1,4 +1,5 @@
 export default function decorate(block) {
+    //Script carousel
     const children = [...block.children];
     const slides = children.filter((child) => child.tagName !== 'BUTTON');
     block.querySelectorAll('img').forEach((img) => {
