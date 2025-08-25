@@ -23,10 +23,10 @@ export default function decorate(block) {
         const hasMainTitle = mainTitle?.textContent.trim().length > 0;
         const hasSecondaryContent = secondaryBlock?.textContent.trim().length > 0;
 
-        const currentImage = slide.querySelector('picture img');
+        const currentImage = imgWrapper.querySelector('img');
         if (currentImage && imgWrapper) {
             const optimizedPic = createOptimizedPicture(currentImage.src, currentImage.alt, false);
-            currentImage.replaceWith(optimizedPic);
+            imgWrapper.replaceWith(optimizedPic);
         }
 
         const shouldHideSliderBox = (
