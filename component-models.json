@@ -935,6 +935,57 @@
     ]
   },
   {
+    "id": "unipol-header-v2",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "General Configuration",
+        "name": "generalConfiguration"
+      },
+      {
+        "component": "aem-content",
+        "name": "generalConfiguration_unipolLogo",
+        "label": "Immagine QR Code",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Labels Configuration",
+        "name": "labels"
+      },
+      {
+        "component": "text",
+        "name": "Labels_privatiLabel",
+        "label": "Label Privati",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_aziendeLabel",
+        "label": "Label Aziende",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_findAgencyLabel",
+        "label": "Label Trova Agenzia",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_assistance",
+        "label": "Label Assistenza e Sinistri",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_privateArea",
+        "label": "Label Area Privata",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "unipol-header",
     "fields": []
   },

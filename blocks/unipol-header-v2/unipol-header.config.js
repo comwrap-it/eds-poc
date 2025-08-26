@@ -1,0 +1,86 @@
+export const HEADER_CONFIG = {
+  topLeftLinks: [
+    { href: '#', text: 'PRIVATI' },
+    { href: '#', text: 'AZIENDE' }
+  ],
+  topRightLinks: [
+    {
+      img: '/content/dam/unipoleds/b_trova_agenzia.svg',
+      alt: 'Icona Trova Agenzia',
+      href: '#',
+      text: 'Trova Agenzia',
+      aria: 'Trova Agenzia'
+    },
+    {
+      img: '/content/dam/unipoleds/b_servizio_clienti.svg',
+      alt: 'Icona Assistenza',
+      href: '#',
+      text: 'Assistenza e sinistri',
+      aria: 'Assistenza e sinistri'
+    }
+  ],
+  popup: {
+    logo: '/content/dam/unipoleds/LogoGruppoUnipolSai.png',
+    triggerText: 'Unipol Sito Cliente ⌵',
+    cancelText: 'Unipol Sito Cliente',
+    confirmText: 'Gruppo Unipol',
+    confirmHref: '#',
+    // ✅ Aggiungi aria-label per il popup
+    ariaLabel: 'Menu di selezione sito Gruppo Unipol'
+  },
+  bottomImageLogo: {
+    src: '/content/dam/unipoleds/logo_unipol.svg',
+    alt: 'Home',
+    href: '#',
+    width: 200,
+    height: 55,
+    aria: 'Vai alla pagina Home'
+  },
+  firstListItemIcon: {
+    src: '/content/dam/unipoleds/bicolor_unica.svg',
+    alt: 'Icona primo link'
+  },
+  bottomRightButtons: [
+    {
+      type: 'search',
+      aria: 'Apri ricerca',
+      imgSrc: '/content/dam/unipoleds/b_search.svg',
+      imgAlt: 'Icona ricerca',
+      href: '#'
+    },
+    {
+      type: 'cart',
+      aria: 'Apri carrello',
+      imgSrc: '/content/dam/unipoleds/b_carrello.svg',
+      imgAlt: 'Icona carrello',
+      href: '#'
+    },
+    {
+      type: 'custom',
+      aria: 'AreaRiservata',
+      imgSrc: '/content/dam/unipoleds/b_users.svg',
+      imgAlt: 'Icona area riservata',
+      href: '#',
+      text: 'AreaRiservata'
+    }
+  ],
+  hambUserArea: {
+    href: '#',
+    text: 'Area riservata',
+    aria: 'Area riservata',
+    imgSrc: '/content/dam/unipoleds/w_users.svg',
+    imgAlt: 'Area riservata'
+  },
+  closeIcon: {
+    src: '/content/dam/unipoleds/w_close.svg',
+    alt: 'Chiudi menu'
+  },
+  mobileMenuItemIcons: [
+    { src: '/content/dam/unipoleds/w_unica.svg', alt: 'Icona item 1' },
+    { src: '/content/dam/unipoleds/a_veicoli_mobilita.svg', alt: 'Icona item 2' },
+    { src: '/content/dam/unipoleds/a_casa_famiglia.svg', alt: 'Icona item 3' },
+    { src: '/content/dam/unipoleds/a_persona.svg', alt: 'Icona item 4' },
+    { src: '/content/dam/unipoleds/a_risparmio.svg', alt: 'Icona item 5' },
+    { src: '', alt: 'Icona item 6' },
+  ]
+};

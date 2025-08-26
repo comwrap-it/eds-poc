@@ -24,6 +24,7 @@
       "carousel",
       "preventivatore",
       "unipol-footer",
+      "unipol-header-v2",
       "unipol-header"
     ]
   },
@@ -60,6 +61,12 @@
   },
   {
     "id": "unipol-footer",
+    "components": [
+      "columns"
+    ]
+  },
+  {
+    "id": "unipol-header-v2",
     "components": [
       "columns"
     ]
