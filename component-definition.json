@@ -309,7 +309,7 @@
           }
         },
         {
-          "title": "Unipol Header V2",
+          "title": "Unipol Header (No Fetch)",
           "id": "unipol-header-v2",
           "plugins": {
             "xwalk": {
