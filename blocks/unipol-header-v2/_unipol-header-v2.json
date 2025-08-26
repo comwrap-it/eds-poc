@@ -29,7 +29,7 @@
         {
           "component": "aem-content",
           "name": "generalConfiguration_unipolLogo",
-          "label": "Immagine QR Code",
+          "label": "Unipol Logo",
           "valueType": "string"
         },
         {
@@ -65,6 +65,12 @@
           "component": "text",
           "name": "Labels_privateArea",
           "label": "Label Area Privata",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "Labels_sitoCliente",
+          "label": "Label Sito Cliente",
           "valueType": "string"
         }]
     }

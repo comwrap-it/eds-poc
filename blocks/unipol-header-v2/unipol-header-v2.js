@@ -2,16 +2,6 @@ import { getGraphQLEndpoint, getAuthHeader, DEV_CONFIG, getDamImageUrl } from '.
 import { HEADER_CONFIG } from './unipol-header.config.js';
 import { initPopup } from './unipol-header.popup.js';
 
-async function fetchHeaderData() {
-  const endpoint = getGraphQLEndpoint('/bin/pub/retrieveStructure.json?rootPath=/content/eds-poc/index');
-  const headers = { 'Content-Type': 'application/json' };
-  if (DEV_CONFIG.isLocalDevelopment) headers['Authorization'] = getAuthHeader();
-
-  const res = await fetch(endpoint, { headers });
-  if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-  return await res.json();
-}
-
 function createLinkItem(imgSrc, imgAlt, linkHref, linkText, ariaLabel) {
   const container = document.createElement('div');
   container.classList.add('link-item');
@@ -490,31 +480,6 @@ export default async function decorate(block) {
       headerEl.className = `${existingClasses} header-wrapper`;
     }
   }
-
-  // ✅ CARICA I DATI IN BACKGROUND E AGGIORNA QUANDO DISPONIBILI
-  fetchHeaderData()
-    .then(data => {
-      if (data?.children) {
-        populateNavigationList(ul, data);
-        
-        if (window.innerWidth <= 1024) {
-          setupMobileMenu(headerBottomCont, right, ul);
-        }
-      }
-    })
-    .catch(error => {
-      console.error('Errore nel caricamento dati header:', error);
-      ul.innerHTML = '';
-      ul.classList.remove('loading-placeholder');
-      
-      const errorLi = document.createElement('li');
-      const errorLink = document.createElement('a');
-      errorLink.href = '/';
-      errorLink.textContent = 'Home';
-      errorLi.appendChild(errorLink);
-      ul.appendChild(errorLi);
-    });
-
   // Setup responsive behavior
   window.addEventListener('resize', () => {
     if (window.innerWidth <= 1024 && !document.querySelector('.hamburger-btn')) {
