@@ -24,7 +24,7 @@ export default async function decorate(block) {
     
     // Prima colonna
     if (columnDivs[0]) {
-      const col1Lists = columnDivs[0].querySelectorAll('ul');
+      const col1Lists = columnDivs[0].querySelectorAll('a');
       col1Lists.forEach(ul => {
         columnLinks.col1.push(ul.cloneNode(true));
       });
@@ -39,23 +39,17 @@ export default async function decorate(block) {
     }
   }
 
-  while (fragment.firstElementChild) header.append(fragment.firstElementChild);
   while (fragment.firstElementChild) {
     const element = fragment.firstElementChild;
 
-    if (element.classList && element.classList.contains('unipol-header')) {
-      const unipolFooter = element.querySelector('.unipol-footer');
-      if (unipolFooter) {
-        const col1 = unipolFooter.querySelector('.bottom-page-list');
-
-        if (col1 && columnLinks.col1.length > 0) {
-          const col1Content = document.createElement('div');
-          col1Content.className = 'u-links';
-          columnLinks.col1.forEach(list => {
-            col1Content.appendChild(list);
-          });
-          col1.appendChild(col1Content);
-        }
+    if (element.classList && element.classList.contains('unipol-header-container')) {
+      if (columnLinks.col1.length > 0) {
+        const col1Content = document.createElement('div');
+        col1Content.className = 'h-links';
+        columnLinks.col1.forEach(link => {
+          col1Content.appendChild(link);
+        });
+        element.appendChild(col1Content);
       }
     }
     header.append(element);
