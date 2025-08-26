@@ -23,7 +23,7 @@
       "fields": [
         {
           "component": "tab",
-          "label": "General Configuration",
+          "label": "Configurazioni Generali",
           "name": "generalConfiguration"
         },
         {
@@ -71,6 +71,51 @@
           "component": "text",
           "name": "Labels_sitoCliente",
           "label": "Label Sito Cliente",
+          "valueType": "string"
+        },{
+          "component": "text",
+          "name": "Labels_groupUnipol",
+          "label": "Label Gruppo Unipol",
+          "valueType": "string"
+        },{
+          "component": "tab",
+          "label": "Icone",
+          "name": "icons"
+        },
+        {
+          "component": "aem-content",
+          "name": "icons_PrivateArea",
+          "label": "Icona Area Privata",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "icons_chart",
+          "label": "Icona Carrello",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "icons_Search",
+          "label": "Icona Ricerca",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "icons_findAgency",
+          "label": "Icona Trova Agenzia",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "icons_assistance",
+          "label": "Icona Assistenza",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "icons_siteClient",
+          "label": "Icona Sito Cliente",
           "valueType": "string"
         }]
     }
