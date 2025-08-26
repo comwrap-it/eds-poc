@@ -30,7 +30,7 @@
       {
         "component": "aem-content",
         "valueType": "string",
-        "name": "headerPath",
+        "name": "header",
         "label": "Header Path"
       }
     ]
