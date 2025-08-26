@@ -17,7 +17,7 @@ export default async function decorate(block) {
 
   // Estrai i link dalle colonne del componente columns prima di processare il fragment
   const columnsBlock = fragment.querySelector('.columns.block');
-  let columnLinks = { col1: [], col2: [] };
+  let columnLinks = { col1: [] };
   
   if (columnsBlock) {
     const columnDivs = columnsBlock.querySelectorAll(':scope > div > div');
@@ -25,8 +25,11 @@ export default async function decorate(block) {
     // Prima colonna
     if (columnDivs[0]) {
       const col1Lists = columnDivs[0].querySelectorAll('a');
-      col1Lists.forEach(ul => {
-        columnLinks.col1.push(ul.cloneNode(true));
+      col1Lists.forEach(link => {
+        // Rimuovi l'attributo class="button" se presente
+        const cleanLink = link.cloneNode(true);
+        cleanLink.removeAttribute('class');
+        columnLinks.col1.push(cleanLink);
       });
     }
 
@@ -42,14 +45,19 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) {
     const element = fragment.firstElementChild;
 
-    if (element.classList && element.classList.contains('unipol-header-container')) {
+    if (element.classList && element.classList.contains('unipol-header-no-fetch-container')) {
       if (columnLinks.col1.length > 0) {
-        const col1Content = document.createElement('div');
-        col1Content.className = 'h-links';
+        // Crea la struttura <ul class="bottom-page-list"> invece del div
+        const bottomPageList = document.createElement('ul');
+        bottomPageList.className = 'bottom-page-list';
+        
         columnLinks.col1.forEach(link => {
-          col1Content.appendChild(link);
+          const listItem = document.createElement('li');
+          listItem.appendChild(link);
+          bottomPageList.appendChild(listItem);
         });
-        element.appendChild(col1Content);
+        
+        element.appendChild(bottomPageList);
       }
     }
     header.append(element);
