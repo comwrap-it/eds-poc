@@ -952,7 +952,10 @@
         "component": "aem-content",
         "name": "generalConfiguration_unipolLogo",
         "label": "Unipol Logo",
-        "valueType": "string"
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
       },
       {
         "component": "tab",
@@ -1010,37 +1013,55 @@
         "component": "aem-content",
         "name": "icons_PrivateArea",
         "label": "Icona Area Privata",
-        "valueType": "string"
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
       },
       {
         "component": "aem-content",
         "name": "icons_chart",
         "label": "Icona Carrello",
-        "valueType": "string"
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
       },
       {
         "component": "aem-content",
         "name": "icons_Search",
         "label": "Icona Ricerca",
-        "valueType": "string"
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
       },
       {
         "component": "aem-content",
         "name": "icons_findAgency",
         "label": "Icona Trova Agenzia",
-        "valueType": "string"
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
       },
       {
         "component": "aem-content",
         "name": "icons_assistance",
         "label": "Icona Assistenza",
-        "valueType": "string"
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
       },
       {
         "component": "aem-content",
         "name": "icons_siteClient",
         "label": "Icona Sito Cliente",
-        "valueType": "string"
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
       }
     ]
   },
