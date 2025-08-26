@@ -26,6 +26,12 @@
         "valueType": "boolean",
         "name": "includeInMenu",
         "label": "Include in Menu"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "headerPath",
+        "label": "Header Path"
       }
     ]
   },
