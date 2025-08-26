@@ -941,6 +941,131 @@
     ]
   },
   {
+    "id": "unipol-header-no-fetch",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazioni Generali",
+        "name": "generalConfiguration"
+      },
+      {
+        "component": "aem-content",
+        "name": "generalConfiguration_unipolLogo",
+        "label": "Unipol Logo",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
+      },
+      {
+        "component": "tab",
+        "label": "Labels Configuration",
+        "name": "labels"
+      },
+      {
+        "component": "text",
+        "name": "Labels_privatiLabel",
+        "label": "Label Privati",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_aziendeLabel",
+        "label": "Label Aziende",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_findAgencyLabel",
+        "label": "Label Trova Agenzia",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_assistance",
+        "label": "Label Assistenza e Sinistri",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_privateArea",
+        "label": "Label Area Privata",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_sitoCliente",
+        "label": "Label Sito Cliente",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Labels_groupUnipol",
+        "label": "Label Gruppo Unipol",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Icone",
+        "name": "icons"
+      },
+      {
+        "component": "aem-content",
+        "name": "icons_PrivateArea",
+        "label": "Icona Area Privata",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
+      },
+      {
+        "component": "aem-content",
+        "name": "icons_chart",
+        "label": "Icona Carrello",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
+      },
+      {
+        "component": "aem-content",
+        "name": "icons_Search",
+        "label": "Icona Ricerca",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
+      },
+      {
+        "component": "aem-content",
+        "name": "icons_findAgency",
+        "label": "Icona Trova Agenzia",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
+      },
+      {
+        "component": "aem-content",
+        "name": "icons_assistance",
+        "label": "Icona Assistenza",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
+      },
+      {
+        "component": "aem-content",
+        "name": "icons_siteClient",
+        "label": "Icona Sito Cliente",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/dam/unipoleds"
+        }
+      }
+    ]
+  },
+  {
     "id": "unipol-header",
     "fields": []
   },

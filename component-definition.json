@@ -309,6 +309,22 @@
           }
         },
         {
+          "title": "Unipol Header (No Fetch)",
+          "id": "unipol-header-no-fetch",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Unipol Header (No Fetch)",
+                  "model": "unipol-header-no-fetch",
+                  "filter": "unipol-header-no-fetch"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Unipol Header",
           "id": "unipol-header",
           "plugins": {

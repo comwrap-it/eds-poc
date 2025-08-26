@@ -64,5 +64,11 @@
     "components": [
       "columns"
     ]
+  },
+  {
+    "id": "unipol-header-no-fetch",
+    "components": [
+      "columns"
+    ]
   }
 ]

@@ -1,4 +1,4 @@
-import { getGraphQLEndpoint, getAuthHeader, DEV_CONFIG, getDamImageUrl } from '../../config/dev-config.js';
+import { getDamImageUrl } from '../../config/dev-config.js';
 import { HEADER_CONFIG } from './unipol-header.config.js';
 import { initPopup } from './unipol-header.popup.js';
 
