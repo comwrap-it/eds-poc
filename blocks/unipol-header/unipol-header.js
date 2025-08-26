@@ -316,7 +316,7 @@ function setupMobileMenu(headerBottomCont, headerTopRight, headerBottomList) {
   });
 }
 
-export default async function decorate(block) {
+export default function decorate(block) {
   // ✅ PULISCI IL BLOCK E IMPOSTA LA CLASSE
   block.innerHTML = '';
   block.className = 'unipol-header block';
@@ -492,6 +492,7 @@ export default async function decorate(block) {
   }
 
   // ✅ CARICA I DATI IN BACKGROUND E AGGIORNA QUANDO DISPONIBILI
+  /** 
   fetchHeaderData()
     .then(data => {
       if (data?.children) {
@@ -514,7 +515,7 @@ export default async function decorate(block) {
       errorLi.appendChild(errorLink);
       ul.appendChild(errorLi);
     });
-
+*/
   // Setup responsive behavior
   window.addEventListener('resize', () => {
     if (window.innerWidth <= 1024 && !document.querySelector('.hamburger-btn')) {
