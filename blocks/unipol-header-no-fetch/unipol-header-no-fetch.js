@@ -220,15 +220,18 @@ export default function decorate(block) {
   }
   toastTitle.appendChild(document.createTextNode(label_private));
   
-  const closeBtn = document.createElement('button');
+  // Cambiato da button a div con X di chiusura
+  const closeBtn = document.createElement('div');
   closeBtn.classList.add('toast-close');
   closeBtn.setAttribute('aria-label', 'Chiudi');
-  if (icon_close) {
-    const img = icon_close.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    closeBtn.appendChild(optimizedPic);
-  }
+  closeBtn.setAttribute('role', 'button');
+  closeBtn.setAttribute('tabindex', '0');
+  
+  // Aggiungi X di chiusura
+  const closeIcon = document.createElement('span');
+  closeIcon.innerHTML = '×';
+  closeIcon.classList.add('close-icon');
+  closeBtn.appendChild(closeIcon);
   
   toastHeader.appendChild(toastTitle);
   toastHeader.appendChild(closeBtn);

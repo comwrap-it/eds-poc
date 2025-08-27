@@ -301,6 +301,26 @@
   filter: brightness(0) invert(1);
 }
 
+/* === TOAST CLOSE === */
+.toast-close {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.close-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
 .toast-close {
   background: transparent;
   border: none;
