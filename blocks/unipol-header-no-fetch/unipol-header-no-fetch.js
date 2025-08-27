@@ -257,27 +257,22 @@ export default function decorate(block) {
   toastNav.innerHTML = `
     <div class="nav-section">
       <div class="nav-item">
-        <span class="nav-icon">🏢</span>
         <span class="nav-text">Cos'è Unica Unipol</span>
         <span class="nav-arrow">›</span>
       </div>
       <div class="nav-item">
-        <span class="nav-icon">🚗</span>
         <span class="nav-text">Veicoli e Mobilità</span>
         <span class="nav-arrow">›</span>
       </div>
       <div class="nav-item">
-        <span class="nav-icon">🏠</span>
         <span class="nav-text">Casa e Famiglia</span>
         <span class="nav-arrow">›</span>
       </div>
       <div class="nav-item">
-        <span class="nav-icon">👤</span>
         <span class="nav-text">Persona</span>
         <span class="nav-arrow">›</span>
       </div>
       <div class="nav-item">
-        <span class="nav-icon">💰</span>
         <span class="nav-text">Risparmio e Previdenza</span>
         <span class="nav-arrow">›</span>
       </div>
