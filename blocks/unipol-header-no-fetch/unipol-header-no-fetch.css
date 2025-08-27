@@ -213,16 +213,28 @@
   display: none;
   flex-direction: column;
   background: transparent;
+  justify-content: center;
   border: none;
   padding: 8px;
   cursor: pointer;
   gap: 3px;
 }
 
+/* Rimuovi hover e focus effects */
+.mobile-menu-button:hover,
+.mobile-menu-button:focus,
+.mobile-menu-button:active {
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
 .hamburger-line {
   width: 20px;
   height: 2px;
   background-color: #333;
+  display: block;
   transition: all 0.3s ease;
 }
 
@@ -431,36 +443,118 @@ body.mobile-menu-open {
 
 /* === RESPONSIVE === */
 @media (max-width: 1280px) {
-  /* Hide desktop elements */
+  /* Mostra header-top su mobile */
   .header-top {
+    display: flex;
+    background: #f1f1f1;
+    padding: 0;
+    border-bottom: 2px solid #f1f1f1;
+  }
+
+  .logo-container {
+    padding: 0;
+  }
+  
+  /* Nascondi header-top-right su mobile */
+  .header-top-right {
     display: none;
   }
   
+  /* Stili per i tab su mobile */
+  .header-top-left {
+    display: flex;
+    width: 100%;
+  }
+  
+  .tab-item {
+    flex: 1;
+    width: 50%;
+    height: 48px;
+    justify-content: center;
+  }
+  
+  .tab-item a {
+    font-size: 14px;
+    padding: 12px 8px;
+  }
+  
+  /* Header bottom modificato per mobile */
+  .header-bottom {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: white;
+  }
+  
+  /* Logo più piccolo su mobile */
+  .logo-container {
+    flex-shrink: 0;
+  }
+
+  .logo-container picture,
+  .logo-container img {
+    width: 80px;
+  }
+  
+  /* Nascondi la navigazione principale */
   .main-navigation {
     display: none;
   }
   
-  .search-button,
-  .cart-button,
-  .user-button {
+  /* Right actions per mobile */
+  .right-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* Mostra solo carrello, area riservata e menu su mobile */
+  .search-button {
     display: none;
   }
   
-  /* Show mobile elements */
-  .mobile-menu-button {
+  .cart-button,
+  .user-button {
     display: flex;
+    width: 40px;
+    height: 40px;
   }
   
-  .header-bottom {
-    padding: 12px 16px;
+  /* Nascondi la label dell'area riservata su mobile */
+  .user-label {
+    display: none;
   }
   
-  .logo-container picture {
-    width: 100px;
+  .user-button-content {
+    padding: 0;
+    gap: 0;
+  }
+  
+  /* Separatore tra area riservata e menu */
+  .user-button::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 24px;
+    background-color: #ddd;
   }
   
   .right-actions {
-    gap: 8px;
+    position: relative;
+  }
+  
+  /* Mobile menu button */
+  .mobile-menu-button {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    margin-left: 6px;
   }
 }
 
@@ -471,6 +565,16 @@ body.mobile-menu-open {
   
   .logo-container picture {
     width: 80px;
+  }
+  
+  .right-actions {
+    gap: 8px;
+  }
+  
+  .cart-button,
+  .user-button,
+  .mobile-menu-button {
+    padding: 6px;
   }
 }
 
