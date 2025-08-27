@@ -42,14 +42,34 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) {
     const element = fragment.firstElementChild;
 
-    if (element.classList && element.classList.contains('unipol-header-container')) {
+    if (element.classList && element.classList.contains('unipol-header-no-fetch-container')) {
       if (columnLinks.col1.length > 0) {
-        const col1Content = document.createElement('div');
-        col1Content.className = 'h-links';
+        // Cerca l'elemento nav esistente
+        const existingNav = element.querySelector('nav.main-navigation');
+        
+        // Crea la nuova struttura di navigazione
+        const nav = document.createElement('nav');
+        nav.className = 'main-navigation';
+        
+        const ul = document.createElement('ul');
+        ul.className = 'nav-list';
+        
         columnLinks.col1.forEach(link => {
-          col1Content.appendChild(link);
+          const li = document.createElement('li');
+          // Rimuovi la classe 'button' dal link se presente
+          link.classList.remove('button');
+          li.appendChild(link);
+          ul.appendChild(li);
         });
-        element.appendChild(col1Content);
+        
+        nav.appendChild(ul);
+        
+        // Sostituisce l'elemento nav esistente se presente, altrimenti lo aggiunge
+        if (existingNav) {
+          existingNav.replaceWith(nav);
+        } else {
+          element.appendChild(nav);
+        }
       }
     }
     header.append(element);
