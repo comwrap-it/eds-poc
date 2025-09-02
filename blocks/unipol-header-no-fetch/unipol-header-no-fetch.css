@@ -1,4 +1,7 @@
 /* === RESET E BASE === */
+header.header-wrapper {
+  height: 104px;
+} 
 .unipol-header-no-fetch {
   position: relative;
   width: 100%;
