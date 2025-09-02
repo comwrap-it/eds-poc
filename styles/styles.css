@@ -90,6 +90,10 @@ body.appear {
   display: block;
 }
 
+header.header-wrapper {
+  height: 104px;
+}
+
 header .header,
 footer .footer {
   visibility: hidden;
