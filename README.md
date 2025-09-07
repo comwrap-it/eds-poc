@@ -50,3 +50,7 @@ npm run lint
 ## More API 
 [APIs for status/cache/etc..] (https://www.aem.live/docs/admin.html#tag/status)
 [Example to check the status of a branch](https://admin.hlx.page/status/comwrap-it/eds-poc/prod)
+
+// Sitemap
+https://github.com/adobe/pages/blob/main/helix-sitemap.yaml
+https://www.aem.live/developer/anatomy-of-a-project
