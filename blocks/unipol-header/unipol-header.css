@@ -10,7 +10,7 @@ LARGE DESKTOP (Above 1920px)
 ========================= */
 @media (min-width: 1921px) {
     .header-wrapper {
-        max-width: 1920px;
+        max-width: var(--max-width-large);
         margin: 0 auto;
     }
 }
@@ -19,9 +19,9 @@ LARGE DESKTOP (Above 1920px)
 HEADER TOP
 ========================= */
 .header-top {
-    height: 48px;
+    height: var(--header-top-height);
     width: 100%;
-    border-bottom: 2px solid #f1f1f1;
+    border-bottom: var(--border-width-medium) solid var(--border-color-medium);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -46,13 +46,13 @@ HEADER TOP
     margin: auto;
     justify-content: center;
     align-items: center;
-    background-color: #f1f1f1;
+    background-color: var(--border-color-medium);
 }
 
 .header-top-left div a {
     font-size: 16px;
     text-decoration: none;
-    color: #337ab7;
+    color: var(--color-primary);
     font-weight: 600;
 }
 
@@ -61,12 +61,12 @@ HEADER TOP
     font-size: 14px;
     font-weight: normal;
     text-decoration: none;
-    color: #193A56;
+    color: var(--color-secondary);
 }
 
 .header-top-left .active-top-link {
     background: transparent;
-    border-top: 4px solid #337ab7;
+    border-top: var(--border-width-thick) solid var(--color-primary);
 }
 
 /* =========================
@@ -87,7 +87,7 @@ POPUP TRIGGER
 ========================= */
 .popup-trigger-container {
     display: flex;
-    background-color: #f1f1f1;
+    background-color: var(--border-color-medium);
     padding: 0 17px;
 }
 

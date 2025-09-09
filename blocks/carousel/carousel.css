@@ -10,8 +10,8 @@ main .section.light, main .section.highlight.carousel-container{
 
 .carousel {
   position: relative;
-  height: 335px;
-  margin-bottom: 20px;
+  height: var(--carousel-height);
+  margin-bottom: var(--spacing-md);
 }
 
 .carousel h1,

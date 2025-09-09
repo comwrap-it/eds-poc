@@ -3,17 +3,17 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  grid-gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-column-width), 1fr));
+  grid-gap: var(--grid-gap);
 }
 
 .cards > ul > li {
-  border: 1px solid #dadada;
+  border: var(--border-width-thin) solid var(--border-color-light);
   background-color: var(--background-color);
 }
 
 .cards .cards-card-body {
-  margin: 16px;
+  margin: var(--spacing-sm);
 }
 
 .cards .cards-card-image {

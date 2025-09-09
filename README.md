@@ -44,6 +44,9 @@ npm run lint
 6. To build react component in dist folder, 'npm run build:react', then commit the builded js
 7. To enable react in whats mode npm run dev:react
 
+## GEneric setup
+https://experienceleaguecommunities.adobe.com/t5/adobe-experience-manager/aem-gems-getting-started-with-aem-authoring-and-edge-delivery/m-p/661500
+
 ## Additional Docs
 1. [Field Types](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/implementing/developing/universal-editor/field-types)
 
@@ -51,6 +54,15 @@ npm run lint
 [APIs for status/cache/etc..] (https://www.aem.live/docs/admin.html#tag/status)
 [Example to check the status of a branch](https://admin.hlx.page/status/comwrap-it/eds-poc/prod)
 
-// Sitemap
+## Sitemap
 https://github.com/adobe/pages/blob/main/helix-sitemap.yaml
 https://www.aem.live/developer/anatomy-of-a-project
+
+## Universal Editor
+https://www.aem.live/developer/ue-tutorial
+
+## Extend sidekik
+https://www.aem.live/developer/sidekick-development
+
+## Repoless + multienvironment
+https://www.aem.live/developer/repoless-environments 

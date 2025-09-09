@@ -38,6 +38,60 @@
 
   /* nav height */
   --nav-height: 64px;
+
+  /* === COMMON DESIGN TOKENS === */
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 20px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 40px;
+  --spacing-xxxl: 48px;
+
+  /* Border */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+  --border-width-extra-thick: 6px;
+  --border-color-light: #dadada;
+  --border-color-medium: #f1f1f1;
+  --border-radius-sm: 2px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 2.4em;
+
+  /* Colors - Extended Palette */
+  --color-primary: #337ab7;
+  --color-primary-hover: #1d3ecf;
+  --color-primary-cta: #c4151c;
+  --color-secondary: #193A56;
+  --color-tertiary: #002360; /* rgb(0, 35, 96) */
+  --color-quaternary: #193a56; /* rgb(25, 58, 86) */
+  --color-gray-light: #f8f9fa;
+  --color-gray-medium: #e9ecef;
+  --color-border: #dadada;
+  --color-border-light: #f1f1f1;
+
+  /* Layout */
+  --max-width-content: 1200px;
+  --max-width-large: 1920px;
+  --header-top-height: 48px;
+  --hero-min-height: 300px;
+  --carousel-height: 335px;
+  --text-image-height: 392px;
+
+  /* Grid */
+  --grid-gap: 24px;
+  --grid-min-column-width: 257px;
+
+  /* Shadows */
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  /* Z-index */
+  --z-index-background: -1;
+  --z-index-dropdown: 1000;
+  --z-index-modal: 1050;
 }
 
 /* fallback fonts */

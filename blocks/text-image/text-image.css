@@ -8,7 +8,7 @@ main > .section > div.text-image-wrapper {
 .text-image {
   display: flex;
   flex-direction: row;
-  height: 392px;
+  height: var(--text-image-height);
   align-items: stretch;
   gap: 0;
   padding: 0;
@@ -16,13 +16,13 @@ main > .section > div.text-image-wrapper {
 
 .text-image .text-content {
   flex: 1;
-  padding: 20px;
+  padding: var(--spacing-md);
   box-sizing: border-box;
 }
 
 @media (min-width: 769px) {
   .text-image .text-content {
-    padding: 0 40px 0px 104px;
+    padding: 0 var(--spacing-xxl) 0px 104px;
   }
 }
 
@@ -38,12 +38,12 @@ main > .section > div.text-image-wrapper {
 }
 
 .text-image .text-content h2 {
-  color: rgb(0, 35, 96);
+  color: var(--color-tertiary);
 }
 
 .text-image .text-content p,
 .text-image .text-content {
-  color: rgb(25, 58, 86);
+  color: var(--color-quaternary);
   font-size: 18px;
 }
 
