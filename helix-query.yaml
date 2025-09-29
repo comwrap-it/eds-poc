@@ -19,7 +19,7 @@ indices:
       - '/**'
     exclude:
       - '/**.json'
-    target: /content/eds-poc/nav-index.json
+    target: /nav-index.json
     properties:
       title:
         select: head > meta[property="og:title"]
