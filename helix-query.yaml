@@ -21,6 +21,14 @@ indices:
       - '/**.json'
     target: /content/eds-poc/nav-index.json
     properties:
-      lastModified:
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, 'content')
+      path:
         select: none
-        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+        value: path
+      html:
+        select: main .carousel picture img
+        value: |
+          attribute(el, 'src')
