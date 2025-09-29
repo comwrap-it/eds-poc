@@ -2,6 +2,7 @@
   "mappings": [
     "/content/eds-poc/:/",
     "/content/eds-poc/configuration:/.helix/config.json",
+    "/content/eds-poc/nav-index.json:/nav-index.json",
     "/content/eds-poc/metadata:/metadata.json"
   ],
   "includes": [
