@@ -14,7 +14,6 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
-
   nav:
     include:
       - '/**'
@@ -22,27 +21,6 @@ indices:
       - '/**.json'
     target: /nav-index.json
     properties:
-      path:
+      lastModified:
         select: none
-        value: pathname
-      title:
-        select: head > meta[property="og:title"], head > title
-        value: |
-          (() => {
-            if (el && el.tagName === 'META') return attribute(el, 'content');
-            if (el) return textContent(el);
-            const seg = pathname.replace(/\/$/, '').split('/').pop();
-            return seg || '/';
-          })()
-      parent:
-        select: none
-        value: |
-          (() => {
-            const p = pathname.replace(/\/$/, '');
-            const i = p.lastIndexOf('/');
-            return i > 0 ? p.substring(0, i) : '/';
-          })()
-      depth:
-        select: none
-        value: |
-          (() => pathname.replace(/\/$/, '').split('/').filter(Boolean).length)()
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
