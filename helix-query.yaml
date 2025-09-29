@@ -19,7 +19,7 @@ indices:
       - '/**'
     exclude:
       - '/**.json'
-    target: /nav-index.json
+    target: /content/eds-poc/nav-index.json
     properties:
       lastModified:
         select: none
